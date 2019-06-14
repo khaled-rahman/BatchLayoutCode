@@ -1,0 +1,384 @@
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001034639775753021 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:100
+Please wait ... ... ...
+
+Number of threads:32
+Energy:6.19616e+07
+Sequential Wall time required:26.6778
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:6.10656e+07
+Parallel(inner) Wall time required:35.6806
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):6.076e+07
+Parallel(outer) Wall time required:2.12215
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):5.69357e+07
+Parallel2(outer) Wall time required:2.1169
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:3.99001e+07
+Minibatch Parallel(inner) Wall time required:15.6274
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:1.45223e+07
+Minibatch Parallel(inner) Wall time required:8.13631
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001273129135370255 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:200
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.5221e+07
+Sequential Wall time required:53.7275
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:1.6459e+07
+Parallel(inner) Wall time required:59.3122
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):2.76791e+07
+Parallel(outer) Wall time required:5.26086
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):1.75635e+07
+Parallel2(outer) Wall time required:4.09179
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.59527e+07
+Minibatch Parallel(inner) Wall time required:31.0077
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:1.12852e+07
+Minibatch Parallel(inner) Wall time required:16.2454
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001163825392723083 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:300
+Please wait ... ... ...
+
+Number of threads:32
+Energy:5.57518e+06
+Sequential Wall time required:82.7934
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:7.04877e+06
+Parallel(inner) Wall time required:125.555
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):6.94022e+06
+Parallel(outer) Wall time required:5.56671
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):6.6081e+06
+Parallel2(outer) Wall time required:5.58562
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.30701e+07
+Minibatch Parallel(inner) Wall time required:46.8052
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:9.38716e+06
+Minibatch Parallel(inner) Wall time required:24.6728
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001253720372915268 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:400
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.72865e+06
+Sequential Wall time required:111.761
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:5.40618e+06
+Parallel(inner) Wall time required:124.012
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):4.78257e+06
+Parallel(outer) Wall time required:7.38527
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):4.97704e+06
+Parallel2(outer) Wall time required:7.39512
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.30532e+07
+Minibatch Parallel(inner) Wall time required:59.3887
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:9.19209e+06
+Minibatch Parallel(inner) Wall time required:31.4808
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.00106532871723175 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:500
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.60136e+06
+Sequential Wall time required:133.875
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:5.00763e+06
+Parallel(inner) Wall time required:155.47
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):4.84212e+06
+Parallel(outer) Wall time required:9.21975
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):4.38917e+06
+Parallel2(outer) Wall time required:9.24433
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.08919e+07
+Minibatch Parallel(inner) Wall time required:75.1421
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:8.28161e+06
+Minibatch Parallel(inner) Wall time required:39.7015
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001171987503767014 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:600
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.54353e+06
+Sequential Wall time required:158.686
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:4.57758e+06
+Parallel(inner) Wall time required:178.369
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):4.98447e+06
+Parallel(outer) Wall time required:11.041
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):5.08637e+06
+Parallel2(outer) Wall time required:11.1037
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.11154e+07
+Minibatch Parallel(inner) Wall time required:89.4326
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:8.2606e+06
+Minibatch Parallel(inner) Wall time required:47.583
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001043025404214859 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:700
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.53871e+06
+Sequential Wall time required:186.458
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:5.32013e+06
+Parallel(inner) Wall time required:213.864
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):4.86787e+06
+Parallel(outer) Wall time required:12.9257
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):5.17911e+06
+Parallel2(outer) Wall time required:12.9617
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.40594e+07
+Minibatch Parallel(inner) Wall time required:103.637
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:1.07942e+07
+Minibatch Parallel(inner) Wall time required:55.2005
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001066315919160843 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:800
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.53601e+06
+Sequential Wall time required:212.305
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:5.04623e+06
+Parallel(inner) Wall time required:269.051
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):5.68019e+06
+Parallel(outer) Wall time required:15.0294
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):4.33283e+06
+Parallel2(outer) Wall time required:15.1166
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.20223e+07
+Minibatch Parallel(inner) Wall time required:121.564
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:8.61665e+06
+Minibatch Parallel(inner) Wall time required:63.6736
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001169975847005844 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:900
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.53516e+06
+Sequential Wall time required:242.592
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:4.44137e+06
+Parallel(inner) Wall time required:282.912
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):4.71194e+06
+Parallel(outer) Wall time required:16.3591
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):4.95932e+06
+Parallel2(outer) Wall time required:16.6138
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.54633e+07
+Minibatch Parallel(inner) Wall time required:133.68
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:1.08523e+07
+Minibatch Parallel(inner) Wall time required:70.7954
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001028265804052353 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1000
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.53502e+06
+Sequential Wall time required:263.028
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:5.17393e+06
+Parallel(inner) Wall time required:330.277
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):5.32779e+06
+Parallel(outer) Wall time required:18.4762
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):4.83012e+06
+Parallel2(outer) Wall time required:18.5358
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.57415e+07
+Minibatch Parallel(inner) Wall time required:153.289
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:1.17302e+07
+Minibatch Parallel(inner) Wall time required:80.0818
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001149974763393402 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1100
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.535e+06
+Sequential Wall time required:294.229
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:4.97617e+06
+Parallel(inner) Wall time required:348.947
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):4.55531e+06
+Parallel(outer) Wall time required:20.2851
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):5.23169e+06
+Parallel2(outer) Wall time required:20.3249
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.25691e+07
+Minibatch Parallel(inner) Wall time required:163.489
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:9.54291e+06
+Minibatch Parallel(inner) Wall time required:86.8016
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001066964119672775 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1200
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.53499e+06
+Sequential Wall time required:328.355
+Creating output file in following directory:datasets/seqoutput.txt
+Energy:5.37735e+06
+Parallel(inner) Wall time required:355.843
+Creating output file in following directory:datasets/paraoutputIn.txt
+Energy(outer):4.87961e+06
+Parallel(outer) Wall time required:22.1081
+Creating output file in following directory:datasets/paraoutputOut.txt
+Energy2(outer):5.03928e+06
+Parallel2(outer) Wall time required:22.2077
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Batch Size:4
+Minbatch Energy:1.93886e+07
+Minibatch Parallel(inner) Wall time required:179.604
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt
+Batch Size:8
+Minbatch Energy:1.22362e+07
+Minibatch Parallel(inner) Wall time required:95.2319
+Creating output file in following directory:datasets/paraoutputOutMinbatch.txt

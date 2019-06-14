@@ -1,0 +1,516 @@
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01516954600811005 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:100
+Please wait ... ... ...
+
+Number of threads:1
+Energy:2.45966e+06
+Sequential Wall time required:1.27312
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU100.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.95645e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:1.32672
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND100.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.86618e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:1.32359
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND100.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:3.11047e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:1.32638
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.94955e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:1.32446
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND100.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.91192e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:1.32268
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.92276e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:1.3248
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.73341e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:1.32556
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.00104067474603653 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:200
+Please wait ... ... ...
+
+Number of threads:1
+Energy:2.0987e+06
+Sequential Wall time required:2.54463
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU200.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.31203e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:2.64468
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND200.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.25021e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:2.64197
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND200.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.33222e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:2.64615
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.21301e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:2.64619
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND200.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.38762e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:2.64746
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.22924e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:2.65555
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.35607e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:2.65858
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND200.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001793105155229568 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:300
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.83422e+06
+Sequential Wall time required:3.83255
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU300.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.2901e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:3.98696
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND300.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.31213e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:3.97176
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND300.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.94379e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:3.97157
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND300.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.33506e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:3.97203
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND300.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.64834e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:3.98282
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND300.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.23717e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:3.97145
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND300.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.12399e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:3.98098
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND300.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001502159051597118 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:400
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.65007e+06
+Sequential Wall time required:5.09293
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU400.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.88919e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:5.2891
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND400.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.46667e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:5.28507
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND400.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:4.04397e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:5.27125
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND400.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.69577e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:5.28413
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND400.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:3.28576e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:5.28592
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND400.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.76848e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:5.27394
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND400.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.73221e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:5.28794
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND400.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001133888028562069 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:500
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.37315e+06
+Sequential Wall time required:6.36178
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU500.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.10276e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:6.60783
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND500.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.12558e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:6.61212
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND500.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.72586e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:6.60955
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND500.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.00347e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:6.60969
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND500.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:3.74733e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:6.60772
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND500.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.15418e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:6.60932
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND500.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.10913e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:6.65701
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND500.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.00115660298615694 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:600
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.14907e+06
+Sequential Wall time required:7.62691
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU600.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.01618e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:7.95221
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND600.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.1542e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:7.94625
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND600.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:3.18094e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:7.94099
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND600.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.08641e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:7.94139
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND600.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.99448e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:7.93273
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND600.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.78312e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:7.975
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND600.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.46513e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:7.95058
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND600.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001093005295842886 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:700
+Please wait ... ... ...
+
+Number of threads:1
+Energy:975056
+Sequential Wall time required:8.89568
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU700.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.99388e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:9.24409
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND700.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.42518e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:9.24559
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND700.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:3.68804e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:9.25587
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND700.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.80812e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:9.2581
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND700.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:3.02591e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:9.26078
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND700.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.13398e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:9.29617
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND700.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.28794e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:9.23911
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND700.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001210068818181753 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:800
+Please wait ... ... ...
+
+Number of threads:1
+Energy:838604
+Sequential Wall time required:10.2097
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU800.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.8414e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:10.5875
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND800.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.54495e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:10.5504
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND800.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:3.6567e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:10.5677
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND800.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.28776e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:10.5744
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND800.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:3.20724e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:10.6059
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND800.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.36322e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:10.558
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND800.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.09623e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:10.5703
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND800.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.00149600300937891 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:900
+Please wait ... ... ...
+
+Number of threads:1
+Energy:759047
+Sequential Wall time required:11.432
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU900.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.16077e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:11.8973
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND900.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.14966e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:11.9114
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND900.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:3.39532e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:11.8848
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND900.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.9483e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:11.9134
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND900.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:3.2715e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:11.912
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND900.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.86498e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:11.9205
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND900.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.33136e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:11.92
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND900.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.00121130608022213 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1000
+Please wait ... ... ...
+
+Number of threads:1
+Energy:638324
+Sequential Wall time required:12.706
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU1000.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.39419e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:13.2428
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND1000.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.61848e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:13.2458
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND1000.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:3.14878e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:13.2452
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND1000.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.3069e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:13.241
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND1000.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:3.34508e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:13.219
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND1000.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.53628e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:13.2187
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND1000.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.02257e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:13.2232
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND1000.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001248177140951157 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1100
+Please wait ... ... ...
+
+Number of threads:1
+Energy:559225
+Sequential Wall time required:14.0453
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU1100.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.97333e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5439
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND1100.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.92856e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5455
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND1100.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.96983e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5363
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND1100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.00693e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5427
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND1100.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.85484e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5354
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND1100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.86608e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5368
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND1100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.90126e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5286
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND1100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001240707002580166 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1200
+Please wait ... ... ...
+
+Number of threads:1
+Energy:493208
+Sequential Wall time required:15.2881
+Creating output file in following directory:datasets/output/blckhole.mtxSEQU1200.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.94915e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:15.8507
+Creating output file in following directory:datasets/output/blckhole.mtxMINB1PARAOUTRAND1200.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.71281e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:15.8363
+Creating output file in following directory:datasets/output/blckhole.mtxMINB2PARAOUTRAND1200.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.64311e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:15.8089
+Creating output file in following directory:datasets/output/blckhole.mtxMINB4PARAOUTRAND1200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.22822e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:15.8211
+Creating output file in following directory:datasets/output/blckhole.mtxMINB8PARAOUTRAND1200.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.82768e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:15.851
+Creating output file in following directory:datasets/output/blckhole.mtxMINB16PARAOUTRAND1200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.92614e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:15.9243
+Creating output file in following directory:datasets/output/blckhole.mtxMINB32PARAOUTRAND1200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.22754e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:15.8449
+Creating output file in following directory:datasets/output/blckhole.mtxMINB64PARAOUTRAND1200.txt

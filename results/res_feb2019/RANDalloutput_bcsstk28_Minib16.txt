@@ -1,0 +1,516 @@
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01542936963960528 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:100
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.06301e+08
+Sequential Wall time required:5.44344
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU100.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.06301e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:5.12802
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND100.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:8.03933e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:5.11058
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND100.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:7.12248e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:5.14137
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:6.44857e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:5.12648
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND100.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:6.26443e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:5.10348
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.73341e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:5.13337
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.47469e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:5.13114
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01109710615128279 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:200
+Please wait ... ... ...
+
+Number of threads:1
+Energy:8.34488e+07
+Sequential Wall time required:10.8244
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU200.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:8.34488e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:10.1945
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND200.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:6.89601e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:10.2152
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND200.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:6.04056e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:10.208
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:5.7522e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:10.2082
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND200.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:5.06587e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:10.1752
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.07443e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:10.1695
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.72694e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:10.1963
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND200.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01148282084614038 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:300
+Please wait ... ... ...
+
+Number of threads:1
+Energy:7.2027e+07
+Sequential Wall time required:16.2135
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU300.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:7.2027e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:15.3491
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND300.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:5.72972e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:15.3592
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND300.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:4.88371e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:15.3381
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND300.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:4.6487e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:15.3155
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND300.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:4.13717e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:15.316
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND300.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.3635e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:15.2537
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND300.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.95258e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:15.3144
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND300.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0111008221283555 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:400
+Please wait ... ... ...
+
+Number of threads:1
+Energy:5.83133e+07
+Sequential Wall time required:21.6138
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU400.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:5.83133e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:20.4388
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND400.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:4.73788e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:20.4362
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND400.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:4.12092e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:20.4214
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND400.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.87366e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:20.3884
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND400.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:3.28701e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:20.4235
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND400.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.89001e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:20.4283
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND400.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.42457e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:20.4191
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND400.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01169275166466832 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:500
+Please wait ... ... ...
+
+Number of threads:1
+Energy:4.70841e+07
+Sequential Wall time required:27.0268
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU500.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:4.70841e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:25.5758
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND500.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.78027e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:25.575
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND500.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:3.32044e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:25.5032
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND500.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.23998e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:25.5337
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND500.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.63187e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:25.4958
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND500.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.35847e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:25.5119
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND500.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.92257e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:25.5061
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND500.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01120417285710573 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:600
+Please wait ... ... ...
+
+Number of threads:1
+Energy:3.83058e+07
+Sequential Wall time required:32.4225
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU600.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.83058e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:30.5983
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND600.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.12251e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:30.6549
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND600.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.65384e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:30.6191
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND600.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.51134e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:30.6193
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND600.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.19969e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:30.6104
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND600.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.84079e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:30.5898
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND600.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.67088e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:30.6221
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND600.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01231984794139862 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:700
+Please wait ... ... ...
+
+Number of threads:1
+Energy:3.16984e+07
+Sequential Wall time required:37.8283
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU700.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.16984e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:35.8763
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND700.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.59271e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:35.8815
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND700.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.2109e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:35.7542
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND700.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.04929e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:35.795
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND700.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.7849e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:35.7826
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND700.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.56639e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:35.7939
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND700.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.42293e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:35.7975
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND700.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01091878768056631 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:800
+Please wait ... ... ...
+
+Number of threads:1
+Energy:2.56865e+07
+Sequential Wall time required:43.3028
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU800.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.56865e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:40.8812
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND800.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:2.11417e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:40.8995
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND800.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.83166e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:40.9399
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND800.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.66944e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:40.8814
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND800.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.50279e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:40.8859
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND800.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.24949e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:40.9349
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND800.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.16156e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:40.909
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND800.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01165311224758625 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:900
+Please wait ... ... ...
+
+Number of threads:1
+Energy:2.14235e+07
+Sequential Wall time required:48.769
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU900.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.14235e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:45.979
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND900.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.74097e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:46.1018
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND900.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.50067e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:46.1711
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND900.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.33634e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:46.1334
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND900.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.29189e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:46.1861
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND900.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.00947e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:46.2161
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND900.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:9.48524e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:46.2072
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND900.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0118306870572269 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1000
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.7259e+07
+Sequential Wall time required:54.1411
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU1000.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.7259e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:51.0342
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND1000.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.48957e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:51.2243
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND1000.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.24896e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:51.1431
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND1000.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.08834e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:51.1033
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND1000.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.01064e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:51.1028
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND1000.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:8.96666e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:51.1644
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND1000.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:7.67114e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:51.1613
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND1000.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01159284077584743 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1100
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.43318e+07
+Sequential Wall time required:59.4802
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU1100.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.43318e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:56.1557
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND1100.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.15675e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:56.3555
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND1100.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.03628e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:56.4783
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND1100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:8.94236e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:56.45
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND1100.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:8.2401e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:56.4642
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND1100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:7.42593e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:56.4813
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND1100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.34798e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:56.4506
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND1100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/bcsstk28.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.1850356110371649 seconds
+Input Matrix: Rows = 4410, Columns= 4410, nnz = 219024
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1200
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.19271e+07
+Sequential Wall time required:65.0101
+Creating output file in following directory:datasets/output/bcsstk28.mtxSEQU1200.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.19271e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:61.3684
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB1PARAOUTRAND1200.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:9.16044e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:61.3731
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB2PARAOUTRAND1200.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:8.68972e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:61.3995
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB4PARAOUTRAND1200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:7.76844e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:61.3516
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB8PARAOUTRAND1200.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:6.87224e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:61.3422
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB16PARAOUTRAND1200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.11711e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:61.3392
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB32PARAOUTRAND1200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:5.00572e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:61.3696
+Creating output file in following directory:datasets/output/bcsstk28.mtxMINB64PARAOUTRAND1200.txt

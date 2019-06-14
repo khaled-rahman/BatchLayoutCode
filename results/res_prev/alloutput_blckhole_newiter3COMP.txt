@@ -1,0 +1,420 @@
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0008875280618667603 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:100
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.84632e+06
+Sequential Wall time required:1.67911
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.8307e+06
+Parallel2(outer) Wall time required:0.166483
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.63202e+06
+Parallel3(outer) Wall time required:0.150046
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0008702613413333893 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:200
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.03435e+06
+Sequential Wall time required:3.08425
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.17249e+06
+Parallel2(outer) Wall time required:0.31891
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.52007e+06
+Parallel3(outer) Wall time required:0.32019
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001372527331113815 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:300
+Please wait ... ... ...
+
+Number of threads:32
+Energy:987215
+Sequential Wall time required:5.29105
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.12933e+06
+Parallel2(outer) Wall time required:0.48896
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50928e+06
+Parallel3(outer) Wall time required:0.39555
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001000579446554184 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:400
+Please wait ... ... ...
+
+Number of threads:32
+Energy:975278
+Sequential Wall time required:6.59201
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.06081e+06
+Parallel2(outer) Wall time required:0.655041
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50104e+06
+Parallel3(outer) Wall time required:0.539543
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0008830726146697998 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:500
+Please wait ... ... ...
+
+Number of threads:32
+Energy:968843
+Sequential Wall time required:8.56386
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.11138e+06
+Parallel2(outer) Wall time required:0.910113
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:0.68286
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0007496923208236694 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:600
+Please wait ... ... ...
+
+Number of threads:32
+Energy:967167
+Sequential Wall time required:9.92803
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.05534e+06
+Parallel2(outer) Wall time required:1.01546
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:0.761499
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0007918067276477814 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:700
+Please wait ... ... ...
+
+Number of threads:32
+Energy:966495
+Sequential Wall time required:11.5626
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.23386e+06
+Parallel2(outer) Wall time required:1.1984
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:0.943597
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.000809352844953537 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:800
+Please wait ... ... ...
+
+Number of threads:32
+Energy:965573
+Sequential Wall time required:13.485
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.06654e+06
+Parallel2(outer) Wall time required:1.30909
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:1.23233
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001263927668333054 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:900
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964586
+Sequential Wall time required:14.9671
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.11802e+06
+Parallel2(outer) Wall time required:2.0191
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:1.27504
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001010879874229431 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1000
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964446
+Sequential Wall time required:16.4577
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.14643e+06
+Parallel2(outer) Wall time required:1.8216
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:1.79324
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001505319029092789 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1100
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:17.7616
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.38004e+06
+Parallel2(outer) Wall time required:1.88975
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:2.09425
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.000875961035490036 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1200
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:19.0147
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.16853e+06
+Parallel2(outer) Wall time required:2.59981
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:1.59833
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.000834394246339798 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1300
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:21.1639
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.06781e+06
+Parallel2(outer) Wall time required:2.17398
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:1.75885
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0007499493658542633 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1400
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:23.0838
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.07997e+06
+Parallel2(outer) Wall time required:2.40702
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:1.89751
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0008621364831924438 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1500
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:25.8856
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.23005e+06
+Parallel2(outer) Wall time required:2.46667
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:2.09305
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0008554607629776001 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1600
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:27.1976
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.14178e+06
+Parallel2(outer) Wall time required:2.71794
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:2.73431
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.000858452171087265 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1700
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:27.5673
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):936200
+Parallel2(outer) Wall time required:3.38469
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:2.43737
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0008992888033390045 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1800
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:29.0965
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.08127e+06
+Parallel2(outer) Wall time required:3.4772
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:2.5183
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.001196667551994324 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1900
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:31.0256
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.07191e+06
+Parallel2(outer) Wall time required:3.17897
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:2.63591
+Creating output file in following directory:datasets/paraoutputOut3.txt
+reading input matrices in text (ascii)... 
+Input File Directory:./datasets/blckhole.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0008148178458213806 seconds
+Input Matrix: Rows = 2132, Columns= 2132, nnz = 14872
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:2000
+Please wait ... ... ...
+
+Number of threads:32
+Energy:964445
+Sequential Wall time required:32.3029
+Creating output file in following directory:datasets/seqoutput.txt
+Energy2(outer):1.10216e+06
+Parallel2(outer) Wall time required:3.91507
+Creating output file in following directory:datasets/paraoutputOut2.txt
+Energy3(outer):1.50105e+06
+Parallel3(outer) Wall time required:2.75095
+Creating output file in following directory:datasets/paraoutputOut3.txt

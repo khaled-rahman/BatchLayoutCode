@@ -1,0 +1,756 @@
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.1182806137949228 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:100
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.22416e+10
+Sequential Wall time required:658.739
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.11712e+10
+Final(rand) Minibatch Parallel(inner) Wall time required:119.725
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.09067e+10
+Final(rand) Minibatch Parallel(inner) Wall time required:32.8836
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.0836e+10
+Final(rand) Minibatch Parallel(inner) Wall time required:29.1358
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND100.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:1.08253e+10
+Final(rand) Minibatch Parallel(inner) Wall time required:27.1067
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND100.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:1.07869e+10
+Final(rand) Minibatch Parallel(inner) Wall time required:26.1037
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND100.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:9.97353e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:25.3827
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND100.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:9.40358e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:25.076
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND100.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:9.15853e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:24.6991
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND100.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:9.05237e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:25.6181
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND100.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:9.02219e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:24.6197
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND100.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:9.01066e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:25.0637
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND100.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:9.00387e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:26.7904
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.02638980420306325 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:200
+Please wait ... ... ...
+
+Number of threads:32
+Energy:5.09398e+09
+Sequential Wall time required:1317.68
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:4.27708e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:231.497
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.07444e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:62.6079
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.03025e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:57.3793
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND200.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:4.03777e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:54.0808
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND200.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:3.98229e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:51.9707
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND200.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:3.48915e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:50.9057
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND200.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:3.11982e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:49.7733
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND200.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:3.0101e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:49.4457
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND200.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:2.92411e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:51.309
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND200.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:2.91573e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:49.2554
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND200.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:2.90338e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:50.0417
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND200.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:2.90452e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:53.6309
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND200.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.02652266668155789 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:300
+Please wait ... ... ...
+
+Number of threads:32
+Energy:3.18228e+09
+Sequential Wall time required:1985.33
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU300.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.67051e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:359.799
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND300.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.51533e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:100.845
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND300.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.49374e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:89.3033
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND300.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:2.49318e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:82.8475
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND300.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:2.45934e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:81.0506
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND300.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:2.08303e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:77.2782
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND300.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:1.8242e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:75.5931
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND300.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:1.72853e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:73.9945
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND300.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:1.6922e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:76.6382
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND300.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:1.66527e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:73.9486
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND300.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:1.66037e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:75.3568
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND300.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:1.65764e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:80.6849
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND300.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.03507698886096478 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:400
+Please wait ... ... ...
+
+Number of threads:32
+Energy:2.21003e+09
+Sequential Wall time required:2630.79
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU400.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.82696e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:481.608
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND400.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.73663e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:133.879
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND400.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.71264e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:120.273
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND400.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:1.69329e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:110.635
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND400.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:1.68183e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:105.799
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND400.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:1.40836e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:103.378
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND400.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:1.23455e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:100.768
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND400.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:1.15643e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:99.5033
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND400.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:1.14057e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:102.533
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND400.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:1.12685e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:99.0432
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND400.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:1.11312e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:100.175
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND400.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:1.11528e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:107.511
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND400.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.06446072086691856 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:500
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.67991e+09
+Sequential Wall time required:3303.72
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU500.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.36708e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:626.623
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND500.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.31009e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:169.854
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND500.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.27956e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:152.642
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND500.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:1.26562e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:148.877
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND500.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:1.2515e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:141.666
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND500.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:1.04064e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:137.921
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND500.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:9.09236e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:135.368
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND500.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:8.43109e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:134.193
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND500.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:8.35398e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:138.661
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND500.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:8.38165e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:132.89
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND500.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:8.22082e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:133.002
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND500.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:8.26579e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:142.533
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND500.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.05912307417020202 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:600
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.33399e+09
+Sequential Wall time required:3956.49
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU600.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.07917e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:741.96
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND600.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.04832e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:204.777
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND600.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.02165e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:186.25
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND600.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:1.00612e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:178.057
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND600.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:9.92328e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:173.426
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND600.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:8.18899e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:167.844
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND600.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:7.24195e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:162.902
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND600.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:6.60688e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:159.886
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND600.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:6.58342e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:166.135
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND600.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:6.58454e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:158.792
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND600.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:6.50605e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:162.197
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND600.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:6.46706e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:168.934
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND600.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.1017437120899558 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:700
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.09952e+09
+Sequential Wall time required:4624.11
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU700.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:8.847e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:892.475
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND700.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:8.67245e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:259.434
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND700.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:8.35259e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:231.768
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND700.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:8.19823e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:214.679
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND700.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:8.20536e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:207.077
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND700.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:6.6978e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:194.697
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND700.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:5.75754e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:190.59
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND700.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:5.34421e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:188.341
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND700.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:5.35957e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:193.764
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND700.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:5.29253e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:180.267
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND700.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:5.20737e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:185.896
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND700.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:5.22103e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:199.312
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND700.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.04271406074985862 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:800
+Please wait ... ... ...
+
+Number of threads:32
+Energy:9.28743e+08
+Sequential Wall time required:5279.46
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU800.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:7.44772e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:983.92
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND800.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:7.3529e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:262.953
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND800.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.99603e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:241.495
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND800.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:6.93564e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:227.464
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND800.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:7.00196e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:220.257
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND800.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:5.54027e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:213.709
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND800.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:4.71103e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:207.164
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND800.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:4.43767e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:205.183
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND800.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:4.43643e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:211.489
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND800.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:4.35778e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:202.489
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND800.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:4.3342e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:200.607
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND800.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:4.29951e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:215.413
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND800.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.05885783722624183 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:900
+Please wait ... ... ...
+
+Number of threads:32
+Energy:8.05669e+08
+Sequential Wall time required:5931.19
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU900.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:6.46662e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:1084.22
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND900.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.35882e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:298.266
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND900.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.01705e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:267.146
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND900.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:6.02027e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:253.64
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND900.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:6.02993e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:241.645
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND900.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:4.7087e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:233.649
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND900.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:4.03336e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:228.8
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND900.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:3.74402e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:224.217
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND900.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:3.76181e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:230.08
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND900.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:3.67296e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:221.69
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND900.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:3.66244e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:225.63
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND900.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:3.66258e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:241.927
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND900.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.04050440900027752 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1000
+Please wait ... ... ...
+
+Number of threads:32
+Energy:7.13871e+08
+Sequential Wall time required:6616.45
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU1000.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:5.71015e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:1194.85
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND1000.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:5.60252e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:347.58
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND1000.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:5.3072e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:306.445
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND1000.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:5.2847e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:292.286
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND1000.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:5.31792e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:276.614
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND1000.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:4.10586e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:263.052
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND1000.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:3.53966e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:256.412
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND1000.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:3.2935e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:252.082
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND1000.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:3.27008e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:259.346
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND1000.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:3.20936e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:248.984
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND1000.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:3.22098e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:252.383
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND1000.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:3.1644e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:268.31
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND1000.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.08352400502189994 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1100
+Please wait ... ... ...
+
+Number of threads:32
+Energy:6.40898e+08
+Sequential Wall time required:7279.26
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU1100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:5.1222e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:1284.04
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND1100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.98163e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:349.844
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND1100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.74658e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:314.217
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND1100.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:4.72132e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:296.399
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND1100.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:4.7828e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:286.771
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND1100.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:3.611e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:279.311
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND1100.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:3.14036e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:275.154
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND1100.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:2.94689e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:272.829
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND1100.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:2.88324e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:281.678
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND1100.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:2.81711e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:269.771
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND1100.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:2.87356e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:275.372
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND1100.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:2.81181e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:295.11
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND1100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/gridgena.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.03628986468538642 seconds
+Input Matrix: Rows = 48962, Columns= 48962, nnz = 512084
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1200
+Please wait ... ... ...
+
+Number of threads:32
+Energy:5.82223e+08
+Sequential Wall time required:7892.73
+Creating output file in following directory:datasets/output/gridgena.mtxSEQU1200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:4.63692e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:1408.02
+Creating output file in following directory:datasets/output/gridgena.mtxMINB8PARAOUTRAND1200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.51791e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:385.004
+Creating output file in following directory:datasets/output/gridgena.mtxMINB32PARAOUTRAND1200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.29431e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:345.897
+Creating output file in following directory:datasets/output/gridgena.mtxMINB64PARAOUTRAND1200.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:4.25805e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:325.994
+Creating output file in following directory:datasets/output/gridgena.mtxMINB128PARAOUTRAND1200.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:4.31591e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:313.807
+Creating output file in following directory:datasets/output/gridgena.mtxMINB256PARAOUTRAND1200.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:3.26082e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:307.013
+Creating output file in following directory:datasets/output/gridgena.mtxMINB512PARAOUTRAND1200.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:2.83207e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:300.617
+Creating output file in following directory:datasets/output/gridgena.mtxMINB1024PARAOUTRAND1200.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:2.6733e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:297.923
+Creating output file in following directory:datasets/output/gridgena.mtxMINB2048PARAOUTRAND1200.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:2.59024e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:307.719
+Creating output file in following directory:datasets/output/gridgena.mtxMINB3000PARAOUTRAND1200.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:2.51949e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:296.35
+Creating output file in following directory:datasets/output/gridgena.mtxMINB4096PARAOUTRAND1200.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:2.59183e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:300.449
+Creating output file in following directory:datasets/output/gridgena.mtxMINB5000PARAOUTRAND1200.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:2.51062e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:321.102
+Creating output file in following directory:datasets/output/gridgena.mtxMINB6000PARAOUTRAND1200.txt

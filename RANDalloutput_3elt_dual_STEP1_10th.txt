@@ -1,0 +1,484 @@
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.03444016119465232 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:100
+Please wait ... ... ...
+
+Number of threads:1
+Energy:8.57477e+07
+Sequential Wall time required:22.2703
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU100.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:8.38706e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:21.1766
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND100.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:7.67701e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:21.2354
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND100.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:7.2722e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:21.1699
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:7.07764e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:21.1794
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND100.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:6.69287e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:21.2546
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.22705e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:21.2645
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:5.81082e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:21.2419
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.007704440969973803 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:200
+Please wait ... ... ...
+
+Number of threads:1
+Energy:3.79781e+07
+Sequential Wall time required:44.6068
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU200.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:3.65253e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:42.3456
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND200.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:3.1542e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:42.2778
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND200.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:2.92202e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:42.3315
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.76789e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:42.3514
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND200.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:2.63587e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:42.3538
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.44722e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:42.3439
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.39716e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:42.2592
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND200.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.007629234343767166 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:300
+Please wait ... ... ...
+
+Number of threads:1
+Energy:2.2675e+07
+Sequential Wall time required:66.8587
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU300.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:2.22644e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:63.4381
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND300.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.90172e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:63.6206
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND300.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.81e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:63.5538
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND300.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.734e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:63.4843
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND300.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.71885e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:63.5364
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND300.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.69291e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:63.5336
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND300.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.84573e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:63.4722
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND300.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.00740287359803915 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:400
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.54638e+07
+Sequential Wall time required:89.1293
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU400.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.55851e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:84.7448
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND400.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.38368e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:84.6909
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND400.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.35341e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:84.747
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND400.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.35452e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:84.683
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND400.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.3891e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:84.6362
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND400.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.51105e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:84.681
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND400.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.71145e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:84.6482
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND400.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.006693391595035791 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:500
+Please wait ... ... ...
+
+Number of threads:1
+Energy:1.13201e+07
+Sequential Wall time required:111.357
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU500.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.22374e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:105.839
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND500.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.11869e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:105.941
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND500.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.183e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:105.855
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND500.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.18764e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:105.937
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND500.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.278e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:105.801
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND500.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.50444e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:105.765
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND500.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.72494e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:105.845
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND500.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.01692414795979857 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:600
+Please wait ... ... ...
+
+Number of threads:1
+Energy:8.55443e+06
+Sequential Wall time required:133.689
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU600.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.0888e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:126.712
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND600.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.08436e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:127.028
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND600.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.14401e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:127.049
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND600.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.19817e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:127.072
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND600.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.3137e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:126.976
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND600.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.50352e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:127.121
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND600.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.75132e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:126.934
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND600.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.02045992016792297 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:700
+Please wait ... ... ...
+
+Number of threads:1
+Energy:6.7519e+06
+Sequential Wall time required:155.938
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU700.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.02971e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:148.349
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND700.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.07881e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:148.214
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND700.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.14992e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:148.202
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND700.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.22329e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:148.294
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND700.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.32648e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:148.264
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND700.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.5166e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:148.158
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND700.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.76608e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:148.139
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND700.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.02014922071248293 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:800
+Please wait ... ... ...
+
+Number of threads:1
+Energy:5.39712e+06
+Sequential Wall time required:178.193
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU800.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.0113e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:169.604
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND800.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.08328e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:169.459
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND800.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.15732e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:169.469
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND800.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.23379e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:169.22
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND800.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.37046e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:169.309
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND800.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.5201e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:169.424
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND800.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.79386e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:169.234
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND800.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.02100484818220139 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:900
+Please wait ... ... ...
+
+Number of threads:1
+Energy:4.40732e+06
+Sequential Wall time required:200.487
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU900.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:1.01015e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:190.251
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND900.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.09541e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:190.649
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND900.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.19563e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:190.51
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND900.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.26053e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:190.574
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND900.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.42087e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:190.448
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND900.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.54962e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:190.485
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND900.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.77736e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:190.625
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND900.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.0251817749813199 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1000
+Please wait ... ... ...
+
+Number of threads:1
+Energy:3.71889e+06
+Sequential Wall time required:222.77
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU1000.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:9.69031e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:211.395
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND1000.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.09639e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:211.864
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND1000.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.19801e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:211.961
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND1000.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.26551e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:211.57
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND1000.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.40508e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:211.605
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND1000.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.55774e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:211.522
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND1000.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.79961e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:211.555
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND1000.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.02188563998788595 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1100
+Please wait ... ... ...
+
+Number of threads:1
+Energy:3.19842e+06
+Sequential Wall time required:244.994
+Creating output file in following directory:datasets/output/3elt_dual.mtxSEQU1100.txt
+Final(rand) Batch Size:1
+Final(rand) Minbatch Energy:9.55562e+06
+Final(rand) Minibatch Parallel(inner) Wall time required:233.549
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB1PARAOUTRAND1100.txt
+Final(rand) Batch Size:2
+Final(rand) Minbatch Energy:1.10076e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:233.87
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB2PARAOUTRAND1100.txt
+Final(rand) Batch Size:4
+Final(rand) Minbatch Energy:1.23967e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:233.841
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB4PARAOUTRAND1100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.26369e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:233.821
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB8PARAOUTRAND1100.txt
+Final(rand) Batch Size:16
+Final(rand) Minbatch Energy:1.4019e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:233.684
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB16PARAOUTRAND1100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.56978e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:233.77
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB32PARAOUTRAND1100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.82496e+07
+Final(rand) Minibatch Parallel(inner) Wall time required:233.761
+Creating output file in following directory:datasets/output/3elt_dual.mtxMINB64PARAOUTRAND1100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/3elt_dual.mtx
+Matrix is symmetric
+Converting matrix data from ASCII to COO format: 0.00195920979604125 seconds
+Input Matrix: Rows = 9000, Columns= 9000, nnz = 26556
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1200
+Please wait ... ... ...
+

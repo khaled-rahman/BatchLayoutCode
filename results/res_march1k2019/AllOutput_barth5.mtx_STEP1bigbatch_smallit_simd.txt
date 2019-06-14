@@ -1,0 +1,1116 @@
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.02462073182687163 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:5
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.06547e+09
+Sequential Wall time required:3.38249
+Creating output file in following directory:datasets/output/barth5.mtxSEQU5.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:4.0557e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.982182
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND5.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.01509e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.357053
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND5.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.96752e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.253822
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND5.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:3.92603e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.208433
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND5.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:3.89204e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.188965
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND5.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:3.87655e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.17745
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND5.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:4.08128e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.165353
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND5.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:3.86156e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.153074
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND5.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:3.88489e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.159678
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND5.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:3.85679e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.140752
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND5.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:3.92189e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.165613
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND5.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:3.85901e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.146173
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND5.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.006996673997491598 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:10
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.19192e+09
+Sequential Wall time required:6.72532
+Creating output file in following directory:datasets/output/barth5.mtxSEQU10.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:4.17807e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.96908
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND10.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.13806e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.724959
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND10.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.08149e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.508794
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND10.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:4.03121e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.415004
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND10.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:3.99362e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.392453
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND10.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:3.97324e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.364414
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND10.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:3.95814e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.342969
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND10.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:3.95591e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.310602
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND10.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:3.9589e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.323321
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND10.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:3.96339e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.285727
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND10.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:3.96518e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.335221
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND10.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:3.96303e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.296999
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND10.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.006889727897942066 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:15
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.38052e+09
+Sequential Wall time required:10.0892
+Creating output file in following directory:datasets/output/barth5.mtxSEQU15.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:4.35754e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.99689
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND15.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.32052e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.09998
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND15.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.25868e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.783074
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND15.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:4.21023e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.639213
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND15.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:4.17268e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.597264
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND15.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:4.17483e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.55252
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND15.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:4.14262e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.520576
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND15.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:4.13319e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.468618
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND15.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:4.1335e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.486128
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND15.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:4.14837e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.434149
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND15.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:4.13928e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.50724
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND15.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:4.13926e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.444474
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND15.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.006417911034077406 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:20
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.26535e+09
+Sequential Wall time required:13.4474
+Creating output file in following directory:datasets/output/barth5.mtxSEQU20.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:4.24844e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.98661
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND20.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:4.20975e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.47904
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND20.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:4.15299e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.03086
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND20.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:4.11075e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.845171
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND20.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:4.07822e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.787874
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND20.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:4.06317e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.742933
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND20.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:4.05217e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.690997
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND20.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:4.05514e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.623988
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND20.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:4.05379e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.649646
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND20.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:4.0569e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.580597
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND20.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:4.0588e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.681024
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND20.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:4.05949e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.593754
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND20.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.005214646924287081 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:25
+Please wait ... ... ...
+
+Number of threads:32
+Energy:4.00516e+09
+Sequential Wall time required:16.8442
+Creating output file in following directory:datasets/output/barth5.mtxSEQU25.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:3.99083e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.70274
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND25.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:3.95531e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.78263
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND25.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:3.90993e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.27522
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND25.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:3.86765e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.0503
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND25.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:3.84392e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.990414
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND25.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:3.83016e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.924021
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND25.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:3.82605e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.870427
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND25.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:3.81817e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.782761
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND25.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:3.82804e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.811672
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND25.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:3.8262e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.729395
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND25.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:3.82894e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.853293
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND25.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:3.82955e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:0.74223
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND25.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.00475779315456748 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:50
+Please wait ... ... ...
+
+Number of threads:32
+Energy:2.77226e+09
+Sequential Wall time required:33.4938
+Creating output file in following directory:datasets/output/barth5.mtxSEQU50.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.76324e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:9.31238
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND50.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.75572e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.55706
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND50.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.73673e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.5708
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND50.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:2.72354e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.10753
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND50.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:2.71143e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.01463
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND50.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:2.70304e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.87352
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND50.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:2.70528e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.75563
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND50.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:2.70582e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.5857
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND50.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:2.70979e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.65785
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND50.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:2.71178e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.46029
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND50.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:2.71374e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.72783
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND50.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:2.71569e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:1.48896
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND50.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.005144020076841116 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:80
+Please wait ... ... ...
+
+Number of threads:32
+Energy:2.02223e+09
+Sequential Wall time required:53.5599
+Creating output file in following directory:datasets/output/barth5.mtxSEQU80.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:2.01435e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:15.7792
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND80.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:2.01095e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:5.93621
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND80.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:2.0075e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.20399
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND80.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:2.00821e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.45455
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND80.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:2.01148e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.2699
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND80.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:2.0086e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.03424
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND80.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:2.01052e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.81782
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND80.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:2.01233e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.52673
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND80.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:2.01617e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.62924
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND80.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:2.03788e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.32281
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND80.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:2.01433e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.74768
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND80.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:2.0177e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.38523
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND80.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.004757853224873543 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:100
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.74713e+09
+Sequential Wall time required:67.0483
+Creating output file in following directory:datasets/output/barth5.mtxSEQU100.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.73696e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:19.8417
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND100.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.73188e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:7.40743
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND100.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.73534e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:5.23955
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND100.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:1.73804e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.30284
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND100.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:1.74081e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.11429
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND100.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:1.74585e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.805
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND100.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:1.742e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.5501
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND100.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:1.74334e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.16821
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND100.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:1.74752e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.30006
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND100.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:1.74467e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.93996
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND100.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:1.74125e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:3.44392
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND100.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:1.74736e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:2.99379
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND100.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.01949142618104815 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:150
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.41342e+09
+Sequential Wall time required:100.661
+Creating output file in following directory:datasets/output/barth5.mtxSEQU150.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.40471e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:27.9555
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND150.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.39876e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:10.5635
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND150.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.3962e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:7.52022
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND150.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:1.40342e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:6.29939
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND150.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:1.41111e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:6.08776
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND150.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:1.41043e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:5.68465
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND150.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:1.40952e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:5.27001
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND150.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:1.41133e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.73298
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND150.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:1.41355e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.94996
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND150.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:1.41096e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.3831
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND150.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:1.41004e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:5.17894
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND150.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:1.4072e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:4.51014
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND150.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.008910859003663063 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:200
+Please wait ... ... ...
+
+Number of threads:32
+Energy:1.19344e+09
+Sequential Wall time required:134.031
+Creating output file in following directory:datasets/output/barth5.mtxSEQU200.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:1.19012e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:37.3896
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND200.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:1.19121e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:14.3987
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND200.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:1.19345e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:10.2513
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND200.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:1.20219e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:8.49971
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND200.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:1.2114e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:8.31076
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND200.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:1.21369e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:7.71539
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND200.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:1.21887e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:7.0952
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND200.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:1.21658e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:6.32364
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND200.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:1.21975e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:6.63824
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND200.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:1.21591e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:5.8294
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND200.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:1.21986e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:6.95238
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND200.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:1.21701e+09
+Final(rand) Minibatch Parallel(inner) Wall time required:5.99674
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND200.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.00948307616636157 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:300
+Please wait ... ... ...
+
+Number of threads:32
+Energy:9.49659e+08
+Sequential Wall time required:201.102
+Creating output file in following directory:datasets/output/barth5.mtxSEQU300.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:9.55936e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:56.5178
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND300.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:9.51882e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:21.4377
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND300.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:9.53349e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:15.0952
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND300.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:9.65018e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:12.6617
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND300.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:9.63601e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:12.2424
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND300.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:9.57072e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:11.5048
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND300.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:9.63598e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:10.7141
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND300.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:9.66967e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:9.54585
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND300.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:9.77536e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:9.96228
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND300.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:9.78265e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:8.74565
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND300.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:9.6936e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:10.3771
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND300.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:9.6906e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:9.00013
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND300.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.03000338841229677 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:400
+Please wait ... ... ...
+
+Number of threads:32
+Energy:8.08788e+08
+Sequential Wall time required:267.828
+Creating output file in following directory:datasets/output/barth5.mtxSEQU400.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:8.05709e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:79.5605
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND400.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:8.01991e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:29.4502
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND400.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:7.97836e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:20.782
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND400.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:8.13392e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:17.234
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND400.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:8.11734e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:16.6113
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND400.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:8.11172e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:15.4035
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND400.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:8.06295e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:14.249
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND400.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:8.12039e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:12.7112
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND400.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:8.19499e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:13.2634
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND400.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:8.19299e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:11.6454
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND400.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:8.27204e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:13.8898
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND400.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:8.20713e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:12.0272
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND400.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.01929025119170547 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:500
+Please wait ... ... ...
+
+Number of threads:32
+Energy:7.3495e+08
+Sequential Wall time required:334.368
+Creating output file in following directory:datasets/output/barth5.mtxSEQU500.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:7.25678e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:93.6382
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND500.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:7.30108e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:35.6674
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND500.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:7.31895e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:25.6351
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND500.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:7.41665e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:21.383
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND500.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:7.43428e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:20.8879
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND500.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:7.47176e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:19.1803
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND500.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:7.49835e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:17.8991
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND500.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:7.41652e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:15.8798
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND500.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:7.49276e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:16.5306
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND500.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:7.41828e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:14.5554
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND500.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:7.61034e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:17.3085
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND500.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:7.39753e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:15.0065
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND500.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.0319270258769393 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:600
+Please wait ... ... ...
+
+Number of threads:32
+Energy:6.90896e+08
+Sequential Wall time required:401.975
+Creating output file in following directory:datasets/output/barth5.mtxSEQU600.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:6.75077e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:113.866
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND600.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.89589e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:43.2169
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND600.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.95562e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:30.6331
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND600.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:7.03349e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:25.5785
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND600.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:7.06588e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:25.0581
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND600.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:7.13229e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:23.1099
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND600.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:7.14167e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:21.4351
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND600.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:7.01483e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:19.0672
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND600.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:7.12158e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:19.8703
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND600.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:6.88549e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:17.5273
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND600.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:7.29957e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:20.8731
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND600.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:7.01578e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:18.0401
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND600.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.02085282513871789 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:700
+Please wait ... ... ...
+
+Number of threads:32
+Energy:6.56074e+08
+Sequential Wall time required:468.991
+Creating output file in following directory:datasets/output/barth5.mtxSEQU700.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:6.41844e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:138.526
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND700.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.6022e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:51.9654
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND700.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.68608e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:36.7343
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND700.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:6.79056e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:30.3503
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND700.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:6.80739e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:29.3793
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND700.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:6.87561e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:27.181
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND700.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:6.90632e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:25.1283
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND700.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:6.73664e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:22.2784
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND700.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:6.86892e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:23.2346
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND700.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:6.54586e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:20.3734
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND700.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:6.99987e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:24.3
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND700.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:6.73783e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:21.0839
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND700.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.018879400100559 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:800
+Please wait ... ... ...
+
+Number of threads:32
+Energy:6.28447e+08
+Sequential Wall time required:534.855
+Creating output file in following directory:datasets/output/barth5.mtxSEQU800.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:6.11834e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:150.461
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND800.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.33511e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:58.1749
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND800.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.42911e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:41.2013
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND800.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:6.56018e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:34.005
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND800.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:6.55194e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:33.4351
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND800.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:6.59681e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:31.0933
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND800.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:6.63076e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:28.8312
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND800.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:6.47463e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:25.4558
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND800.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:6.59793e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:26.5597
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND800.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:6.23034e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:23.3213
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND800.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:6.73785e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:27.7478
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND800.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:6.47133e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:24.0091
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND800.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.02639144891873002 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:900
+Please wait ... ... ...
+
+Number of threads:32
+Energy:6.1447e+08
+Sequential Wall time required:602.828
+Creating output file in following directory:datasets/output/barth5.mtxSEQU900.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:6.00038e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:179.387
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND900.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.21031e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:68.9501
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND900.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.28547e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:47.887
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND900.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:6.42759e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:39.5969
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND900.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:6.37609e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:38.5228
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND900.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:6.46156e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:34.9911
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND900.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:6.48377e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:32.3598
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND900.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:6.26913e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:28.7663
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND900.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:6.43702e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:29.8169
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND900.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:6.08129e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:26.2746
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND900.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:6.53238e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:31.2395
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND900.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:6.31249e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:27.0778
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND900.txt
+reading input matrices in text (ascii)... 
+Input File Directory:/N/u/morahma/Research/Spring2019/FirstForceDirectedGraph/flGenForDiGraph/datasets/input/barth5.mtx
+Converting matrix data from ASCII to COO format: 0.01910251285880804 seconds
+Input Matrix: Rows = 15606, Columns= 15606, nnz = 61484
+Converting to csc ... 
+
+Entering TestAlgorithms ...
+Total Number of iterations is:1000
+Please wait ... ... ...
+
+Number of threads:32
+Energy:6.04612e+08
+Sequential Wall time required:668.58
+Creating output file in following directory:datasets/output/barth5.mtxSEQU1000.txt
+Final(rand) Batch Size:8
+Final(rand) Minbatch Energy:5.93993e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:188.606
+Creating output file in following directory:datasets/output/barth5.mtxMINB8PARAOUTRAND1000.txt
+Final(rand) Batch Size:32
+Final(rand) Minbatch Energy:6.14448e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:74.1096
+Creating output file in following directory:datasets/output/barth5.mtxMINB32PARAOUTRAND1000.txt
+Final(rand) Batch Size:64
+Final(rand) Minbatch Energy:6.23808e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:51.541
+Creating output file in following directory:datasets/output/barth5.mtxMINB64PARAOUTRAND1000.txt
+Final(rand) Batch Size:128
+Final(rand) Minbatch Energy:6.33696e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:43.0304
+Creating output file in following directory:datasets/output/barth5.mtxMINB128PARAOUTRAND1000.txt
+Final(rand) Batch Size:256
+Final(rand) Minbatch Energy:6.32359e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:42.3008
+Creating output file in following directory:datasets/output/barth5.mtxMINB256PARAOUTRAND1000.txt
+Final(rand) Batch Size:512
+Final(rand) Minbatch Energy:6.3753e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:39.3998
+Creating output file in following directory:datasets/output/barth5.mtxMINB512PARAOUTRAND1000.txt
+Final(rand) Batch Size:1024
+Final(rand) Minbatch Energy:6.41916e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:35.9646
+Creating output file in following directory:datasets/output/barth5.mtxMINB1024PARAOUTRAND1000.txt
+Final(rand) Batch Size:2048
+Final(rand) Minbatch Energy:6.21365e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:31.9429
+Creating output file in following directory:datasets/output/barth5.mtxMINB2048PARAOUTRAND1000.txt
+Final(rand) Batch Size:3000
+Final(rand) Minbatch Energy:6.36742e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:33.2759
+Creating output file in following directory:datasets/output/barth5.mtxMINB3000PARAOUTRAND1000.txt
+Final(rand) Batch Size:4096
+Final(rand) Minbatch Energy:6.01604e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:29.1635
+Creating output file in following directory:datasets/output/barth5.mtxMINB4096PARAOUTRAND1000.txt
+Final(rand) Batch Size:5000
+Final(rand) Minbatch Energy:6.41244e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:34.7534
+Creating output file in following directory:datasets/output/barth5.mtxMINB5000PARAOUTRAND1000.txt
+Final(rand) Batch Size:6000
+Final(rand) Minbatch Energy:6.21801e+08
+Final(rand) Minibatch Parallel(inner) Wall time required:30.185
+Creating output file in following directory:datasets/output/barth5.mtxMINB6000PARAOUTRAND1000.txt
