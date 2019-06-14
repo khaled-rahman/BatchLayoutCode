@@ -33,7 +33,3 @@ pip install apgl scipy networkx s_gd2 fa2
 Open the jupyter notebook named 'drawGraph.ipynb' located in datasets folder (If you do not have jupyter notebook installed in your pc, please install it). Give appropriate matrix market file name (.mtx) in line 'graph = mmread("input/3elt\_dual.mtx")' that were used to generate the layout. Here, "3elt\_dual.mtx" file was used to generate layout. After running each line in jupyter notebook, a layout graph with aesthetic metrics' values will be shown in the end. Please also modify iterations that were used to run code.
 
 =======
-# ParallelGraphVis
-
-# Test
->>>>>>> 862fa7b9c54875b587dad33922236619b87772c5
