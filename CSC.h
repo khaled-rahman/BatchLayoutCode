@@ -8,16 +8,13 @@
 #include <cassert>
 #include <tuple>
 #include "Deleter.h"
-#include "HeapEntry.h"
+//#include "HeapEntry.h"
 
 #include "utility.h"
 #include "BitMap.h"
 #include <numeric>
 
 #include "Triple.h"
-extern "C" {
-#include "GTgraph/R-MAT/graph.h"
-}
 
 using namespace std;
 
@@ -58,7 +55,6 @@ public:
     template <typename AddOperation>
     void MergeDuplicates (AddOperation addop); // 1st method
 
-    CSC(graph & G);
     CSC (IT * ri, IT * ci, NT * val, IT mynnz, IT m, IT n);
     CSC (const CSC<IT,NT> & rhs);		// copy constructor
     CSC<IT,NT> & operator=(const CSC<IT,NT> & rhs);	// assignment operator
@@ -145,97 +141,6 @@ CSC<IT,NT> & CSC<IT,NT>::operator= (const CSC<IT,NT> & rhs) // ridefinisce opera
 	return *this;
 }
 
-
-//! Construct a CSC object from a GTgraph object
-//! GTgraph might have parallel edges; this constructor sums them up
-//! Assumes a sorted GTgraph (primary key: start)
-template <class IT, class NT>
-CSC<IT,NT>::CSC(graph & G):nnz(G.m), rows(G.n), cols(G.n)
-{
-	// graph is like a triples object
-	// typedef struct {
-        // LONG_T m;
-        // LONG_T n;
-        // // Arrays of size 'm' storing the edge information
-        // // A directed edge 'e' (0 <= e < m) from start[e] to end[e]
-        // // had an integer weight w[e] 
-        // LONG_T* start;
-        // LONG_T* end; 
-	// WEIGHT_T* w;
-	// } graph; 
-	cout << "Graph nnz= " << G.m << " and n=" << G.n << endl;
-
-	vector< Triple<IT,NT> > simpleG;
-	vector< pair< pair<IT,IT>,NT> > currCol;
-	currCol.push_back(make_pair(make_pair(G.start[0], G.end[0]), G.w[0]));
-	for (IT k = 0 ; k < nnz-1 ; ++k)
-        {
-                if(G.start[k] != G.start[k+1] )
-                {
-			std::sort(currCol.begin(), currCol.end());
-			simpleG.push_back(Triple<IT,NT>(currCol[0].first.first, currCol[0].first.second, currCol[0].second));
-			for(int i=0; i< currCol.size()-1; ++i)
-			{
-				if(currCol[i].first == currCol[i+1].first)
-				{
-					simpleG.back().val += currCol[i+1].second;
-				}
-				else
-				{	
-					simpleG.push_back(Triple<IT,NT>(currCol[i+1].first.first, currCol[i+1].first.second, currCol[i+1].second));
-				}
-			}
-			vector< pair< pair<IT,IT>,NT> >().swap(currCol);
-		}
-		currCol.push_back(make_pair(make_pair(G.start[k+1], G.end[k+1]), G.w[k+1]));
-        }
-	// now do the last row
-	sort(currCol.begin(), currCol.end());
-        simpleG.push_back(Triple<IT,NT>(currCol[0].first.first, currCol[0].first.second, currCol[0].second));
-        for(int i=0; i< currCol.size()-1; ++i)
-        {
-        	if(currCol[i].first == currCol[i+1].first)
-               	{
-               		simpleG.back().val += currCol[i+1].second;
-		}
-		else
-                {
-        	        simpleG.push_back(Triple<IT,NT>(currCol[i+1].first.first, currCol[i+1].first.second, currCol[i+1].second));
-                }
-        }
-
-	nnz = simpleG.size();
-	cout << "[After duplicate merging] Graph nnz= " << nnz << " and n=" << G.n << endl << endl;
-
-    colptr = my_malloc<IT>(cols + 1);
-    rowids = my_malloc<IT>(nnz);
-    values = my_malloc<NT>(nnz);
-
-    IT *work = my_malloc<IT>(cols);
-    
-    std::fill(work, work+cols, (IT) 0); // initilized to zero
-   
-    for (IT k = 0 ; k < nnz ; ++k)
-    	{
-        	IT tmp =  simpleG[k].col;
-        	work [ tmp ]++ ;		// col counts (i.e, w holds the "col difference array")
-
-        }
-
-	if(nnz > 0)
-	{
-		colptr[cols] = CumulativeSum (work, cols) ;		// cumulative sum of w
-        	copy(work, work+cols, colptr);
-
-		IT last;
-		for (IT k = 0 ; k < nnz ; ++k)
-        	{
-			rowids[ last = work[ simpleG[k].col ]++ ]  = simpleG[k].row ;
-			values[last] = simpleG[k].val ;
-       	 	}
-	}
-    my_free<IT>(work);
-}
 
 // Construct a Csc object from an array of "triple"s 
 template <class IT, class NT>

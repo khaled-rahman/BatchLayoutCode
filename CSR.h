@@ -33,7 +33,6 @@ public:
         }
 	}
     
-    CSR (graph & G);
     CSR (string filename);
     CSR (const CSC<IT,NT> & csc);   // CSC -> CSR conversion
     CSR (const CSR<IT,NT> & rhs);	// copy constructor
@@ -233,82 +232,6 @@ CSR<IT,NT>::CSR(const CSC<IT,NT> & csc, const bool transpose):nnz(csc.nnz), rows
             colids[k] = csc.rowids[k];
         }
     }
-}
-
-template <class IT, class NT>
-CSR<IT,NT>::CSR(graph & G):nnz(G.m), rows(G.n), cols(G.n), zerobased(true)
-{
-	// graph is like a triples object
-	// typedef struct {
-        // LONG_T m;
-        // LONG_T n;
-        // // Arrays of size 'm' storing the edge information
-        // // A directed edge 'e' (0 <= e < m) from start[e] to end[e]
-        // // had an integer weight w[e] 
-        // LONG_T* start;
-        // LONG_T* end; 
-	// WEIGHT_T* w;
-	// } graph; 
-	cout << "Graph nnz= " << G.m << " and n=" << G.n << endl;
-
-	vector< Triple<IT,NT> > simpleG;
-	vector< pair< pair<IT,IT>,NT> > currCol;
-	currCol.push_back(make_pair(make_pair(G.start[0], G.end[0]), G.w[0]));
-	for (IT k = 0 ; k < nnz-1 ; ++k) {
-        if(G.start[k] != G.start[k+1] ) {
-            std::sort(currCol.begin(), currCol.end());
-            simpleG.push_back(Triple<IT,NT>(currCol[0].first.first, currCol[0].first.second, currCol[0].second));
-            for(int i=0; i< currCol.size()-1; ++i) {
-                if(currCol[i].first == currCol[i+1].first) {
-                    simpleG.back().val += currCol[i+1].second;
-                }
-                else {	
-                    simpleG.push_back(Triple<IT,NT>(currCol[i+1].first.first, currCol[i+1].first.second, currCol[i+1].second));
-                }
-            }
-            vector< pair< pair<IT,IT>,NT> >().swap(currCol);
-        }
-		currCol.push_back(make_pair(make_pair(G.start[k+1], G.end[k+1]), G.w[k+1]));
-    }
-    
-	// now do the last row
-	sort(currCol.begin(), currCol.end());
-    simpleG.push_back(Triple<IT,NT>(currCol[0].first.first, currCol[0].first.second, currCol[0].second));
-    for(int i=0; i< currCol.size()-1; ++i) {
-        if(currCol[i].first == currCol[i+1].first) {
-            simpleG.back().val += currCol[i+1].second;
-        }
-		else {
-            simpleG.push_back(Triple<IT,NT>(currCol[i+1].first.first, currCol[i+1].first.second, currCol[i+1].second));
-        }
-    }
-
-	nnz = simpleG.size();
-	cout << "[After duplicate merging] Graph nnz= " << nnz << " and n=" << G.n << endl;
-
-    rowptr = my_malloc<IT>(rows + 1);
-    colids = my_malloc<IT>(nnz);
-    values = my_malloc<NT>(nnz);
-
-    IT *work = my_malloc<IT>(rows);
-    std::fill(work, work+rows, (IT) 0); // initilized to zero
-    
-    for (IT k = 0 ; k < nnz ; ++k) {
-        IT tmp =  simpleG[k].row;
-        work [ tmp ]++ ;		// col counts (i.e, w holds the "col difference array")
-	}
-
-	if(nnz > 0) {
-        rowptr[rows] = CumulativeSum (work, rows) ;		// cumulative sum of w
-        copy(work, work + rows, rowptr);
-        
-		IT last;
-		for (IT k = 0 ; k < nnz ; ++k) {
-            colids[ last = work[ simpleG[k].row ]++ ]  = simpleG[k].col ;
-			values[last] = simpleG[k].val ;
-        }
-	}
-    my_free<IT>(work);
 }
 
 

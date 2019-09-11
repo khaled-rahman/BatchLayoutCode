@@ -4,7 +4,7 @@ Parallel Batch Update Algorithm for Force-Directed Graph Layout generation in Sh
 
 ## System Requirements
 
-Users need to have following softwares/tools installed in their PC.
+Users need to have following softwares/tools installed in their PC. The source code was compiled and run successfully in both linux and macOS.
 ```
 GCC version >= 4.9
 OpenMP version >= 4.5
