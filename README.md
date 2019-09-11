@@ -71,5 +71,5 @@ BHMINB*<int1>*PARAOUT*<int2> - will be generaged by barnes-hut mode of SMU where
 
 GAPPROX*<int1>*PARAOUT*<int2> - will be generaged by greedy approximation mode of SMU where int1 is minibatch size and int2 is iterations.
 ```
-
+### Contact 
 If you have questions, please don't hesitate to ask me (Md. Khaledur Rahman) by sending email to `morahma@iu.edu`.
