@@ -2,6 +2,16 @@
 
 Parallel Batch Update Algorithm for Force-Directed Graph Layout generation in Shared Memory. This tool generates layout of graphs using multicores which is generally faster than equivalent algorithms. It comes with various features, e.g., it intializes layout using random technique as well as greedy technique (helps to converge faster), it provides several ptions like (a,r)-energy models and Edge weights, it can approximate repulsive forces by  Barnes-Hut approximation and greedy technique. We assume that the input graph is undirected, connected and symmetric.
 
+@@@@@                   @      @                                     
+@    @                  @      @                                     
+@  @   @@@@@@ @  @@@@@@ @      @      @@@@@@ @    @ @@@@@@ @    @ @  
+@@@         @ @@ @    @ @@@@@@ @           @ @    @ @    @ @    @ @@ 
+@  @   @@@@@@ @  @      @    @ @      @@@@@@ @@@@@@ @    @ @    @ @  
+@    @ @    @ @  @      @    @ @      @    @      @ @    @ @    @ @  
+@@@@@  @@@@@@ @@ @@@@@@ @    @ @@@@@@ @@@@@@ @@@@@@ @@@@@@ @@@@@@ @@ 
+
+
+
 ## System Requirements
 
 Users need to have following softwares/tools installed in their PC. The source code was compiled and run successfully in both linux and macOS.
