@@ -22,11 +22,18 @@ OpenMP version >= 4.5
 Python3 packages: matplotlib, scipy, networkx, numpy
 ```
 
-## Compile and Run
-
-Input file must be in matrix market format ([check here for details about .mtx file](https://math.nist.gov/MatrixMarket/formats.html)). To check compile and run, use the following command:
+## Compile BatchLayout
+To compile BatchLayout type the following command on terminal:
 ```
-$ make clean; make
+$ make clean
+$ make
+```
+This will generate an executible file in bin folder.
+
+## Run BatchLayout from command line
+
+Input file must be in matrix market format ([check here for details about .mtx file](https://math.nist.gov/MatrixMarket/formats.html)). To run BatchLayout, use the following command:
+```
 $ ./bin/BatchLayout -input ./datasets/input/3elt_dual.mtx -output ./datasets/output/ -iter 600 -batch 256 -threads 32 -algo 2
 ```
 Here, `-input` is the full path of input file, `-output` is the directory where output file will be saved, `-iter` is the number of iterations, `-batch` is the size of minibatch which is 256 here, `-threads` is the maximum number of threads which is 32 and `-algo` is the choice of algorithm to run which is 2 represending cache blocking stochastic minibatch update algorithm. All options are described below:
@@ -57,9 +64,9 @@ It indicates if energy value is improved less than this percenrages then optimiz
 default: -weight 1.0 -bht 1.2 -engt 0.01 -batch 256 -iter 600 -threads MAX -algo 2 -init 0
 ```
 
-## Run using Python
+## Run BatchLayout using Python
 
-User can run BatchLayout using python command. We have provided a python script which will run executible BatchLayout file, generate layout and draw graph based on the layout. Note user must successfully compile BatchLayout to create executible file and then type following command:
+User can run BatchLayout using python command. We have provided a python script which will run executible BatchLayout file, generate layout and draw graph based on the layout. Note that user must successfully compile BatchLayout to create executible file and then type following command:
 ```
 $ python runBatchLayout.py -inf ./datasets/input/3elt_dual.mtx -outd ./datasets/output/ -iter 600 -threads 4
 ```
