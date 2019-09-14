@@ -21,6 +21,7 @@ GCC version >= 4.9
 OpenMP version >= 4.5
 Python3 packages: matplotlib, scipy, networkx, numpy
 ```
+Some helpful links for installation can be found at [GCC](https://gcc.gnu.org/install/), [OpenMP](https://clang-omp.github.io) and [Environment Setup](http://heather.cs.ucdavis.edu/~matloff/158/ToolsInstructions.html#compile_openmp).
 
 ## Compile BatchLayout
 To compile BatchLayout type the following command on terminal:
@@ -32,7 +33,7 @@ This will generate an executible file in bin folder.
 
 ## Run BatchLayout from command line
 
-Input file must be in matrix market format ([check here for details about .mtx file](https://math.nist.gov/MatrixMarket/formats.html)). To run BatchLayout, use the following command:
+Input file must be in matrix market format ([check here for details about .mtx file](https://math.nist.gov/MatrixMarket/formats.html)). A lot of datasets can be found at [suitesparse website](https://sparse.tamu.edu). We provide few example input files in datasets/input directory. To run BatchLayout, use the following command:
 ```
 $ ./bin/BatchLayout -input ./datasets/input/3elt_dual.mtx -output ./datasets/output/ -iter 600 -batch 256 -threads 32 -algo 2
 ```
