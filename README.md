@@ -27,7 +27,7 @@ Some helpful links for installation can be found at [GCC](https://gcc.gnu.org/in
 To compile BatchLayout type the following command on terminal:
 ```
 $ make clean
-$ make all
+$ make
 ```
 This will generate an executible file in bin folder.
 
