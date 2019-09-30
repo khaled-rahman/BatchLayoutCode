@@ -5,6 +5,8 @@
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
+#include <cstring>
+#include <cstdio>
 #include <cassert>
 #include "Deleter.h"
 #include "CSC.h"
