@@ -13,9 +13,9 @@
 #include <sstream>
 #include <random>
 
-#include "../sample/MortonCode.hpp"
-#include "../sample/algorithms.hpp"
-#include "../sample/BarnesHut.hpp"
+#include "../sample/MortonCode.h"
+#include "../sample/algorithms.h"
+#include "../sample/BarnesHut.h"
 
 using namespace std;
 
@@ -140,9 +140,9 @@ void TestAlgorithms(int argc, char *argv[]){
 	}else if(algoOption == 2){//cache block minibatch algo
 		algoname = "CACHE";
 		if(fabs(energyThreshold - 0.01) > 0){
-			outputvec = algo.cacheBlockingminiBatchForceDirectedAlgorithmConverged(iterations, numberOfThreads, batchsize);
+			outputvec = algo.cacheBlockingminiBatchForceDirectedAlgorithmConverged(iterations, numberOfThreads, batchsize, 0);
 		}else{
-                	outputvec = algo.cacheBlockingminiBatchForceDirectedAlgorithm(iterations, numberOfThreads, batchsize);
+                	outputvec = algo.cacheBlockingminiBatchForceDirectedAlgorithm(iterations, numberOfThreads, batchsize, 0);
 		}
 	}else if(algoOption == 3){//linlog mode
 		algoname = "LINLOG";
@@ -150,7 +150,7 @@ void TestAlgorithms(int argc, char *argv[]){
 	}else if(algoOption == 4){//barnes-hut approximation
 		algoname = "BHCACHE";
 		
-                outputvec = algo.BarnesHutApproximation(iterations, numberOfThreads, batchsize, bhThreshold);
+                outputvec = algo.BarnesHutApproximation(iterations, numberOfThreads, batchsize, bhThreshold, 0);
 	}else if(algoOption == 5){//greedy approximation
 		algoname = "GREEDY";
 		outputvec = algo.approxForceDirectedAlgorithm(iterations, numberOfThreads, batchsize);
@@ -159,7 +159,7 @@ void TestAlgorithms(int argc, char *argv[]){
 		outputvec = algo.approxCacheBlockBH(iterations, numberOfThreads, batchsize);
 	}else if(algoOption == 7){//O(n^+nd)
 		algoname = "CACHESD";
-		outputvec = algo.cacheBlockingminiBatchForceDirectedAlgorithmSD(iterations, numberOfThreads, batchsize);
+		outputvec = algo.cacheBlockingminiBatchForceDirectedAlgorithmSD(iterations, numberOfThreads, batchsize, 0);
 	}else if(algoOption == 8){//(1,-1)-energy model
 		algoname = "FA";
 		outputvec = algo.FAcacheBlockingminiBatchForceDirectedAlgorithm(iterations, numberOfThreads, batchsize);
