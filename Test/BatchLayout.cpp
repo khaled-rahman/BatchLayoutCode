@@ -134,6 +134,11 @@ void TestAlgorithms(int argc, char *argv[]){
                 numberOfThreads = 1;
                 batchsize = 1;
 		outputvec = algo.seqAdjForceDirectedAlgorithm(iterations);
+	}else if(algoOption == 100){//naive parallel algo
+		algoname = "SEQ";
+                numberOfThreads = 1;
+                batchsize = 1;
+		outputvec = algo.seqForceDirectedAlgorithm(iterations);
 	}else if(algoOption == 1){//naive parallel algo
                 algoname = "NAIVE";
 		outputvec = algo.naiveParallelForceDirectedAlgorithm(iterations, numberOfThreads);

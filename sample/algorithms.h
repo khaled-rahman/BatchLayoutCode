@@ -65,6 +65,7 @@ class algorithms{
 	Coordinate<VALUETYPE> calcRepulsion(INDEXTYPE i, INDEXTYPE n);
 	VALUETYPE updateStepLength(VALUETYPE STEP, VALUETYPE ENERGY, VALUETYPE ENERGY0);	
 	vector<VALUETYPE> seqForceDirectedAlgorithm(INDEXTYPE ITERATIONS);
+	vector<VALUETYPE> opt_seqForceDirectedAlgorithm(INDEXTYPE ITERATIONS);
 	vector<VALUETYPE> seqAdjForceDirectedAlgorithm(INDEXTYPE ITERATIONS);
 	vector<VALUETYPE> naiveParallelForceDirectedAlgorithm(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS);
 	vector<VALUETYPE> miniBatchForceDirectedAlgorithm(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);

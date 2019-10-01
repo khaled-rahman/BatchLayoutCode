@@ -199,6 +199,138 @@
 		writeToFile("SEQU" + to_string(ITERATIONS));
 		return result;
 	}
+/*
+ *
+ *       Majedul: working on optimizing serial version first  
+ */
+	//sequantial implementation of O(n^2) algorithm
+   vector<VALUETYPE> algorithms::opt_seqForceDirectedAlgorithm(INDEXTYPE ITERATIONS){
+		INDEXTYPE LOOP = 0;
+		VALUETYPE start, end, ENERGY, ENERGY0;
+		VALUETYPE STEP = 1.0;
+		vector<VALUETYPE> result;
+		ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
+		start = omp_get_wtime();
+		if(init == 0){
+                        initDFS();
+                }else if(init == 2){
+			fileInitialization();
+		}
+                else{
+                        randInit();
+                }
+/*
+ *             NOTE: how it works: 
+ *                      rowptr (sorted, index --> starting and end of colids):
+ *                        0 3 4 8 10 12      
+ *                node(i):0 1 2 3  4  5       
+ *
+ *                      colids: 1 2 5  4  0 2 3 4   4 5   6 7  sorted in each group ???  
+ *                              -----  -  -------   ---
+ *                              0 1 2  3  4 5 6 7   8 9 
+ */  
+      while(LOOP < ITERATIONS)
+      {
+	 ENERGY0 = ENERGY;
+         ENERGY = 0;
+
+	 for(INDEXTYPE i = 0; i < graph.rows; i++)   /* test each node */
+         {
+            Coordinate<VALUETYPE> f = Coordinate <VALUETYPE>(0.0, 0.0);
+	    INDEXTYPE k = graph.rowptr[i]; 
+            
+            Coordinate<VALUETYPE> iCord = this->nCoordinates[i]; 
+            INDEXTYPE upper = graph.rowptr[i+1]-1 ;
+
+
+            for(INDEXTYPE j = 0; j < graph.rows; j++) /* test i with all other nodes */
+            {
+
+               Coordinate<VALUETYPE> jCord = this->nCoordinates[j]; 
+               Coordinate<VALUETYPE> dfCord = jCord - iCord; 
+               VALUETYPE dist = dfCord.getMagnitude2();
+               
+               if (j != graph.colids[k])
+               {
+                  if (dist > 0)
+                     f = f - dfCord * (1.0 / dist);
+               }
+               else if (j == graph.colids[k])
+               {
+	          f = f + dfCord * (W * dfCord.getMagnitude());
+                  if(k < upper)
+		     k++;
+               }
+/*
+ *             make most frequent case as if case: non-connected case should be
+ *             most frequent
+ *
+ *             NOTE:  we can apply speculative vectorization in most frequent
+ *             case:
+ *
+ *             Pseudo code: 
+ *          Vf = [Cordinate[0.0], .. ] ;
+ *          for (j = 0; j < graph.rows; j+=4) // when vlen = 4
+ *          {
+ *             VjCord = nCord[j:j+3]; 
+ *             VdfCord = Vjcord - [icord, icrod, icord, icord];
+ *             Vdist = [VdfCord[0].getMag2, VdfCord[1].getMag2(), ...,...].
+ *
+ *             // speculative path 
+ *             if ([j, j+1, j+2, j+3] != VEC_ALL (graph.colids[k, k, k, k] ) )
+ *             {
+ *                // note: using redundant comp... assuming most often dist > 0
+ *                // if that not true.. speculation would be profitable here
+ *                Vmask = Vdist > [0, 0, 0, 0] // 1 where the conditon is true 
+ *                Vf1 = Vf - VdfCord * ([1,1,1,1]/Vdist);      
+ *                Vf = select (Vf1, Vf, Vmask);
+ *             }
+ *             else // not vectorizable path due to update of K  
+ *             {
+ *                // assuming this path is less frequent .. when node is neighbor
+ *                // if this path is frequent, we can futher apply speculation
+ *                
+ *                [f0, f1, f2, f3] = Vf; 
+ *                if (j == graph.colids[k]) 
+ *                {
+	             f = f + dfCord * (W * dfCord.getMagnitude());
+                     if (k < upper) k++; 
+ *                }
+ *                if (j+1 == graph.colids[k]) 
+ *                {
+	             f = f + dfCord * (W * dfCord.getMagnitude());
+                     if (k < upper) k++; 
+ *                }
+ *                if (j+2 == graph.colids[k]) 
+ *                {
+	             f = f + dfCord * (W * dfCord.getMagnitude());
+                     if (k < upper) k++; 
+ *                }
+ *                if (j+3 == graph.colids[k]) 
+ *                {
+	             f = f + dfCord * (W * dfCord.getMagnitude());
+                     if (k < upper) k++; 
+ *                }
+ *                Vf = [f0, f1, f2, f3]; 
+ *             }
+ *          }
+ */
+	    }
+	    this->nCoordinates[i] +=  (f.getUnitVector() * STEP);
+            ENERGY = ENERGY + f.getMagnitude2();
+	 }
+	 STEP = updateStepLength(STEP, ENERGY, ENERGY0);
+	 LOOP++;
+      }
+      end = omp_get_wtime();
+		cout << "Sequential" << endl;
+		cout << "Energy:" << ENERGY << endl;
+		cout << "Sequential Wall time required:" << end - start << endl;
+		result.push_back(ENERGY);
+		result.push_back(end - start);
+		writeToFile("SEQU" + to_string(ITERATIONS));
+		return result;
+	}
 	
 	vector<VALUETYPE> algorithms::seqAdjForceDirectedAlgorithm(INDEXTYPE ITERATIONS){
                 INDEXTYPE LOOP = 0;
