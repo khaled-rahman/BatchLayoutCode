@@ -585,6 +585,110 @@
                 result.push_back(end - start);
 		return result;
 	}
+	vector<VALUETYPE> algorithms::cacheBlockingminiBatchForceDirectedAlgorithmVD(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE, int flag = 0){
+		INDEXTYPE LOOP = 0;
+                INDEXTYPE blocky = 512, blockx = 2;
+                VALUETYPE start, end, ENERGY, ENERGY0;
+                VALUETYPE STEP = 1.0;
+                vector<VALUETYPE> result;
+                vector<INDEXTYPE> indices;
+                vector<int> kindex(graph.rows, 0);
+		ENERGY0 = numeric_limits<VALUETYPE>::max();
+                ENERGY = 0;
+                omp_set_num_threads(NUMOFTHREADS);
+                start = omp_get_wtime();
+                if(flag == 0){
+                if(init == 0){
+                        initDFS();
+                }else if(init == 2){
+                        fileInitialization();
+                }
+                else{   
+                        randInit();
+                }}else{
+                        STEP = pow(0.999, 4 * ITERATIONS);
+                }
+		//printf("OK1\n");
+                while(LOOP < ITERATIONS){	
+			ENERGY0 = ENERGY;
+                        ENERGY = 0;
+                        #pragma omp parallel for simd proc_bind(close)
+                        for(INDEXTYPE k = 0; k < graph.rows; k++){
+                                kindex[k] = graph.rowptr[k];
+                                prevCoordinates[k] = Coordinate <VALUETYPE>(0.0, 0.0);
+                        }
+                        for(INDEXTYPE b = 0; b < (int)(graph.rows / BATCHSIZE); b += 1){
+                                #pragma omp parallel for schedule(static)
+                                for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += blockx){
+                                        for(INDEXTYPE j = 0; j < graph.rows; j += blocky){
+                                                for(INDEXTYPE bi = 0; bi < blockx && i + bi < (b + 1) * BATCHSIZE; bi++){
+                                                        Coordinate<VALUETYPE> f = Coordinate <VALUETYPE>(0.0, 0.0);
+							//printf("OK2\n");
+                                                        for(INDEXTYPE bj = 0; bj < blocky && j + bj < graph.rows; bj++){
+                                                                if(j + bj == graph.colids[kindex[bi+i]]){
+                                                                        f += (nCoordinates[j+bj] - nCoordinates[i+bi]) * (W * (nCoordinates[j+bj] - nCoordinates[i+bi]).getMagnitude());
+                                                                        if(kindex[bi+i] < graph.rowptr[i+bi+1] - 1){
+                                                                                kindex[bi+i]++;
+                                                                        }
+                                                                }else{
+                                                                        VALUETYPE dist = (this->nCoordinates[j+bj] - this->nCoordinates[i+bi]).getMagnitude2();
+                                                                        if(dist > 0)
+                                                                        {
+                                                                                f = f - (this->nCoordinates[j+bj] - this->nCoordinates[i+bi]) * (1.0 / (dist));
+                                                                        }
+                                                                }
+                                                        }
+                                                        prevCoordinates[i+bi] += f;
+                                                }
+                                        }
+                                }
+                                for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
+                                        nCoordinates[i] = nCoordinates[i] + prevCoordinates[i].getUnitVector() * STEP;
+                                        ENERGY += prevCoordinates[i].getMagnitude2();
+                                }
+                        }
+			//printf("OK2\n");	
+                        #pragma omp parallel for schedule(static)
+                        for(INDEXTYPE i = (int)(graph.rows / BATCHSIZE) * BATCHSIZE; i < graph.rows; i += blockx){
+                        	for(INDEXTYPE j = 0; j < graph.rows; j += blocky){
+                                	for(INDEXTYPE bi = 0; bi < blockx && i + bi < graph.rows; bi++){                                         
+                                        	Coordinate<VALUETYPE> f = Coordinate <VALUETYPE>(0.0, 0.0);
+                                                for(INDEXTYPE bj = 0; bj < blocky && j + bj < graph.rows; bj++){
+                                                	if(j + bj == graph.colids[kindex[bi+i]]){
+                                                        	f += (nCoordinates[j+bj] - nCoordinates[i+bi]) * (W * (nCoordinates[j+bj] - nCoordinates[i+bi]).getMagnitude());
+                                                                if(kindex[bi+i] < graph.rowptr[i+bi+1] - 1){
+                                                                	kindex[bi+i]++;
+                                                                }
+                                             		}else{
+                                                        	VALUETYPE dist = (this->nCoordinates[j+bj] - this->nCoordinates[i+bi]).getMagnitude2();
+                                                                if(dist > 0)
+                                                                {
+                                                                	f = f - (this->nCoordinates[j+bj] - this->nCoordinates[i+bi]) * (1.0 / (dist));
+                                                                }
+                                                        }
+                                                  }
+                                                  prevCoordinates[i+bi] += f;
+                                        }
+                                }
+                        }
+                        for(INDEXTYPE i = (int)(graph.rows / BATCHSIZE) * BATCHSIZE; i < graph.rows; i++){
+                        	nCoordinates[i] = nCoordinates[i] + prevCoordinates[i].getUnitVector() * STEP;
+                                ENERGY += prevCoordinates[i].getMagnitude2();
+                       	}
+                        STEP = STEP * 0.999;
+                        LOOP++;
+                }
+                end = omp_get_wtime();
+		if(flag == 0){
+                cout << "Vectorized Cache Blocking Minibatch Size:" << BATCHSIZE  << endl;
+                cout << "Vectorized Cache Blocking Minbatch Energy:" << ENERGY << endl;
+                cout << "Vectorized Cache Blocking Minibatch Parallel Wall time required:" << end - start << endl;
+                writeToFile("VCACHEMINB"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                }
+                result.push_back(ENERGY);
+                result.push_back(end - start);
+                return result;
+	}
 	vector<VALUETYPE> algorithms::cacheBlockingminiBatchForceDirectedAlgorithm(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE, int flag = 0){
                 INDEXTYPE LOOP = 0;
 		INDEXTYPE blocky = 512, blockx = 2;

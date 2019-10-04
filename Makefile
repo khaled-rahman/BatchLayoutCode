@@ -5,7 +5,8 @@ BIN = ./bin
 INCDIR = -I$(BatchLayout) -I$(SAMPLE) -I$(UNITTEST)
 
 COMPILER = g++
-FLAGS = -g -fopenmp -ffast-math -mavx512f -mavx512dq -O3 -std=c++11 -DCPP
+
+FLAGS = -g -fomit-frame-pointer -fopenmp -ffast-math -mavx512f -mavx512dq -O3 -std=c++11 -DCPP
 #FLAGS = -g -fopenmp -O3 -std=c++11 -DCPP
 
 all: batchlayout
@@ -17,7 +18,14 @@ batchlayout.o:	$(UNITTEST)/BatchLayout.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/al
 		$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/batchlayout.o $(UNITTEST)/BatchLayout.cpp
 
 batchlayout:	algorithms.o batchlayout.o
-		$(COMPILER) $(INCDIR) $(FLAGS) -g -o $(BIN)/BatchLayout $(BIN)/algorithms.o $(BIN)/batchlayout.o
-	
+		$(COMPILER) $(INCDIR) $(FLAGS) -o $(BIN)/BatchLayout $(BIN)/algorithms.o $(BIN)/batchlayout.o
+
+utest.o:	$(UNITTEST)/utest.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h
+	$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/utest.o $(UNITTEST)/utest.cpp
+
+utest:	algorithms.o utest.o
+	$(COMPILER) $(INCDIR) $(FLAGS) -o $(BIN)/utest $(BIN)/algorithms.o $(BIN)/utest.o
+
+
 clean:
 	rm -rf ./bin/*
