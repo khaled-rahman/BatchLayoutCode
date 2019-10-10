@@ -18,7 +18,7 @@
 #include "../sample/BarnesHut.h"
 using namespace std;
 
-#define EPS 1.0e-7
+#define EPS 2.2e-16
 #define VALUETYPE double
 #define INDEXTYPE int
 

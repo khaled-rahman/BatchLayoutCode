@@ -5,8 +5,10 @@ BIN = ./bin
 INCDIR = -I$(BatchLayout) -I$(SAMPLE) -I$(UNITTEST)
 
 COMPILER = g++
-#FLAGS = -g -fomit-frame-pointer -fopenmp -ffast-math -mavx512f -mavx512dq -O3 -std=c++11 -DCPP
-FLAGS = -g -fopenmp -O3 -std=c++11 -DCPP
+
+FLAGS = -g -fomit-frame-pointer -fopenmp -ffast-math -mavx512f -mavx512dq -O3 -std=c++11 -DCPP
+#FLAGS = -g -fopenmp -O3 -std=c++11 -DCPP
+
 all: batchlayout
 
 algorithms.o:	$(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h IO.h CSR.h CSC.h 
