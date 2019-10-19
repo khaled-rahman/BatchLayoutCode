@@ -15,6 +15,7 @@
 #include <utility>
 #include "../sample/MortonCode.h"
 #include "../sample/algorithms.h"
+#include "../sample/newalgo.h"
 #include "../sample/BarnesHut.h"
 using namespace std;
 
@@ -76,8 +77,19 @@ void uTestAlgorithms(char *argv[]){
 		printf("Not OK!\n");
 	}
 }
+void uTestNewAlgo(int argc, char *argv[]){
+	CSR<INDEXTYPE, VALUETYPE> A_csr;
+        string inputfile = "./datasets/input/3elt_dual.mtx";
+        string outputdir = "./datasets/output/";
+        SetInputMatricesAsCSR(A_csr, inputfile);
+        A_csr.Sorted();
+        vector<VALUETYPE> outputvec;
+	newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+	na.batchlayout(500, 48, 256);	
+}
 int main(int argc, char* argv[]){
 	
-	uTestAlgorithms(argv);
-        return 0;
+	//uTestAlgorithms(argv);
+        uTestNewAlgo(argc, argv);
+	return 0;
 }
