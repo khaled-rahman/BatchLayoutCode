@@ -85,7 +85,9 @@ void uTestNewAlgo(int argc, char *argv[]){
         A_csr.Sorted();
         vector<VALUETYPE> outputvec;
 	newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
-	na.batchlayout(500, 48, 256);	
+	newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+	na2.EfficientVersion(500, 48, 256);
+	na.batchlayout(500, 48, 256);
 }
 int main(int argc, char* argv[]){
 	

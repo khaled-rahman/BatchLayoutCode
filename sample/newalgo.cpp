@@ -10,6 +10,8 @@
 		filename = input;
 		threshold = th;
 		nCoordinates = static_cast<Coordinate<VALUETYPE> *> (::operator new (sizeof(Coordinate<VALUETYPE>[A_csr.rows])));
+		blasX = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[A_csr.rows])));
+                blasY = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[A_csr.rows])));
 		this->init = init;
 	}
 	void newalgo::randInit(){
@@ -92,6 +94,8 @@
 		#pragma omp parallel for schedule(static)
 		for(int i = 0; i < graph.rows; i++){
 			nCoordinates[i] = nCoordinates[i] * scalefactor;
+			blasX[i] = nCoordinates[i].x;
+                        blasY[i] = nCoordinates[i].y;
 		}
         }
 	VALUETYPE newalgo::frmodel(Coordinate<VALUETYPE> ci, Coordinate<VALUETYPE> cj){
@@ -195,6 +199,78 @@
                 result.push_back(end - start);
 		return result;
 	}
+	
+	vector<VALUETYPE> newalgo::EfficientVersion(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE){
+                INDEXTYPE LOOP = 0;
+                VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
+                VALUETYPE STEP = 1.0;
+                vector<VALUETYPE> result;
+                pb_X = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+                pb_Y = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+                ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
+                omp_set_num_threads(NUMOFTHREADS);
+                start = omp_get_wtime();
+                initDFS();
+                while(LOOP < ITERATIONS){
+                        ENERGY0 = ENERGY;
+                        ENERGY = 0;
+                        for(int i = 0; i < BATCHSIZE; i++){
+                                pb_X[i] = pb_Y[i] = 0;
+                        }
+                        for(INDEXTYPE b = 0; b < (int)ceil( 1.0 * graph.rows / BATCHSIZE); b += 1){
+                                #pragma omp parallel for schedule(static)
+                                for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1){
+                                        if(i >= graph.rows)continue;
+                                        VALUETYPE fx = 0, fy = 0, distX, distY, dist, dist2;
+                                        int ind = i-b*BATCHSIZE;
+                                        for(INDEXTYPE j = 0; j < i; j += 1){
+                                                distX = blasX[j] - blasX[i];
+                                                distY = blasY[j] - blasY[i];
+                                                dist2 = 1.0 / (distX * distX + distY * distY);
+                                                fx += distX * dist2;
+                                                fy += distY * dist2;
+                                        }
+					for(INDEXTYPE j = i+1; j < graph.rows; j += 1){
+                                                distX = blasX[j] - blasX[i];
+                                                distY = blasY[j] - blasY[i];
+                                                dist2 = 1.0 / (distX * distX + distY * distY);
+                                                fx += distX * dist2;
+                                                fy += distY * dist2;
+                                        }
+                                        for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - blasX[i];
+                                                distY = blasY[v] - blasY[i];
+                                                dist2 = 1.0 / (distX * distX + distY * distY);
+                                                dist = sqrt(distX * distX + distY * distY);
+                                                pb_X[ind] += distX * dist + distX * dist2;
+                                                pb_Y[ind] += distY * dist + distY * dist2;
+                                        }
+                                        pb_X[ind] = pb_X[ind] - fx;
+                                        pb_Y[ind] = pb_Y[ind] - fy;
+                                }
+                                for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
+                                        if(i >= graph.rows) break;
+                                        int ind = i-b*BATCHSIZE;
+                                        double dist = 1.0 / sqrt(pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
+                                        blasX[i] += pb_X[ind] * STEP * dist;
+                                        blasY[i] += pb_Y[ind] * STEP * dist;
+                                        ENERGY += (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+                                }
+                        }
+                        STEP = STEP * 0.999;
+                        LOOP++;
+                }
+		end = omp_get_wtime();
+                cout << "Efficient Minibatch Size:" << BATCHSIZE  << endl;
+                cout << "Efficient Minbatch Energy:" << ENERGY << endl;
+                cout << "Efficient Minibatch Parallel Wall time required:" << end - start << endl;
+                writeToFile("Efficient"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                result.push_back(ENERGY);
+                result.push_back(end - start);
+                return result;
+        }
+	
 	void newalgo::print(){
 		for(INDEXTYPE i = 0; i < graph.rows; i++){
                 	cout << "Node:" << i << ", X:" << nCoordinates[i].getX() << ", Y:" << nCoordinates[i].getY()<< endl;

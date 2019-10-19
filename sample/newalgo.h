@@ -49,6 +49,7 @@ class newalgo{
 	public:
 		CSR<INDEXTYPE, VALUETYPE> graph;
 		Coordinate<VALUETYPE>  *nCoordinates, *prevCoordinates;
+		VALUETYPE *blasX, *blasY;
 		VALUETYPE K = 1.0, C = 1.0, Shift=1.0, init;
 		VALUETYPE minX, minY, maxX, maxY, W, threshold;
 		string filename;
@@ -62,7 +63,7 @@ class newalgo{
 	VALUETYPE frmodel(Coordinate<VALUETYPE> ci, Coordinate<VALUETYPE> cj);
 	void NBLAS(INDEXTYPE BATCHSIZE, INDEXTYPE START, Coordinate<VALUETYPE> *Y, Coordinate<VALUETYPE> *Z, VALUETYPE (newalgo::*func)(Coordinate<VALUETYPE> ci, Coordinate<VALUETYPE> cj));
 	vector<VALUETYPE> batchlayout(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);
-	
+	vector<VALUETYPE> EfficientVersion(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);	
 	void print();
 	void writeRepulsiveForce(vector<Coordinate<VALUETYPE> > &repulse, string f);
 	void writeToFileBH(Coordinate<VALUETYPE> *tCoordinates, string f);
