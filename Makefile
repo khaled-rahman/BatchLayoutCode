@@ -14,17 +14,20 @@ all: batchlayout
 algorithms.o:	$(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h IO.h CSR.h CSC.h 
 		$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/algorithms.o $(SAMPLE)/algorithms.cpp
 
+newalgo.o:	$(SAMPLE)/newalgo.cpp $(SAMPLE)/newalgo.h IO.h CSR.h CSC.h
+		$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/newalgo.o $(SAMPLE)/newalgo.cpp
+
 batchlayout.o:	$(UNITTEST)/BatchLayout.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h
 		$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/batchlayout.o $(UNITTEST)/BatchLayout.cpp
 
 batchlayout:	algorithms.o batchlayout.o
 		$(COMPILER) $(INCDIR) $(FLAGS) -o $(BIN)/BatchLayout $(BIN)/algorithms.o $(BIN)/batchlayout.o
 
-utest.o:	$(UNITTEST)/utest.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h
+utest.o:	$(UNITTEST)/utest.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h $(SAMPLE)/newalgo.h $(SAMPLE)/newalgo.cpp
 	$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/utest.o $(UNITTEST)/utest.cpp
 
-utest:	algorithms.o utest.o
-	$(COMPILER) $(INCDIR) $(FLAGS) -o $(BIN)/utest $(BIN)/algorithms.o $(BIN)/utest.o
+utest:	algorithms.o newalgo.o utest.o
+	$(COMPILER) $(INCDIR) $(FLAGS) -o $(BIN)/utest $(BIN)/algorithms.o $(BIN)/utest.o $(BIN)/newalgo.o
 
 
 clean:
