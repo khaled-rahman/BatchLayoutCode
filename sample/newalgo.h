@@ -60,8 +60,11 @@ class newalgo{
 	void randInit();
 	void initDFS();
 
-	VALUETYPE frmodel(Coordinate<VALUETYPE> ci, Coordinate<VALUETYPE> cj);
-	void NBLAS(INDEXTYPE BATCHSIZE, INDEXTYPE START, Coordinate<VALUETYPE> *Y, Coordinate<VALUETYPE> *Z, VALUETYPE (newalgo::*func)(Coordinate<VALUETYPE> ci, Coordinate<VALUETYPE> cj));
+	VALUETYPE frmodel(Coordinate<VALUETYPE> ci, Coordinate<VALUETYPE> cj){
+		VALUETYPE dx = ci.x - cj.x;
+        	VALUETYPE dy = ci.y - cj.y;
+        	return -1.0 / (dx * dx + dy * dy);
+	}
 	vector<VALUETYPE> batchlayout(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);
 	vector<VALUETYPE> EfficientVersion(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);	
 	void print();

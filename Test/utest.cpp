@@ -46,16 +46,19 @@ vector<pair<VALUETYPE, VALUETYPE> > readInput(string initfile){
 	fclose(infile);
 	return input;
 }
-bool test(vector<pair<double, double> > a, vector<pair<double, double> > b){
-	double diff = 0;
-	for(int i = 0; i < a.size(); i++){
-		diff += fabs(a[i].first - b[i].first) + fabs(a[i].second - b[i].second);
+void test(Coordinate<VALUETYPE> *a, Coordinate<VALUETYPE> *b, int size){
+	double maxdiff = 2 * 10 * 1000 * size * EPS;
+	int errc = 0;
+	for(int i = 0; i <size; i++){
+		double diff = fabs(a[i].x - b[i].x);
+		if(diff > maxdiff) errc++;
+		diff = fabs(a[i].y - b[i].y);
+		if(diff > maxdiff) errc++;
 	}
-	printf("Difference: %lf\n", diff);
-	if(diff > a.size() * EPS){
-		return false;
+	if(errc == 0){
+		printf("Passed Test!\n");
 	}else{
-		return true;
+		printf("Not passed! Total error = %d out of %d. Error rate = %lf\n", errc, 2 * size, 1.0 * errc/ (2.0 * size));
 	}
 }
 void uTestAlgorithms(char *argv[]){
@@ -71,12 +74,8 @@ void uTestAlgorithms(char *argv[]){
 	outputvec = algo2.cacheBlockingminiBatchForceDirectedAlgorithmSD(400, omp_get_max_threads(), 256, 0);
 	vector<pair<double, double> > first = readInput(outputdir+"3elt_dual.mtxCACHEMINB256PARAOUT400.txt");
 	vector<pair<double, double> > second = readInput(outputdir+"3elt_dual.mtxCACHESDMINB256PARAOUT400.txt");
-	if(test(first, second)){
-		printf("OK!\n");
-	}else{
-		printf("Not OK!\n");
-	}
 }
+
 void uTestNewAlgo(int argc, char *argv[]){
 	CSR<INDEXTYPE, VALUETYPE> A_csr;
         string inputfile = "./datasets/input/3elt_dual.mtx";
@@ -84,10 +83,19 @@ void uTestNewAlgo(int argc, char *argv[]){
         SetInputMatricesAsCSR(A_csr, inputfile);
         A_csr.Sorted();
         vector<VALUETYPE> outputvec;
+	algorithms algo = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+	algo.cacheBlockingminiBatchForceDirectedAlgorithm(500, 48, 256, 0);
+	algorithms algo2 = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+	algo2.cacheBlockingminiBatchForceDirectedAlgorithmSD(500, 48, 256, 0);
+	test(algo.nCoordinates, algo2.nCoordinates, A_csr.rows);	
+	
 	newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
 	newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
 	na2.EfficientVersion(500, 48, 256);
-	na.batchlayout(500, 48, 256);
+
+		
+
+	//na.batchlayout(500, 48, 256);
 }
 int main(int argc, char* argv[]){
 	
