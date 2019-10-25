@@ -2,6 +2,8 @@
 #include "nblas.h"
 #include<immintrin.h>
 
+#define NEARZERO 1e-30
+
 	newalgo::newalgo(CSR<INDEXTYPE, VALUETYPE> &A_csr, string input, string outputd, int init, double weight, double th, string ifile){
 		graph.make_empty();
 		graph = A_csr;
@@ -137,6 +139,7 @@
                 while(LOOP < ITERATIONS){
                         ENERGY0 = ENERGY;
                         ENERGY = 0;
+			//#pragma imp parallel for schedule(static)
                         for(int i = 0; i < BATCHSIZE; i++){
                                 pb_X[i] = pb_Y[i] = 0;
                         }
@@ -145,16 +148,18 @@
 		// no reverse
 
                         for(INDEXTYPE b = 0; b < (graph.rows / BATCHSIZE); b += 1){
-                                //#pragma omp parallel for schedule(static)
+                                #pragma omp parallel for schedule(static)
                                 for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1){
                                         VALUETYPE fx = 0, fy = 0, distX, distY, dist, dist2;
-                                        int ind = i-b*BATCHSIZE;
-                                        for(INDEXTYPE j = 0; j < i; j += 1){
+                                        INDEXTYPE ind = i - b * BATCHSIZE;
+					for(INDEXTYPE j = 0; j < i; j += 1){
                                                 distX = blasX[j] - blasX[i];
                                                 distY = blasY[j] - blasY[i];
                                                 dist2 = 1.0 / (distX * distX + distY * distY);
                                                 fx += distX * dist2;
                                                 fy += distY * dist2;
+						//if(j == graph.colids[graph.rowptr[i]])
+						//printf("Reverse %d: x = %lf, y = %lf\n", j, distX*dist2, distY*dist2);
                                         }
 					for(INDEXTYPE j = i+1; j < graph.rows; j += 1){
                                                 distX = blasX[j] - blasX[i];
@@ -162,30 +167,37 @@
                                                 dist2 = 1.0 / (distX * distX + distY * distY);
                                                 fx += distX * dist2;
                                                 fy += distY * dist2;
+						//if(j == graph.colids[graph.rowptr[i]])
+                                                //printf("Reverse %d: x = %lf, y = %lf\n", i, distX*dist2, distY*dist2);
+
                                         }
                                         for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
                                                 int v = graph.colids[j];
                                                 distX = blasX[v] - blasX[i];
                                                 distY = blasY[v] - blasY[i];
-                                                dist2 = 1.0 / (distX * distX + distY * distY);
-                                                dist = sqrt(distX * distX + distY * distY);
-                                                pb_X[ind] += distX * dist + distX * dist2;
-                                                pb_Y[ind] += distY * dist + distY * dist2;
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+                                                pb_X[ind] += distX * dist;
+                                                pb_Y[ind] += distY * dist;
+						//if(v == graph.colids[graph.rowptr[i]])
+						//printf("Forward %d: x = %lf, y = %lf\n", v, distX * dist2, distY*dist2);
                                         }
                                         pb_X[ind] = pb_X[ind] - fx;
                                         pb_Y[ind] = pb_Y[ind] - fy;
                                 }
                                 for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
-                                        int ind = i-b*BATCHSIZE;
-                                        double dist = 1.0 / sqrt(pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
-                                        blasX[i] += pb_X[ind] * STEP * dist;
-                                        blasY[i] += pb_Y[ind] * STEP * dist;
-                                        ENERGY += (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+                                        INDEXTYPE ind = i - b * BATCHSIZE;
+					double dist = (pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
+                                        ENERGY += dist;
+					dist = STEP / sqrt(dist);
+					blasX[i] += pb_X[ind] * dist;
+                                        blasY[i] += pb_Y[ind] * dist;
+					pb_X[ind] = pb_Y[ind] = 0;
                                 }
                         }
 			//clean up loop
 			INDEXTYPE cleanup = (graph.rows/BATCHSIZE) * BATCHSIZE;
-			//#pragma omp parallel for schedule(static)
+			#pragma omp parallel for schedule(dynamic)
 			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
 				INDEXTYPE ind = i- cleanup;
                 		VALUETYPE fx = 0, fy = 0, distX, distY, dist, dist2;
@@ -193,10 +205,10 @@
 					int v = graph.colids[j];
                                         distX = blasX[v] - blasX[i];
                                         distY = blasY[v] - blasY[i];
-                                        dist2 = 1.0 / (distX * distX + distY * distY);
-                                        dist = sqrt(distX * distX + distY * distY);
-                                        pb_X[ind] += distX * dist + distX * dist2;
-                                        pb_Y[ind] += distY * dist + distY * dist2;	
+                                        dist = distX * distX + distY * distY;
+                                        dist = sqrt(dist) + 1.0 / dist;
+                                        pb_X[ind] += distX * dist;
+                                        pb_Y[ind] += distY * dist;	
 				}
 				for(INDEXTYPE j = 0; j < i; j += 1){
                                         distX = blasX[j] - blasX[i];
@@ -216,11 +228,13 @@
 				pb_Y[ind] = pb_Y[ind] - fy;
 			}
 			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
-                        	int ind = i-cleanup;
-                                double dist = 1.0 / sqrt(pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
-                                blasX[i] += pb_X[ind] * STEP * dist;
-                                blasY[i] += pb_Y[ind] * STEP * dist;
-                                ENERGY += (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+				INDEXTYPE ind = i - cleanup;
+                                double dist = (pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
+                                ENERGY += dist;
+				dist = STEP / sqrt(dist);
+				blasX[i] += pb_X[ind] * dist;
+                                blasY[i] += pb_Y[ind] * dist;
+				pb_X[ind] = pb_Y[ind] = 0;
                        	}
                         STEP = STEP * 0.999;
                         LOOP++;
@@ -229,12 +243,451 @@
                 cout << "Efficient Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficient Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficient Minibatch Parallel Wall time required:" << end - start << endl;
-                writeToFile("Efficient"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFileEFF("Efficient"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
                 result.push_back(ENERGY);
                 result.push_back(end - start);
                 return result;
         }
-	
+	vector<VALUETYPE> newalgo::EfficientVersionUnRoll(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE){
+                INDEXTYPE LOOP = 0;
+                VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
+                VALUETYPE STEP = 1.0;
+                vector<VALUETYPE> result;
+                pb_X = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+                pb_Y = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+                ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
+                omp_set_num_threads(NUMOFTHREADS);
+                start = omp_get_wtime();
+                initDFS();
+                while(LOOP < ITERATIONS){
+                        ENERGY0 = ENERGY;
+                        ENERGY = 0;
+                        for(int i = 0; i < BATCHSIZE; i++){
+                                pb_X[i] = pb_Y[i] = 0;
+                        }
+		
+			for(INDEXTYPE b = 0; b < (graph.rows / BATCHSIZE); b += 1){
+				#pragma omp parallel for schedule(static)	
+				for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 8){
+                                        VALUETYPE fx0, fx1, fx2, fx3, fx4, fx5, fx6, fx7;
+                                	VALUETYPE fy0, fy1, fy2, fy3, fy4, fy5, fy6, fy7;
+                                	VALUETYPE x0, x1, x2, x3, x4, x5, x6, x7;
+                                	VALUETYPE y0, y1, y2, y3, y4, y5, y6, y7;
+                                	VALUETYPE d0, d1, d2, d3, d4, d5, d6, d7;
+					
+					int ind = i-b*BATCHSIZE;
+					x0 = blasX[i];
+					x1 = blasX[i+1];
+					x2 = blasX[i+2];
+					x3 = blasX[i+3];
+					x4 = blasX[i+4];
+					x5 = blasX[i+5];
+					x6 = blasX[i+6];
+					x7 = blasX[i+7];
+
+					y0 = blasY[i];
+					y1 = blasY[i+1];	
+					y2 = blasY[i+2];
+					y3 = blasY[i+3];
+					y4 = blasY[i+4];
+					y5 = blasY[i+5];
+					y6 = blasY[i+6];
+					y7 = blasY[i+7];
+					
+					fx0 = fx1 = fx2 = fx3 = fx4 = fx5 = fx6 = fx7 = 0;
+					fy0 = fy1 = fy2 = fy3 = fy4 = fy5 = fy6 = fy7 = 0;		
+                                       	VALUETYPE distX, distY, dist; 
+					for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x0;
+                                                distY = blasY[v] - y0;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx0 += distX * dist;
+                                                fy0 += distY * dist;
+                                        }
+					
+					for(INDEXTYPE j = graph.rowptr[i+1]; j < graph.rowptr[i+1+1]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x1;
+                                                distY = blasY[v] - y1;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx1 += distX * dist;
+                                                fy1 += distY * dist;
+                                        }
+				
+					for(INDEXTYPE j = graph.rowptr[i+2]; j < graph.rowptr[i+1+2]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x2;
+                                                distY = blasY[v] - y2;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx2 += distX * dist;
+                                                fy2 += distY * dist;
+                                        }
+
+					for(INDEXTYPE j = graph.rowptr[i+3]; j < graph.rowptr[i+1+3]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x3;
+                                                distY = blasY[v] - y3;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx3 += distX * dist;
+                                                fy3 += distY * dist;
+                                        }
+
+					for(INDEXTYPE j = graph.rowptr[i+4]; j < graph.rowptr[i+1+4]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x4;
+                                                distY = blasY[v] - y4;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx4 += distX * dist;
+                                                fy4 += distY * dist;
+                                        }
+					for(INDEXTYPE j = graph.rowptr[i+5]; j < graph.rowptr[i+1+5]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x5;
+                                                distY = blasY[v] - y5;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx5 += distX * dist;
+                                                fy5 += distY * dist;
+                                        }
+					for(INDEXTYPE j = graph.rowptr[i+6]; j < graph.rowptr[i+1+6]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x6;
+                                                distY = blasY[v] - y6;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx6 += distX * dist;
+                                                fy6 += distY * dist;
+                                        }
+					for(INDEXTYPE j = graph.rowptr[i+7]; j < graph.rowptr[i+1+7]; j += 1){
+                                                int v = graph.colids[j];
+                                                distX = blasX[v] - x7;
+                                                distY = blasY[v] - y7;
+
+                                                dist = (distX * distX + distY * distY);
+                                                dist = sqrt(dist) + 1.0 / dist;
+
+
+                                                fx7 += distX * dist;
+                                                fy7 += distY * dist;
+                                        }
+					
+					for(INDEXTYPE j = 0; j < i; j += 1){
+                                        	VALUETYPE vd = blasX[j];
+						x0 = vd - x0;
+						x1 = vd - x1;
+						x2 = vd - x2;
+                                                x3 = vd - x3;
+						x4 = vd - x4;
+                                                x5 = vd - x5;
+                                                x6 = vd - x6;
+                                                x7 = vd - x7;
+						y0 = vd - y0;
+						y1 = vd - y1;
+						y2 = vd - y2;
+                                                y3 = vd - y3;
+						y4 = vd - y4;
+                                                y5 = vd - y5;
+                                                y6 = vd - y6;
+                                                y7 = vd - y7; 	       
+						//distX = blasX[j] - blasX[i];
+                                                //distY = blasY[j] - blasY[i];
+                                         	
+						d0 = 1.0 / (x0 * x0 + y0 * y0);
+						d1 = 1.0 / (x1 * x1 + y1 * y1);
+						d2 = 1.0 / (x2 * x2 + y2 * y2);
+						d3 = 1.0 / (x3 * x3 + y3 * y3);
+						d4 = 1.0 / (x4 * x4 + y4 * y4);
+						d5 = 1.0 / (x5 * x5 + y5 * y5);
+						d6 = 1.0 / (x6 * x6 + y6 * y6);
+						d7 = 1.0 / (x7 * x7 + y7 * y7);       
+						//dist2 = 1.0 / (distX * distX + distY * distY);
+                                                
+						fx0 -= x0 * d0;
+						fx1 -= x1 * d1;
+						fx2 -= x2 * d2;
+                                                fx3 -= x3 * d3;
+						fx4 -= x4 * d4;
+                                                fx5 -= x5 * d5;
+                                                fx6 -= x6 * d6;
+                                                fx7 -= x7 * d7;
+						fy0 -= y0 * d0;
+						fy1 -= y1 * d1;
+						fy2 -= y2 * d2;
+                                                fy3 -= y3 * d3;
+						fy4 -= y4 * d4;
+                                                fy5 -= y5 * d5;
+                                                fy6 -= y6 * d6;
+                                                fy7 -= y7 * d7;
+						//fx += distX * dist2;
+                                                //fy += distY * dist2;
+                                        }
+					for(INDEXTYPE j = i+1; j < i + 8; j++){
+						x0 = blasX[j] - x0;
+						y0 = blasY[j] - y0;
+						d0 = 1.0 / (x0 * x0 + y0 * y0);	
+						fx0 -= x0 * d0;
+						fy0 -= y0 * d0;				
+					}
+					x1 = blasX[i] - x1;
+					y1 = blasX[i] - y1;
+					d1 = 1.0 / (x1 * x1 + y1 * y1);
+					fx1 -= x1 * d1;
+					fy1 -= y1 * d1;
+					for(INDEXTYPE j = i+2; j < i + 8; j++){
+                                                x1 = blasX[j] - x1;
+                                                y1 = blasY[j] - y1;
+                                                d1 = 1.0 / (x1 * x1 + y1 * y1);
+                                                fx1 -= x1 * d1;
+                                                fy1 -= y1 * d1;
+                                        }
+					for(INDEXTYPE j = i; j < i + 2; j++){
+                                                x2 = blasX[j] - x2;
+                                                y2 = blasY[j] - y2;
+                                                d2 = 1.0 / (x2 * x2 + y2 * y2);
+                                                fx2 -= x2 * d2;
+                                                fy2 -= y2 * d2;
+                                        }
+					for(INDEXTYPE j = i+3; j < i + 8; j++){
+                                                x2 = blasX[j] - x2;
+                                                y2 = blasY[j] - y2;
+                                                d2 = d0 = 1.0 / (x2 * x2 + y2 * y2);
+                                                fx2 -= x2 * d2;
+                                                fy2 -= y2 * d2;
+                                        }
+					//////////////////
+					for(INDEXTYPE j = i; j < i + 3; j++){
+                                                x3 = blasX[j] - x3;
+                                                y3 = blasY[j] - y3;
+                                                d3 = 1.0 / (x3 * x3 + y3 * y3);
+                                                fx3 -= x3 * d3;
+                                                fy3 -= y3 * d3;
+                                        }
+					for(INDEXTYPE j = i+4; j < i + 8; j++){
+                                                x3 = blasX[j] - x3;
+                                                y3 = blasY[j] - y3;
+                                                d3 = 1.0 / (x3 * x3 + y3 * y3);
+                                                fx3 -= x3 * d3;
+                                                fy3 -= y3 * d3;
+                                        }
+					////////
+					for(INDEXTYPE j = i; j < i + 4; j++){
+                                                x4 = blasX[j] - x4;
+                                                y4 = blasY[j] - y4;
+                                                d4 = 1.0 / (x4 * x4 + y4 * y4);
+                                                fx4 -= x4 * d4;
+                                                fy4 -= y4 * d4;
+                                        }
+					for(INDEXTYPE j = i+5; j < i + 8; j++){
+                                                x4 = blasX[j] - x4;
+                                                y4 = blasY[j] - y4;
+                                                d4 = 1.0 / (x4 * x4 + y4 * y4);
+                                                fx4 -= x4 * d4;
+                                                fy4 -= y4 * d4;
+                                        }
+					/////
+					for(INDEXTYPE j = i; j < i + 5; j++){
+                                                x5 = blasX[j] - x5;
+                                                y5 = blasY[j] - y5;
+                                                d5 = 1.0 / (x5 * x5 + y5 * y5);
+                                                fx5 -= x5 * d5;
+                                                fy5 -= y5 * d5;
+                                        }
+					for(INDEXTYPE j = i+6; j < i + 8; j++){
+                                                x5 = blasX[j] - x5;
+                                                y5 = blasY[j] - y5;
+                                                d5 = 1.0 / (x5 * x5 + y5 * y5);
+                                                fx5 -= x5 * d5;
+                                                fy5 -= y5 * d5;
+                                        }
+			
+					//////
+					for(INDEXTYPE j = i; j < i + 6; j++){
+                                                x6 = blasX[j] - x6;
+                                                y6 = blasY[j] - y6;
+                                                d6 = 1.0 / (x6 * x6 + y6 * y6);
+                                                fx6 -= x6 * d6;
+                                                fy6 -= y6 * d6;
+                                        }
+					x6 = blasX[i+7] - x6;
+                                        y6 = blasX[i+7] - y6;
+                                        d6 = 1.0 / (x6 * x6 + y6 * y6);
+                                        fx6 -= x6 * d6;
+                                        fy6 -= y6 * d1;
+					////
+					for(INDEXTYPE j = i; j < i + 7; j++){
+                                                x7 = blasX[j] - x7;
+                                                y7 = blasY[j] - y7;
+                                                d7 = 1.0 / (x7 * x7 + y7 * y7);
+                                                fx7 -= x7 * d7;
+                                                fy7 -= y7 * d7;
+                                        }
+					////////////
+                                        for(INDEXTYPE j = i+8; j < graph.rows; j += 1){
+                                                VALUETYPE vx = blasX[j];
+						VALUETYPE vy = blasY[j];
+						x0 = vx - x0;
+                                                x1 = vx - x1;
+                                                x2 = vx - x2;
+                                                x3 = vx - x3;
+                                                x4 = vx - x4;
+                                                x5 = vx - x5;
+                                                x6 = vx - x6;
+                                                x7 = vx - x7;
+                                                y0 = vy - y0;
+                                                y1 = vy - y1;
+                                                y2 = vy - y2;
+                                                y3 = vy - y3;
+                                                y4 = vy - y4;
+                                                y5 = vy - y5;
+                                                y6 = vy - y6;
+                                                y7 = vy - y7;
+						//distX = blasX[j] - blasX[i];
+                                                //distY = blasY[j] - blasY[i];
+                                                
+						d0 = 1.0 / (x0 * x0 + y0 * y0);
+                                                d1 = 1.0 / (x1 * x1 + y1 * y1);
+                                                d2 = 1.0 / (x2 * x2 + y2 * y2);
+                                                d3 = 1.0 / (x3 * x3 + y3 * y3);
+                                                d4 = 1.0 / (x4 * x4 + y4 * y4);
+                                                d5 = 1.0 / (x5 * x5 + y5 * y5);
+                                                d6 = 1.0 / (x6 * x6 + y6 * y6);
+                                                d7 = 1.0 / (x7 * x7 + y7 * y7);
+						//dist2 = 1.0 / (distX * distX + distY * distY);
+                                                
+						fx0 -= x0 * d0;
+                                                fx1 -= x1 * d1;
+                                                fx2 -= x2 * d2;
+                                                fx3 -= x3 * d3;
+                                                fx4 -= x4 * d4;
+                                                fx5 -= x5 * d5;
+                                                fx6 -= x6 * d6;
+                                                fx7 -= x7 * d7;
+                                                fy0 -= y0 * d0;
+                                                fy1 -= y1 * d1;
+                                                fy2 -= y2 * d2;
+                                                fy3 -= y3 * d3;
+                                                fy4 -= y4 * d4;
+                                                fy5 -= y5 * d5;
+                                                fy6 -= y6 * d6;
+                                                fy7 -= y7 * d7;
+						//fx += distX * dist2;
+                                                //fy += distY * dist2;
+                                        }
+					pb_X[ind] = fx0;
+					pb_X[ind+1] = fx1;
+					pb_X[ind+2] = fx2;
+                                        pb_X[ind+3] = fx3;
+					pb_X[ind+4] = fx4;
+                                        pb_X[ind+5] = fx5;
+                                        pb_X[ind+6] = fx6;
+                                        pb_X[ind+7] = fx7;
+					
+					pb_Y[ind] = fy0;
+					pb_Y[ind+1] = fy1;
+					pb_Y[ind+2] = fy2;
+                                        pb_Y[ind+3] = fy3;
+					pb_Y[ind+4] = fy4;
+                                        pb_Y[ind+5] = fy5;
+                                        pb_Y[ind+6] = fy6;
+                                        pb_Y[ind+7] = fy7;	
+				}
+				/*printf("After:\n");
+                                for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
+                                        printf("%d = %lf,", i, pb_X[i-b*BATCHSIZE]);
+                                }
+				*/
+				for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1){
+                                        int ind = i-b*BATCHSIZE;
+                                        VALUETYPE d;
+					d = (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+					ENERGY += d ;
+					d = STEP / sqrt(d);
+					blasX[i] += pb_X[ind] * d;
+                                        blasY[i] += pb_Y[ind] * d;
+					pb_X[ind] = 0;
+					pb_Y[ind] = 0;    
+                                }
+                        }
+			INDEXTYPE cleanup = (graph.rows/BATCHSIZE) * BATCHSIZE;
+			#pragma omp parallel for schedule(dynamic) 
+			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
+                                INDEXTYPE ind = i- cleanup;
+                                VALUETYPE fx = 0, fy = 0, distX, distY, dist, dist2;
+                                for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
+                                        int v = graph.colids[j];
+                                        distX = blasX[v] - blasX[i];
+                                        distY = blasY[v] - blasY[i];
+                                        dist = (distX * distX + distY * distY);
+                                        dist = sqrt(dist) + 1.0 / dist;
+                                        pb_X[ind] += distX * dist;
+                                        pb_Y[ind] += distY * dist;
+                                }
+                                for(INDEXTYPE j = 0; j < i; j += 1){
+                                        distX = blasX[j] - blasX[i];
+                                        distY = blasY[j] - blasY[i];
+                                        dist2 = 1.0 / (distX * distX + distY * distY);
+                                        fx += distX * dist2;
+                                        fy += distY * dist2;
+                                }
+                                for(INDEXTYPE j = i+1; j < graph.rows; j += 1){
+                                        distX = blasX[j] - blasX[i];
+                                        distY = blasY[j] - blasY[i];
+                                        dist2 = 1.0 / (distX * distX + distY * distY);
+                                        fx += distX * dist2;
+                                        fy += distY * dist2;
+                                }
+                                pb_X[ind] = pb_X[ind] - fx;
+                                pb_Y[ind] = pb_Y[ind] - fy;
+                        }	
+			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
+                                int ind = i-cleanup;
+                                double dist = (pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
+                                ENERGY += dist;
+				dist = STEP / sqrt(dist);
+				blasX[i] += pb_X[ind] * dist;
+                                blasY[i] += pb_Y[ind] * dist;
+				pb_X[ind] = pb_Y[ind] = 0;
+                        }
+                        STEP = STEP * 0.999;
+                        LOOP++;
+                }
+                end = omp_get_wtime();
+                cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
+                cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
+                cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
+                writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                result.push_back(ENERGY);
+                result.push_back(end - start);
+                return result;
+        }
+				
 	vector<VALUETYPE> newalgo::EfficientVersionV2(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE){
                 INDEXTYPE LOOP = 0;
                 VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
@@ -261,114 +714,32 @@
 					register __m512d vfx0, vfx1, vfx2, vfx3, vfx4, vfx5, vfx6, vfx7;
                                         register __m512d vfy0, vfy1, vfy2, vfy3, vfy4, vfy5, vfy6, vfy7;
 					
-					vfx0 = vfx1 = vfx2 = vfx3 = vfx4 = vfx5 = vfx6 = vfx7 = _mm512_set1_pd(0.0);
-					vfy0 = vfy1 = vfy2 = vfy3 = vfy4 = vfy5 = vfy6 = vfy7 = _mm512_set1_pd(0.0);
+					vfx0 = _mm512_set1_pd(0.0);
+					vfy0 = _mm512_set1_pd(0.0);
 					dc = _mm512_set1_pd(1.0);
 
-					x = blasX[i];
-					vbx0 = _mm512_set1_pd(x);
-					x = blasX[i+1];
-                                        vbx1 = _mm512_set1_pd(x);
-					x = blasX[i+2];
-                                        vbx2 = _mm512_set1_pd(x);
-					x = blasX[i+3];
-                                        vbx3 = _mm512_set1_pd(x);
-					x = blasX[i+4];
-                                        vbx4 = _mm512_set1_pd(x);
-					x = blasX[i+5];
-                                        vbx5 = _mm512_set1_pd(x);
-					x = blasX[i+6];
-                                        vbx6 = _mm512_set1_pd(x);
-					x = blasX[i+7];
-                                        vbx7 = _mm512_set1_pd(x);
-
-					y = blasY[i];
-					vby0 = _mm512_set1_pd(y);
-					y = blasY[i+1];
-                                        vby1 = _mm512_set1_pd(y);
-					y = blasY[i+2];
-                                        vby2 = _mm512_set1_pd(y);
-					y = blasY[i+3];
-                                        vby3 = _mm512_set1_pd(y);
-					y = blasY[i+4];
-                                        vby4 = _mm512_set1_pd(y);
-					y = blasY[i+5];
-                                        vby5 = _mm512_set1_pd(y);
-					y = blasY[i+6];
-                                        vby6 = _mm512_set1_pd(y);
-					y = blasY[i+7];
-                                        vby7 = _mm512_set1_pd(y);
+					vbx0 = _mm512_loadu_pd(blasX + i);
+					vby0 = _mm512_loadu_pd(blasY + i);
                                         
 					int ind = i-b*BATCHSIZE;
                                         for(INDEXTYPE j = 0; j < i; j += 1){
                                                 register __m512d vcx, vcy, d0, d1, d2, d3, d4, d5, d6, d7;
-						
+							
 						vcx = _mm512_set1_pd(blasX[j]);
 						vcy = _mm512_set1_pd(blasY[j]);
 						
 						vbx0 = _mm512_sub_pd(vcx, vbx0);
 						vby0 = _mm512_sub_pd(vcy, vby0);
-						vbx1 = _mm512_sub_pd(vcx, vbx1);
-                                                vby1 = _mm512_sub_pd(vcy, vby1);
-						vbx2 = _mm512_sub_pd(vcx, vbx2);
-                                                vby2 = _mm512_sub_pd(vcy, vby2);
-						vbx3 = _mm512_sub_pd(vcx, vbx3);
-                                                vby3 = _mm512_sub_pd(vcy, vby3);
-						vbx4 = _mm512_sub_pd(vcx, vbx4);
-                                                vby4 = _mm512_sub_pd(vcy, vby4);
-						vbx5 = _mm512_sub_pd(vcx, vbx5);
-                                                vby5 = _mm512_sub_pd(vcy, vby5);
-						vbx6 = _mm512_sub_pd(vcx, vbx6);
-                                                vby6 = _mm512_sub_pd(vcy, vby6);
-						vbx7 = _mm512_sub_pd(vcx, vbx7);
-                                                vby7 = _mm512_sub_pd(vcy, vby7);
 						//distX = blasX[j] - blasX[i];
                                                 //distY = blasY[j] - blasY[i];
                                                 
 						d0 = _mm512_mul_pd(vbx0, vbx0);
 						d0 = _mm512_fmadd_pd(vby0, vby0, d0);
 						d0 = _mm512_div_pd(dc, d0);
-						d1 = _mm512_mul_pd(vbx1, vbx1);
-                                                d1 = _mm512_fmadd_pd(vby1, vby1, d1);
-                                                d1 = _mm512_div_pd(dc, d1);
-						d2 = _mm512_mul_pd(vbx2, vbx2);
-                                                d2 = _mm512_fmadd_pd(vby2, vby2, d2);
-                                                d2 = _mm512_div_pd(dc, d2);
-						d3 = _mm512_mul_pd(vbx3, vbx3);
-                                                d3 = _mm512_fmadd_pd(vby3, vby3, d3);
-                                                d3 = _mm512_div_pd(dc, d3);
-						d4 = _mm512_mul_pd(vbx4, vbx4);
-                                                d4 = _mm512_fmadd_pd(vby4, vby4, d4);
-                                                d4 = _mm512_div_pd(dc, d4);
-						d5 = _mm512_mul_pd(vbx5, vbx5);
-                                                d5 = _mm512_fmadd_pd(vby5, vby5, d5);
-                                                d5 = _mm512_div_pd(dc, d5);
-						d6 = _mm512_mul_pd(vbx6, vbx6);
-                                                d6 = _mm512_fmadd_pd(vby6, vby6, d6);
-                                                d6 = _mm512_div_pd(dc, d6);
-						d7 = _mm512_mul_pd(vbx7, vbx7);
-                                                d7 = _mm512_fmadd_pd(vby7, vby7, d7);
-                                                d7 = _mm512_div_pd(dc, d7);
 						//dist2 = 1.0 / (distX * distX + distY * distY);
                                                 
 						vfx0 = _mm512_fmadd_pd(vbx0, d0, vfx0);
-						vfx1 = _mm512_fmadd_pd(vbx1, d1, vfx1);
-						vfx2 = _mm512_fmadd_pd(vbx2, d2, vfx2);
-                                                vfx3 = _mm512_fmadd_pd(vbx3, d3, vfx3);
-						vfx4 = _mm512_fmadd_pd(vbx4, d4, vfx4);
-                                                vfx5 = _mm512_fmadd_pd(vbx5, d5, vfx5);
-                                                vfx6 = _mm512_fmadd_pd(vbx6, d6, vfx6);
-                                                vfx7 = _mm512_fmadd_pd(vbx7, d7, vfx7);
-						
 						vfy0 = _mm512_fmadd_pd(vby0, d0, vfy0);
-						vfy1 = _mm512_fmadd_pd(vby1, d1, vfy1);
-						vfy2 = _mm512_fmadd_pd(vby2, d2, vfy2);
-                                                vfy3 = _mm512_fmadd_pd(vby3, d3, vfy3);
-						vfy4 = _mm512_fmadd_pd(vby4, d4, vfy4);
-                                                vfy5 = _mm512_fmadd_pd(vby5, d5, vfy5);
-                                                vfy6 = _mm512_fmadd_pd(vby6, d6, vfy6);
-                                                vfy7 = _mm512_fmadd_pd(vby7, d7, vfy7);
-	
 						//fx += distX * dist2;
                                                 //fy += distY * dist2;
                                         }
@@ -380,87 +751,22 @@
 
                                                 vbx0 = _mm512_sub_pd(vcx, vbx0);
                                                 vby0 = _mm512_sub_pd(vcy, vby0);
-                                                vbx1 = _mm512_sub_pd(vcx, vbx1);
-                                                vby1 = _mm512_sub_pd(vcy, vby1);
-                                                vbx2 = _mm512_sub_pd(vcx, vbx2);
-                                                vby2 = _mm512_sub_pd(vcy, vby2);
-                                                vbx3 = _mm512_sub_pd(vcx, vbx3);
-                                                vby3 = _mm512_sub_pd(vcy, vby3);
-                                                vbx4 = _mm512_sub_pd(vcx, vbx4);
-                                                vby4 = _mm512_sub_pd(vcy, vby4);
-                                                vbx5 = _mm512_sub_pd(vcx, vbx5);
-                                                vby5 = _mm512_sub_pd(vcy, vby5);
-                                                vbx6 = _mm512_sub_pd(vcx, vbx6);
-                                                vby6 = _mm512_sub_pd(vcy, vby6);
-                                                vbx7 = _mm512_sub_pd(vcx, vbx7);
-                                                vby7 = _mm512_sub_pd(vcy, vby7);
 						//distX = blasX[j] - blasX[i];
                                                 //distY = blasY[j] - blasY[i];
                                                 
 						d0 = _mm512_mul_pd(vbx0, vbx0);
                                                 d0 = _mm512_fmadd_pd(vby0, vby0, d0);
                                                 d0 = _mm512_div_pd(dc, d0);
-                                                d1 = _mm512_mul_pd(vbx1, vbx1);
-                                                d1 = _mm512_fmadd_pd(vby1, vby1, d1);
-                                                d1 = _mm512_div_pd(dc, d1);
-                                                d2 = _mm512_mul_pd(vbx2, vbx2);
-                                                d2 = _mm512_fmadd_pd(vby2, vby2, d2);
-                                                d2 = _mm512_div_pd(dc, d2);
-                                                d3 = _mm512_mul_pd(vbx3, vbx3);
-                                                d3 = _mm512_fmadd_pd(vby3, vby3, d3);
-                                                d3 = _mm512_div_pd(dc, d3);
-                                                d4 = _mm512_mul_pd(vbx4, vbx4);
-                                                d4 = _mm512_fmadd_pd(vby4, vby4, d4);
-                                                d4 = _mm512_div_pd(dc, d4);
-                                                d5 = _mm512_mul_pd(vbx5, vbx5);
-                                                d5 = _mm512_fmadd_pd(vby5, vby5, d5);
-                                                d5 = _mm512_div_pd(dc, d5);
-                                                d6 = _mm512_mul_pd(vbx6, vbx6);
-                                                d6 = _mm512_fmadd_pd(vby6, vby6, d6);
-                                                d6 = _mm512_div_pd(dc, d6);
-                                                d7 = _mm512_mul_pd(vbx7, vbx7);
-                                                d7 = _mm512_fmadd_pd(vby7, vby7, d7);
-                                                d7 = _mm512_div_pd(dc, d7);
 						//dist2 = 1.0 / (distX * distX + distY * distY);
                                                 
 						vfx0 = _mm512_fmadd_pd(vbx0, d0, vfx0);
-                                                vfx1 = _mm512_fmadd_pd(vbx1, d1, vfx1);
-                                                vfx2 = _mm512_fmadd_pd(vbx2, d2, vfx2);
-                                                vfx3 = _mm512_fmadd_pd(vbx3, d3, vfx3);
-                                                vfx4 = _mm512_fmadd_pd(vbx4, d4, vfx4);
-                                                vfx5 = _mm512_fmadd_pd(vbx5, d5, vfx5);
-                                                vfx6 = _mm512_fmadd_pd(vbx6, d6, vfx6);
-                                                vfx7 = _mm512_fmadd_pd(vbx7, d7, vfx7);
-
                                                 vfy0 = _mm512_fmadd_pd(vby0, d0, vfy0);
-                                                vfy1 = _mm512_fmadd_pd(vby1, d1, vfy1);
-                                                vfy2 = _mm512_fmadd_pd(vby2, d2, vfy2);
-                                                vfy3 = _mm512_fmadd_pd(vby3, d3, vfy3);
-                                                vfy4 = _mm512_fmadd_pd(vby4, d4, vfy4);
-                                                vfy5 = _mm512_fmadd_pd(vby5, d5, vfy5);
-                                                vfy6 = _mm512_fmadd_pd(vby6, d6, vfy6);
-                                                vfy7 = _mm512_fmadd_pd(vby7, d7, vfy7);
 						//fx += distX * dist2;
                                                 //fy += distY * dist2;
                                         }
 					_mm512_storeu_pd(pb_X+ind, vfx0);
-					_mm512_storeu_pd(pb_X+ind + 1, vfx1);
-					_mm512_storeu_pd(pb_X+ind + 2, vfx2);
-                                        _mm512_storeu_pd(pb_X+ind + 3, vfx3);
-					_mm512_storeu_pd(pb_X+ind + 4, vfx4);
-                                        _mm512_storeu_pd(pb_X+ind + 5, vfx5);
-                                        _mm512_storeu_pd(pb_X+ind + 6, vfx6);
-                                        _mm512_storeu_pd(pb_X+ind + 7, vfx7);
-				
 					_mm512_storeu_pd(pb_Y+ind, vfy0);
-                                        _mm512_storeu_pd(pb_Y+ind + 1, vfy1);
-                                        _mm512_storeu_pd(pb_Y+ind + 2, vfy2);
-                                        _mm512_storeu_pd(pb_Y+ind + 3, vfy3);
-                                        _mm512_storeu_pd(pb_Y+ind + 4, vfy4);
-                                        _mm512_storeu_pd(pb_Y+ind + 5, vfy5);
-                                        _mm512_storeu_pd(pb_Y+ind + 6, vfy6);
-                                        _mm512_storeu_pd(pb_Y+ind + 7, vfy7);
-                                        for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
+					for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
                                                 int v = graph.colids[j];
                                                 distX = blasX[v] - blasX[i];
                                                 distY = blasY[v] - blasY[i];
@@ -472,6 +778,11 @@
                                         //pb_X[ind] = pb_X[ind] - fx;
                                         //pb_Y[ind] = pb_Y[ind] - fy;
                                 }
+				printf("After:\n");
+				for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
+					printf("%d = %lf,", i, pb_X[i-b*BATCHSIZE]);
+				}
+				printf("\n");
 				for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
                                         int ind = i-b*BATCHSIZE;
 					double dist2 = pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind];
@@ -550,4 +861,17 @@
 			output << nCoordinates[i].getX() <<"\t"<< nCoordinates[i].getY() << "\t" << i+1 << endl;
 		}
 		output.close();
+	}
+	void newalgo::writeToFileEFF(string f){
+		stringstream  data(filename);
+                string lasttok;
+                while(getline(data,lasttok,'/'));
+                filename = outputdir + lasttok + f + ".txt";
+                ofstream output;
+                output.open(filename);
+                cout << "Creating output file in following directory:" << filename << endl;
+                for(INDEXTYPE i = 0; i < graph.rows; i++){
+                        output << blasX[i] <<"\t"<< blasY[i] << "\t" << i+1 << endl;
+                }
+                output.close();
 	}

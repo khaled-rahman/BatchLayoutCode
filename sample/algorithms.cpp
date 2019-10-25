@@ -553,23 +553,46 @@
 					for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
 						int v = graph.colids[j];
 						prevCoordinates[i] += (this->nCoordinates[v] - this->nCoordinates[i]) * (W * (this->nCoordinates[v] - this->nCoordinates[i]).getMagnitude()) + (this->nCoordinates[v] - this->nCoordinates[i]) * (1.0 / ((this->nCoordinates[v] - this->nCoordinates[i]).getMagnitude2()));
+						/*if(!(prevCoordinates[i].x)){
+                                                printf("i = %d, j = %d <-->\n", i, v);
+
+                                                exit(1);
+                                        	}*/
 					}
 					Coordinate<VALUETYPE> f = Coordinate <VALUETYPE>(0.0, 0.0);
 					//#pragma omp simd
                                         for(INDEXTYPE j = 0; j < i; j += 1){
 						f += (this->nCoordinates[j] - this->nCoordinates[i]) * (1.0 / ((this->nCoordinates[j] - this->nCoordinates[i]).getMagnitude2()));
-                                        }
+                                        	/*if(!(f.x)){
+                                                printf("i = %d, j = %d\n", i, j);
+                                                exit(1);
+                                        	}*/
+					}
 					//#pragma omp simd
 					for(INDEXTYPE j = i+1; j < graph.rows; j += 1){
 						f += (this->nCoordinates[j] - this->nCoordinates[i]) * (1.0 / ((this->nCoordinates[j] - this->nCoordinates[i]).getMagnitude2()));
+						/*if(!f.x){
+                                                printf("i = %d, j = %d\n", i, j);
+                                                exit(1);
+                                                }*/
 					}
 					prevCoordinates[i] = prevCoordinates[i] - f;
+					/*if(!prevCoordinates[i].x){
+						printf("i = %d\n", i);
+						exit(1);
+					}*/
                                 }
-                                for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
-                                        if(i >= graph.rows) continue;
+				/*for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
+					cout << "Node:" << i << ", X:" << prevCoordinates[i].getX() << ", Y:" << prevCoordinates[i].getY()<< endl;
+				}
+				cout << endl;
+                                */
+				for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++){
+                                        if(i >= graph.rows) break;
                                         nCoordinates[i] = nCoordinates[i] + prevCoordinates[i].getUnitVector() * STEP;
                                         ENERGY += prevCoordinates[i].getMagnitude2();
                                 }
+				//print();
                         }
 			STEP = STEP * 0.999;
                         LOOP++;

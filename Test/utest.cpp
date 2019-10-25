@@ -78,7 +78,7 @@ void uTestAlgorithms(char *argv[]){
 
 void uTestNewAlgo(int argc, char *argv[]){
 	CSR<INDEXTYPE, VALUETYPE> A_csr;
-        string inputfile = "./datasets/input/3elt_dual.mtx";
+        string inputfile = "./datasets/input/jagmesh1.mtx";
         string outputdir = "./datasets/output/";
         SetInputMatricesAsCSR(A_csr, inputfile);
         A_csr.Sorted();
@@ -92,7 +92,7 @@ void uTestNewAlgo(int argc, char *argv[]){
 	newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
 	newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
 	na2.EfficientVersion(5, 48, 256);	
-	//na.EfficientVersionV2(5, 48, 256);
+	na.EfficientVersionUnRoll(5, 48, 256);
 }
 int main(int argc, char* argv[]){
 	
