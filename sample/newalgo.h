@@ -73,5 +73,6 @@ class newalgo{
 	void writeRepulsiveForce(vector<Coordinate<VALUETYPE> > &repulse, string f);
 	void writeToFileBH(Coordinate<VALUETYPE> *tCoordinates, string f);
 	void writeToFile(string f);
+	void writeToFileEFF(string f);
 };
 #endif

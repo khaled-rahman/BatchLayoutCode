@@ -399,33 +399,34 @@
                                         }
 					
 					for(INDEXTYPE j = 0; j < i; j += 1){
-                                        	x0 = blasX[j] - x0;
-						x1 = blasX[j] - x1;
-						x2 = blasX[j] - x2;
-                                                x3 = blasX[j] - x3;
-						x4 = blasX[j] - x4;
-                                                x5 = blasX[j] - x5;
-                                                x6 = blasX[j] - x6;
-                                                x7 = blasX[j] - x7;
-						y0 = blasY[j] - y0;
-						y1 = blasY[j] - y1;
-						y2 = blasY[j] - y2;
-                                                y3 = blasY[j] - y3;
-						y4 = blasY[j] - y4;
-                                                y5 = blasY[j] - y5;
-                                                y6 = blasY[j] - y6;
-                                                y7 = blasY[j] - y7; 	       
+                                        	VALUETYPE vd = blasX[j];
+						x0 = vd - x0;
+						x1 = vd - x1;
+						x2 = vd - x2;
+                                                x3 = vd - x3;
+						x4 = vd - x4;
+                                                x5 = vd - x5;
+                                                x6 = vd - x6;
+                                                x7 = vd - x7;
+						y0 = vd - y0;
+						y1 = vd - y1;
+						y2 = vd - y2;
+                                                y3 = vd - y3;
+						y4 = vd - y4;
+                                                y5 = vd - y5;
+                                                y6 = vd - y6;
+                                                y7 = vd - y7; 	       
 						//distX = blasX[j] - blasX[i];
                                                 //distY = blasY[j] - blasY[i];
                                          	
-						d0 = 1.0 / (x0 * x0 + y0 * y0 + NEARZERO);
-						d1 = 1.0 / (x1 * x1 + y1 * y1 + NEARZERO);
-						d2 = 1.0 / (x2 * x2 + y2 * y2 + NEARZERO);
-						d3 = 1.0 / (x3 * x3 + y3 * y3 + NEARZERO);
-						d4 = 1.0 / (x4 * x4 + y4 * y4 + NEARZERO);
-						d5 = 1.0 / (x5 * x5 + y5 * y5 + NEARZERO);
-						d6 = 1.0 / (x6 * x6 + y6 * y6 + NEARZERO);
-						d7 = 1.0 / (x7 * x7 + y7 * y7 + NEARZERO);       
+						d0 = 1.0 / (x0 * x0 + y0 * y0);
+						d1 = 1.0 / (x1 * x1 + y1 * y1);
+						d2 = 1.0 / (x2 * x2 + y2 * y2);
+						d3 = 1.0 / (x3 * x3 + y3 * y3);
+						d4 = 1.0 / (x4 * x4 + y4 * y4);
+						d5 = 1.0 / (x5 * x5 + y5 * y5);
+						d6 = 1.0 / (x6 * x6 + y6 * y6);
+						d7 = 1.0 / (x7 * x7 + y7 * y7);       
 						//dist2 = 1.0 / (distX * distX + distY * distY);
                                                 
 						fx0 -= x0 * d0;
@@ -447,34 +448,137 @@
 						//fx += distX * dist2;
                                                 //fy += distY * dist2;
                                         }
-                                        for(INDEXTYPE j = i+1; j < graph.rows; j += 1){
-                                                x0 = blasX[j] - x0;
+					for(INDEXTYPE j = i+1; j < i + 8; j++){
+						x0 = blasX[j] - x0;
+						y0 = blasY[j] - y0;
+						d0 = 1.0 / (x0 * x0 + y0 * y0);	
+						fx0 -= x0 * d0;
+						fy0 -= y0 * d0;				
+					}
+					x1 = blasX[i] - x1;
+					y1 = blasX[i] - y1;
+					d1 = 1.0 / (x1 * x1 + y1 * y1);
+					fx1 -= x1 * d1;
+					fy1 -= y1 * d1;
+					for(INDEXTYPE j = i+2; j < i + 8; j++){
                                                 x1 = blasX[j] - x1;
-                                                x2 = blasX[j] - x2;
-                                                x3 = blasX[j] - x3;
-                                                x4 = blasX[j] - x4;
-                                                x5 = blasX[j] - x5;
-                                                x6 = blasX[j] - x6;
-                                                x7 = blasX[j] - x7;
-                                                y0 = blasY[j] - y0;
                                                 y1 = blasY[j] - y1;
+                                                d1 = 1.0 / (x1 * x1 + y1 * y1);
+                                                fx1 -= x1 * d1;
+                                                fy1 -= y1 * d1;
+                                        }
+					for(INDEXTYPE j = i; j < i + 2; j++){
+                                                x2 = blasX[j] - x2;
                                                 y2 = blasY[j] - y2;
+                                                d2 = 1.0 / (x2 * x2 + y2 * y2);
+                                                fx2 -= x2 * d2;
+                                                fy2 -= y2 * d2;
+                                        }
+					for(INDEXTYPE j = i+3; j < i + 8; j++){
+                                                x2 = blasX[j] - x2;
+                                                y2 = blasY[j] - y2;
+                                                d2 = d0 = 1.0 / (x2 * x2 + y2 * y2);
+                                                fx2 -= x2 * d2;
+                                                fy2 -= y2 * d2;
+                                        }
+					//////////////////
+					for(INDEXTYPE j = i; j < i + 3; j++){
+                                                x3 = blasX[j] - x3;
                                                 y3 = blasY[j] - y3;
+                                                d3 = 1.0 / (x3 * x3 + y3 * y3);
+                                                fx3 -= x3 * d3;
+                                                fy3 -= y3 * d3;
+                                        }
+					for(INDEXTYPE j = i+4; j < i + 8; j++){
+                                                x3 = blasX[j] - x3;
+                                                y3 = blasY[j] - y3;
+                                                d3 = 1.0 / (x3 * x3 + y3 * y3);
+                                                fx3 -= x3 * d3;
+                                                fy3 -= y3 * d3;
+                                        }
+					////////
+					for(INDEXTYPE j = i; j < i + 4; j++){
+                                                x4 = blasX[j] - x4;
                                                 y4 = blasY[j] - y4;
+                                                d4 = 1.0 / (x4 * x4 + y4 * y4);
+                                                fx4 -= x4 * d4;
+                                                fy4 -= y4 * d4;
+                                        }
+					for(INDEXTYPE j = i+5; j < i + 8; j++){
+                                                x4 = blasX[j] - x4;
+                                                y4 = blasY[j] - y4;
+                                                d4 = 1.0 / (x4 * x4 + y4 * y4);
+                                                fx4 -= x4 * d4;
+                                                fy4 -= y4 * d4;
+                                        }
+					/////
+					for(INDEXTYPE j = i; j < i + 5; j++){
+                                                x5 = blasX[j] - x5;
                                                 y5 = blasY[j] - y5;
+                                                d5 = 1.0 / (x5 * x5 + y5 * y5);
+                                                fx5 -= x5 * d5;
+                                                fy5 -= y5 * d5;
+                                        }
+					for(INDEXTYPE j = i+6; j < i + 8; j++){
+                                                x5 = blasX[j] - x5;
+                                                y5 = blasY[j] - y5;
+                                                d5 = 1.0 / (x5 * x5 + y5 * y5);
+                                                fx5 -= x5 * d5;
+                                                fy5 -= y5 * d5;
+                                        }
+			
+					//////
+					for(INDEXTYPE j = i; j < i + 6; j++){
+                                                x6 = blasX[j] - x6;
                                                 y6 = blasY[j] - y6;
+                                                d6 = 1.0 / (x6 * x6 + y6 * y6);
+                                                fx6 -= x6 * d6;
+                                                fy6 -= y6 * d6;
+                                        }
+					x6 = blasX[i+7] - x6;
+                                        y6 = blasX[i+7] - y6;
+                                        d6 = 1.0 / (x6 * x6 + y6 * y6);
+                                        fx6 -= x6 * d6;
+                                        fy6 -= y6 * d1;
+					////
+					for(INDEXTYPE j = i; j < i + 7; j++){
+                                                x7 = blasX[j] - x7;
                                                 y7 = blasY[j] - y7;
+                                                d7 = 1.0 / (x7 * x7 + y7 * y7);
+                                                fx7 -= x7 * d7;
+                                                fy7 -= y7 * d7;
+                                        }
+					////////////
+                                        for(INDEXTYPE j = i+8; j < graph.rows; j += 1){
+                                                VALUETYPE vx = blasX[j];
+						VALUETYPE vy = blasY[j];
+						x0 = vx - x0;
+                                                x1 = vx - x1;
+                                                x2 = vx - x2;
+                                                x3 = vx - x3;
+                                                x4 = vx - x4;
+                                                x5 = vx - x5;
+                                                x6 = vx - x6;
+                                                x7 = vx - x7;
+                                                y0 = vy - y0;
+                                                y1 = vy - y1;
+                                                y2 = vy - y2;
+                                                y3 = vy - y3;
+                                                y4 = vy - y4;
+                                                y5 = vy - y5;
+                                                y6 = vy - y6;
+                                                y7 = vy - y7;
 						//distX = blasX[j] - blasX[i];
                                                 //distY = blasY[j] - blasY[i];
                                                 
-						d0 = 1.0 / (x0 * x0 + y0 * y0 + NEARZERO);
-                                                d1 = 1.0 / (x1 * x1 + y1 * y1 + NEARZERO);
-                                                d2 = 1.0 / (x2 * x2 + y2 * y2 + NEARZERO);
-                                                d3 = 1.0 / (x3 * x3 + y3 * y3 + NEARZERO);
-                                                d4 = 1.0 / (x4 * x4 + y4 * y4 + NEARZERO);
-                                                d5 = 1.0 / (x5 * x5 + y5 * y5 + NEARZERO);
-                                                d6 = 1.0 / (x6 * x6 + y6 * y6 + NEARZERO);
-                                                d7 = 1.0 / (x7 * x7 + y7 * y7 + NEARZERO);
+						d0 = 1.0 / (x0 * x0 + y0 * y0);
+                                                d1 = 1.0 / (x1 * x1 + y1 * y1);
+                                                d2 = 1.0 / (x2 * x2 + y2 * y2);
+                                                d3 = 1.0 / (x3 * x3 + y3 * y3);
+                                                d4 = 1.0 / (x4 * x4 + y4 * y4);
+                                                d5 = 1.0 / (x5 * x5 + y5 * y5);
+                                                d6 = 1.0 / (x6 * x6 + y6 * y6);
+                                                d7 = 1.0 / (x7 * x7 + y7 * y7);
 						//dist2 = 1.0 / (distX * distX + distY * distY);
                                                 
 						fx0 -= x0 * d0;
@@ -519,64 +623,16 @@
                                         printf("%d = %lf,", i, pb_X[i-b*BATCHSIZE]);
                                 }
 				*/
-				for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 8){
+				for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1){
                                         int ind = i-b*BATCHSIZE;
-					VALUETYPE fx0, fx1, fx2, fx3, fx4, fx5, fx6, fx7;
-                                        VALUETYPE fy0, fy1, fy2, fy3, fy4, fy5, fy6, fy7;
-                                        VALUETYPE x0, x1, x2, x3, x4, x5, x6, x7;
-                                        VALUETYPE y0, y1, y2, y3, y4, y5, y6, y7;
-                                        VALUETYPE d0, d1, d2, d3, d4, d5, d6, d7;
-					x0 = pb_X[ind];
-					y0 = pb_Y[ind];
-					x1 = pb_X[ind+1];
-                                        y1 = pb_Y[ind+1];
-					x2 = pb_X[ind+2];
-                                        y2 = pb_Y[ind+2];
-					x3 = pb_X[ind+3];
-                                        y3 = pb_Y[ind+3];
-					x4 = pb_X[ind+4];
-                                        y4 = pb_Y[ind+4];
-					x5 = pb_X[ind+5];
-                                        y5 = pb_Y[ind+5];
-					x6 = pb_X[ind+6];
-                                        y6 = pb_Y[ind+6];	
-					x7 = pb_X[ind+7];
-                                        y7 = pb_Y[ind+7];
-					d0 = (x0 * x0 + y0 * y0);
-                                        d1 = (x1 * x1 + y1 * y1);
-					d2 = (x2 * x2 + y2 * y2);
-                                        d3 = (x3 * x3 + y3 * y3);
-					d4 = (x4 * x4 + y4 * y4);
-                                        d5 = (x5 * x5 + y5 * y5);
-                                        d6 = (x6 * x6 + y6 * y6);
-                                        d7 = (x7 * x7 + y7 * y7);
-					ENERGY += d0 + d1 + d2 + d3 + d4 + d5 + d6 + d7;
-					d0 = STEP / sqrt(d0);
-					d1 = STEP / sqrt(d1);
-					d2 = STEP / sqrt(d2);
-                                        d3 = STEP / sqrt(d3);
-					d4 = STEP / sqrt(d4);
-                                        d5 = STEP / sqrt(d5);
-                                        d6 = STEP / sqrt(d6);
-                                        d7 = STEP / sqrt(d7);
-					blasX[i] += x0 * d0;
-                                        blasY[i] += y0 * d0;
-					blasX[i+1] += x1 * d1;
-                                        blasY[i+1] += y1 * d1;
-					blasX[i+2] += x2 * d2;
-                                        blasY[i+2] += y2 * d2;
-                                        blasX[i+3] += x3 * d3;
-                                        blasY[i+3] += y3 * d3;
-					blasX[i+4] += x4 * d4;
-                                        blasY[i+4] += y4 * d4;
-                                        blasX[i+5] += x5 * d5;
-                                        blasY[i+5] += y5 * d5;
-                                        blasX[i+6] += x6 * d6;
-                                        blasY[i+6] += y6 * d6;
-                                        blasX[i+7] += x7 * d7;
-                                        blasY[i+7] += y7 * d7;
-					pb_X[ind] = pb_X[ind + 1] = pb_X[ind + 2] = pb_X[ind + 3] = pb_X[ind + 4] = pb_X[ind + 5] =  pb_X[ind + 6] = pb_X[ind + 7] = 0;
-					pb_Y[ind] = pb_Y[ind + 1] = pb_Y[ind + 2] = pb_Y[ind + 3] = pb_Y[ind + 4] = pb_Y[ind + 5] =  pb_Y[ind + 6] = pb_Y[ind + 7] = 0;    
+                                        VALUETYPE d;
+					d = (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+					ENERGY += d ;
+					d = STEP / sqrt(d);
+					blasX[i] += pb_X[ind] * d;
+                                        blasY[i] += pb_Y[ind] * d;
+					pb_X[ind] = 0;
+					pb_Y[ind] = 0;    
                                 }
                         }
 			INDEXTYPE cleanup = (graph.rows/BATCHSIZE) * BATCHSIZE;
