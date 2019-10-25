@@ -78,21 +78,25 @@ void uTestAlgorithms(char *argv[]){
 
 void uTestNewAlgo(int argc, char *argv[]){
 	CSR<INDEXTYPE, VALUETYPE> A_csr;
-        string inputfile = "./datasets/input/jagmesh1.mtx";
+        //string inputfile = "./datasets/input/jagmesh1.mtx";
+	 string inputfile = "./datasets/input/3elt_dual.mtx";
+	//string inputfile = "./datasets/input/skirt.mtx";
         string outputdir = "./datasets/output/";
         SetInputMatricesAsCSR(A_csr, inputfile);
         A_csr.Sorted();
         vector<VALUETYPE> outputvec;
-	algorithms algo = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
-	algo.cacheBlockingminiBatchForceDirectedAlgorithm(500, 48, 256, 0);
-	algorithms algo2 = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+   #if 0
+        algorithms algo = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+	algo.cacheBlockingminiBatchForceDirectedAlgorithm(500, 48, 256, 0);	
+        algorithms algo2 = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
 	algo2.cacheBlockingminiBatchForceDirectedAlgorithmSD(500, 48, 256, 0);
-	test(algo.nCoordinates, algo2.nCoordinates, A_csr.rows);	
-	
+        test(algo.nCoordinates, algo2.nCoordinates, A_csr.rows);	
+   #endif	
 	newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
-	newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
-	na2.EfficientVersion(5, 48, 256);	
 	na.EfficientVersionUnRoll(5, 48, 256);
+        
+        newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+	na2.EfficientVersion(5, 48, 256);	
 }
 int main(int argc, char* argv[]){
 	
