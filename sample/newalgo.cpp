@@ -702,6 +702,7 @@
  * NOTE: define for appropriate unroll factor 
  */
    #define UR4_MEMOPT 1 
+   //#define UR1 1 
    
    #define DEBUG 0
 
@@ -745,7 +746,7 @@
          {
 
 /*
- *          NOTE: no cleanup for unroll as lon as BATCHZIE is multiple of unroll
+ *          NOTE: no cleanup for unroll as long as BATCHZIE is multiple of unroll
  *          factor 
  */
 	    #pragma omp parallel for schedule(static)	
@@ -1599,9 +1600,9 @@
       pb_Y = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
       ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
      
-#if 0
+#if DEGUG == 1
+      cout << "*************** Unroll factor = 2" << endl;
       cout << "Rows = " << graph.rows << endl;
-      exit(1);
 #endif
 
       omp_set_num_threads(NUMOFTHREADS);
@@ -1811,6 +1812,9 @@
  *    cleanup 
  */
 			INDEXTYPE cleanup = (graph.rows/BATCHSIZE) * BATCHSIZE;
+            #if DEBUG == 1
+                        cout << "Total cleanup nodes = " << graph.rows - cleanup;
+            #endif
 			#pragma omp parallel for schedule(dynamic) 
 			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
                                 INDEXTYPE ind = i- cleanup;
@@ -1854,10 +1858,12 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
+         #if 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
                 writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+         #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
                 return result;
@@ -2295,77 +2301,10 @@
                   //fy += distY * dist2;
                }
                
-            #if 0               
-               // connected nodes 
-               VALUETYPE px0=0, px1=0, px2=0, px3=0, px4=0, px5=0, px6=0, px7=0;
-               VALUETYPE py0=0, py1=0, py2=0, py3=0, py4=0, py5=0, py6=0, py7=0;
-               
-               for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1)
-               {
-                  int v = graph.colids[j];
-                  distX = blasX[v] - x0;
-                  distY = blasY[v] - y0;
-                  dist = (distX * distX + distY * distY);
-                  dist = sqrt(dist) + 1.0 / dist;
-
-                  px0 += distX * dist;
-                  py0 += distY * dist;
-               }
-					
-	       for(INDEXTYPE j = graph.rowptr[i+1]; j < graph.rowptr[i+1+1]; j += 1)
-               {
-                  int v = graph.colids[j];
-                  
-                  distX = blasX[v] - x1;
-                  distY = blasY[v] - y1;
- 
-                  dist = (distX * distX + distY * distY);
-                  dist = sqrt(dist) + 1.0 / dist;
-
-                  px1 += distX * dist;
-                  py1 += distY * dist;
-               }
-				
-	       for(INDEXTYPE j = graph.rowptr[i+2]; j < graph.rowptr[i+1+2]; j += 1)
-               {
-                  int v = graph.colids[j];
-                  distX = blasX[v] - x2;
-                  distY = blasY[v] - y2;
-
-                  dist = (distX * distX + distY * distY);
-                  dist = sqrt(dist) + 1.0 / dist;
-
-                  px2 += distX * dist;
-                  py2 += distY * dist;
-               }
-
-	       for(INDEXTYPE j = graph.rowptr[i+3]; j < graph.rowptr[i+1+3]; j += 1)
-               {
-                  int v = graph.colids[j];
-                  distX = blasX[v] - x3;
-                  distY = blasY[v] - y3;
-
-                  dist = (distX * distX + distY * distY);
-                  dist = sqrt(dist) + 1.0 / dist;
-
-                  px3 += distX * dist;
-                  py3 += distY * dist;                         
-               }
-               pb_X[ind] = px0 - fx0;
-	       pb_X[ind+1] = px1 - fx1;
-	       pb_X[ind+2] = px2 - fx2;
-               pb_X[ind+3] = px3 - fx3;
-					
-	       pb_Y[ind] = py0 - fy0;
-	       pb_Y[ind+1] = py1 - fy1;
-	       pb_Y[ind+2] = py2 - fy2;
-               pb_Y[ind+3] = py3 - fy3;
-            #endif
-               
                pb_X[ind] = fx0;
 	       pb_X[ind+1] = fx1;
 	       pb_X[ind+2] = fx2;
-               pb_X[ind+3] = -fx3;
+               pb_X[ind+3] = fx3;
 					
 	       pb_Y[ind] = fy0;
 	       pb_Y[ind+1] = fy1;
@@ -2377,48 +2316,8 @@
  *          FIXME: ***** the code slows down by 10% 
  *
  */
-         #if 0
-	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
-            {
-               int ind = i-b*BATCHSIZE;
-               VALUETYPE pbX=0.0, pbY=0.0;
-               VALUETYPE dist, distX, distY;
-               for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1)
-               {
-                  int v = graph.colids[j];
-                  distX = blasX[v] - blasX[i];
-                  distY = blasY[v] - blasY[i];
-                  dist = (distX * distX + distY * distY);
-                  dist = sqrt(dist) + 1.0 / dist;
-                  pbX += distX * dist;
-                  pbY += distY * dist;
-               }
-
-               pb_X[ind] = pbX - pb_X[ind];
-               pb_Y[ind] = pbY - pb_Y[ind];
-            }
-
-	    /*printf("After:\n");
-            for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++)
-            {
-               printf("%d = %lf,", i, pb_X[i-b*BATCHSIZE]);
-            }
-	    */
-	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
-            {
-               int ind = i-b*BATCHSIZE;
-               VALUETYPE d;
-	       d = (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
-	       ENERGY += d ;
-	       
-               d = STEP / sqrt(d);
-	       blasX[i] += pb_X[ind] * d;
-               blasY[i] += pb_Y[ind] * d;
-	       
-               pb_X[ind] = 0;
-	       pb_Y[ind] = 0;    
-            }
-         #else
+#if 0
+	    #pragma omp parallel for schedule(static)	
 	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
             {
                int ind = i-b*BATCHSIZE;
@@ -2439,7 +2338,8 @@
                pbY = pbY - pb_Y[ind];
 	       
                dist = (pbX * pbX + pbY * pbY);
-	       ENERGY += dist ;
+               #pragma omp atomic
+               ENERGY += dist ;
 	       
                dist = STEP / sqrt(dist);
 	       blasX[i] += pbX * dist;
@@ -2447,7 +2347,58 @@
                pb_X[ind] = 0;
 	       pb_Y[ind] = 0;    
             }
-         #endif
+#else
+/*
+ *          Calc connected nodes 
+ *          complexity : BATCHSIZE * avg connection 
+ *          ************ still 10% slow, why ????? 
+ *          Unrolling by 4, we eliminate 4 * rows memory loads, 
+ *          but moving out the connected nodes, we have extra loads 
+ *          = BATCHSIZE * avg connection
+ *          ***** Need to find:  4*VLEN*rows >> BATCHSIZE * avg connection
+ *                         example: pkustk01
+ *                                  avg connect = 50 (guessing from prof)
+ *                               4*8*22044  >> 256 * 50
+ *                               705408     >> 12800 
+ *
+ */
+	    #pragma omp parallel for schedule(static)	
+	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
+            {
+               int ind = i-b*BATCHSIZE;
+               VALUETYPE pbX=0.0, pbY=0.0;
+               VALUETYPE dist, distX, distY;
+               for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1)
+               {
+                  int v = graph.colids[j];
+                  distX = blasX[v] - blasX[i];
+                  distY = blasY[v] - blasY[i];
+                  dist = (distX * distX + distY * distY);
+                  dist = sqrt(dist) + 1.0 / dist;
+                  pbX += distX * dist;
+                  pbY += distY * dist;
+               }
+               pb_X[ind] = pbX - pb_X[ind];
+               pb_Y[ind] = pbY - pb_Y[ind];
+            }
+/*
+ *          Update nodes 
+ */
+	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
+            {
+               int ind = i-b*BATCHSIZE;
+               VALUETYPE d;
+	       d = (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+	       ENERGY += d ;
+	       
+               d = STEP / sqrt(d);
+	       blasX[i] += pb_X[ind] * d;
+               blasY[i] += pb_Y[ind] * d;
+	       
+               pb_X[ind] = 0;
+	       pb_Y[ind] = 0;    
+            }
+#endif
          }
 /*
  *    cleanup 
@@ -2699,3 +2650,235 @@
                 }
                 output.close();
 	}
+/*
+ *       Using intrinsic codes .... 
+ *    
+ */
+/*
+ * **************************** Intrinsic Version ************************ 
+ */
+#if 0
+   vector<VALUETYPE> newalgo::EfficientVersionVec(INDEXTYPE ITERATIONS, 
+         INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE)
+   {
+      INDEXTYPE LOOP = 0;
+      VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
+      VALUETYPE STEP = 1.0;
+      
+      vector<VALUETYPE> result;
+      pb_X = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+      pb_Y = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+      ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
+     
+#if 0
+      cout << "Rows = " << graph.rows << endl;
+      exit(1);
+#endif
+
+      omp_set_num_threads(NUMOFTHREADS);
+/*
+ *    time included initDFS 
+ */
+      start = omp_get_wtime();
+
+      initDFS();
+      
+      while(LOOP < ITERATIONS)
+      {
+         ENERGY0 = ENERGY;
+         ENERGY = 0;
+         for(int i = 0; i < BATCHSIZE; i++)
+         {
+            pb_X[i] = pb_Y[i] = 0;
+         }
+	
+         
+	 for(INDEXTYPE b = 0; b < (graph.rows / BATCHSIZE); b += 1)
+         {
+
+/*
+ *          NOTE: no cleanup for unroll as lon as BATCHZIE is multiple of unroll
+ *          factor 
+ */
+	    #pragma omp parallel for schedule(static)	
+	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 8)
+            {
+	       int ind = i-b*BATCHSIZE;
+
+	       register __m512d vbx0, vbx1, vbx2, vbx3, vbx4, vbx5, vbx6, vbx7, dc;
+               
+               VALUETYPE distX, distY, dist; 
+               VALUETYPE fx0;
+               VALUETYPE fy0;
+               
+               
+               VALUETYPE x0;
+               VALUETYPE y0;
+               VALUETYPE d0;
+					
+	       x0 = blasX[i];
+
+	       y0 = blasY[i];
+					
+	       fx0 = 0;
+	       fy0 = 0;		
+		
+/*
+ *              j is up to i... lower up case  
+ */
+               for(INDEXTYPE j = 0; j < i; j += 1)
+               {
+                  VALUETYPE dx0, dx1;
+                  VALUETYPE dy0, dy1;
+                  VALUETYPE xj = blasX[j];
+                  VALUETYPE yj = blasY[j];
+		  
+                  dx0 = xj - x0;
+                  dy0 = yj - y0;
+		
+                  //distX = blasX[j] - blasX[i];
+                  //distY = blasY[j] - blasY[i];
+                                   	
+	          d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
+		
+                  //dist2 = 1.0 / (distX * distX + distY * distY);
+                                            
+		  fx0 += dx0 * d0;
+                  fy0 += dy0 * d0;
+		 
+                  //fx += distX * dist2;
+                  //fy += distY * dist2;
+               }		
+/*
+ *             location where we need to skip some points i==j
+ *             NOTE: its UR iteration, no need to optimize 
+ *             Hopefully compiler will unroll and get rid of the conditions
+ */
+/*
+ *             Upper part  
+ *
+ */ 
+               for(INDEXTYPE j = i+1; j < graph.rows; j += 1)
+               {
+                  VALUETYPE dx0, dx1;
+                  VALUETYPE dy0, dy1;
+                  VALUETYPE xj = blasX[j];
+                  VALUETYPE yj = blasY[j];
+		  
+                  dx0 = xj - x0;
+                  dy0 = yj - y0;
+		
+                  //distX = blasX[j] - blasX[i];
+                  //distY = blasY[j] - blasY[i];
+                                   	
+	          d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
+		
+                  //dist2 = 1.0 / (distX * distX + distY * distY);
+                                            
+		  fx0 += dx0 * d0;
+		
+                  fy0 += dy0 * d0;
+		 
+                  //fx += distX * dist2;
+                  //fy += distY * dist2;
+               }
+               
+               
+               // connected nodes 
+               VALUETYPE px0=0, px1=0, px2=0, px3=0, px4=0, px5=0, px6=0, px7=0;
+               VALUETYPE py0=0, py1=0, py2=0, py3=0, py4=0, py5=0, py6=0, py7=0;
+               
+               for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1)
+               {
+                  int v = graph.colids[j];
+                  distX = blasX[v] - x0;
+                  distY = blasY[v] - y0;
+                  dist = (distX * distX + distY * distY);
+                  dist = sqrt(dist) + 1.0 / dist;
+
+                  px0 += distX * dist;
+                  py0 += distY * dist;
+               }
+				
+               pb_X[ind] = px0 - fx0;
+	       pb_Y[ind] = py0 - fy0;
+	    }
+	    /*printf("After:\n");
+            for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++)
+            {
+               printf("%d = %lf,", i, pb_X[i-b*BATCHSIZE]);
+            }
+	    */
+	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
+            {
+               int ind = i-b*BATCHSIZE;
+               VALUETYPE d;
+	       d = (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+	       ENERGY += d ;
+	       
+               d = STEP / sqrt(d);
+	       blasX[i] += pb_X[ind] * d;
+               blasY[i] += pb_Y[ind] * d;
+	       
+               pb_X[ind] = 0;
+	       pb_Y[ind] = 0;    
+            }
+         }
+/*
+ *    cleanup 
+ */
+			INDEXTYPE cleanup = (graph.rows/BATCHSIZE) * BATCHSIZE;
+			#pragma omp parallel for schedule(dynamic) 
+			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
+                                INDEXTYPE ind = i- cleanup;
+                                VALUETYPE fx = 0, fy = 0, distX, distY, dist, dist2;
+                                for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
+                                        int v = graph.colids[j];
+                                        distX = blasX[v] - blasX[i];
+                                        distY = blasY[v] - blasY[i];
+                                        dist = (distX * distX + distY * distY);
+                                        dist = sqrt(dist) + 1.0 / dist;
+                                        pb_X[ind] += distX * dist;
+                                        pb_Y[ind] += distY * dist;
+                                }
+                                for(INDEXTYPE j = 0; j < i; j += 1){
+                                        distX = blasX[j] - blasX[i];
+                                        distY = blasY[j] - blasY[i];
+                                        dist2 = 1.0 / (distX * distX + distY * distY);
+                                        fx += distX * dist2;
+                                        fy += distY * dist2;
+                                }
+                                for(INDEXTYPE j = i+1; j < graph.rows; j += 1){
+                                        distX = blasX[j] - blasX[i];
+                                        distY = blasY[j] - blasY[i];
+                                        dist2 = 1.0 / (distX * distX + distY * distY);
+                                        fx += distX * dist2;
+                                        fy += distY * dist2;
+                                }
+                                pb_X[ind] = pb_X[ind] - fx;
+                                pb_Y[ind] = pb_Y[ind] - fy;
+                        }	
+			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
+                                int ind = i-cleanup;
+                                double dist = (pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
+                                ENERGY += dist;
+				dist = STEP / sqrt(dist);
+				blasX[i] += pb_X[ind] * dist;
+                                blasY[i] += pb_Y[ind] * dist;
+				pb_X[ind] = pb_Y[ind] = 0;
+                        }
+                        STEP = STEP * 0.999;
+                        LOOP++;
+                }
+                end = omp_get_wtime();
+         #if 0
+                cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
+                cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
+                cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
+                writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+         #endif
+                result.push_back(ENERGY);
+                result.push_back(end - start);
+                return result;
+        }
+#endif
