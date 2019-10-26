@@ -27,7 +27,10 @@ batchlayout.o:	$(UNITTEST)/BatchLayout.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/al
 batchlayout:	algorithms.o batchlayout.o
 		$(COMPILER) $(INCDIR) $(FLAGS) -o $(BIN)/BatchLayout $(BIN)/algorithms.o $(BIN)/batchlayout.o
 
-utest.o:	$(UNITTEST)/utest.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h $(SAMPLE)/newalgo.h $(SAMPLE)/newalgo.cpp $(Kernel)/nblas.cpp
+#utest.o:	$(UNITTEST)/utest.cpp $(SAMPLE)/algorithms.cpp $(SAMPLE)/algorithms.h $(SAMPLE)/newalgo.h $(SAMPLE)/newalgo.cpp $(Kernel)/nblas.cpp
+#	$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/utest.o $(UNITTEST)/utest.cpp
+
+utest.o:	$(UNITTEST)/utest.cpp 
 	$(COMPILER) $(INCDIR) $(FLAGS) -c -o $(BIN)/utest.o $(UNITTEST)/utest.cpp
 
 utest:	algorithms.o newalgo.o utest.o nblas.o
