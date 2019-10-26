@@ -139,13 +139,13 @@ void GetAvgTimes(int argc, char *argv[], int nrep)
 
 }
 
-#define DEBUG 1 
+#define DEBUG 0 
 
 int main(int argc, char* argv[]){
 	
 	//uTestAlgorithms(argv);
         //uTestNewAlgo(argc, argv);
-   #ifdef DEBUG 
+   #if DEBUG == 1 
         GetAvgTimes(argc, argv, 1);
    #else
         GetAvgTimes(argc, argv, 20);

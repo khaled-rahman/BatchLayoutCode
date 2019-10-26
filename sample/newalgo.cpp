@@ -791,7 +791,7 @@
                   VALUETYPE dx0, dx1, dx2, dx3, dx4, dx5, dx6, dx7;
                   VALUETYPE dy0, dy1, dy2, dy3, dy4, dy5, dy6, dy7;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
 		  dx1 = xj - x1;
@@ -854,7 +854,7 @@
                for (INDEXTYPE j = i; j < i+8; j++) 
                {
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   if (j != i)
                   {
@@ -938,7 +938,7 @@
                   VALUETYPE dx0, dx1, dx2, dx3, dx4, dx5, dx6, dx7;
                   VALUETYPE dy0, dy1, dy2, dy3, dy4, dy5, dy6, dy7;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
 		  dx1 = xj - x1;
@@ -1311,7 +1311,7 @@
                   VALUETYPE dx0, dx1, dx2, dx3;
                   VALUETYPE dy0, dy1, dy2, dy3;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
 		  dx1 = xj - x1;
@@ -1354,7 +1354,7 @@
                for (INDEXTYPE j = i; j < i+4; j++) 
                {
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   if (j != i)
                   {
@@ -1402,7 +1402,7 @@
                   VALUETYPE dx0, dx1, dx2, dx3;
                   VALUETYPE dy0, dy1, dy2, dy3;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
 		  dx1 = xj - x1;
@@ -1658,7 +1658,7 @@
                   VALUETYPE dx0, dx1;
                   VALUETYPE dy0, dy1;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
 		  dx1 = xj - x1;
@@ -1691,7 +1691,7 @@
                for (INDEXTYPE j = i; j < i+2; j++) 
                {
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   if (j != i)
                   {
@@ -1721,7 +1721,7 @@
                   VALUETYPE dx0, dx1;
                   VALUETYPE dy0, dy1;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
 		  dx1 = xj - x1;
@@ -1935,7 +1935,7 @@
                   VALUETYPE dx0, dx1;
                   VALUETYPE dy0, dy1;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
                   dy0 = yj - y0;
@@ -1967,7 +1967,7 @@
                   VALUETYPE dx0, dx1;
                   VALUETYPE dy0, dy1;
                   VALUETYPE xj = blasX[j];
-                  VALUETYPE yj = blasX[j];
+                  VALUETYPE yj = blasY[j];
 		  
                   dx0 = xj - x0;
                   dy0 = yj - y0;
