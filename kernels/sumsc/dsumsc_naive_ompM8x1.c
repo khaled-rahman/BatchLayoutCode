@@ -4,10 +4,17 @@
 void ATL_USUMSC(long M, const double *X, long N, const double *Y, double *Z, long incX, long incY )
 {
    long i, j;
-   for (j=0; j < N; j+=16)
+   for (j=0; j < N; j+=8)
    {
       double y0, y1, y2, y3, y4, y5, y6, y7;
-      double y8, y9, y10, y11, y12, y13, y14, y15;
+      double sum0=0.0;
+      double sum1=0.0;
+      double sum2=0.0;
+      double sum3=0.0;
+      double sum4=0.0;
+      double sum5=0.0;
+      double sum6=0.0;
+      double sum7=0.0;
 
       y0 = Y[j]; 
       y1 = Y[j+1]; 
@@ -18,23 +25,6 @@ void ATL_USUMSC(long M, const double *X, long N, const double *Y, double *Z, lon
       y6 = Y[j+6]; 
       y7 = Y[j+7]; 
       
-      y0 = Y[j+8]; 
-      y1 = Y[j+8+1]; 
-      y2 = Y[j+8+2]; 
-      y3 = Y[j+8+3]; 
-      y4 = Y[j+8+4]; 
-      y5 = Y[j+8+5]; 
-      y6 = Y[j+8+6]; 
-      y7 = Y[j+8+7]; 
-      
-      double sum0=0.0;
-      double sum1=0.0;
-      double sum2=0.0;
-      double sum3=0.0;
-      double sum4=0.0;
-      double sum5=0.0;
-      double sum6=0.0;
-      double sum7=0.0;
       #pragma omp parallel for simd reduction(+: sum0) \
                                     reduction(+: sum1) \
                                     reduction(+: sum2) \
