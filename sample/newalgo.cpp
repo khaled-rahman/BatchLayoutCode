@@ -240,7 +240,7 @@
                         LOOP++;
                 }
 		end = omp_get_wtime();
-         #if 0
+         #if 1
                 cout << "Efficient Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficient Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficient Minibatch Parallel Wall time required:" << end - start << endl;
@@ -2902,7 +2902,12 @@
                               // N=64: spup = 0.683  
                               // N=32: spup = 0.974  
 
-   //#define MDIM_UR4 1  // spup = 0.278   
+   //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46 energy=5.70207e+10 
+                       // N=128: spup = 0.30 
+                       // N=64:  spup = 0.33
+                       // N=32:  spup = 0.44
+                       // N=16:  spup = 0.68
+                       // N=4:  spup = 1.71    sec = 0.43
    
    //#define MDIM_VEC_UR8 1  // N=256: spup = 1.46  
                            // N=128: spup = 1.56
@@ -2910,7 +2915,7 @@
    
    //#define MDIM_VEC_UR4 1  // N=256: spup = 1.35 
                            // N=128: spup = 1.42  
-                           // N=64: spup = 1.46  
+                           // N=64: spup = 1.53 sec=0.099 energy = 7.23105e+11 
                            // N=32: spup = 2.03  --- with 256 Eff, spup = 1.26   
    
    //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  .... FIXME: energy=nan 
@@ -2921,7 +2926,18 @@
                                   // N=128: spup = 1.9
                                   // N=64: spup = 2.25 -- with 256 eff, spup = 1.85  
                                   // N=32: spup = 2.91 -- with 256 eff, spup = 1.89 
-   
+#if 1 
+   void PrintVector(__m512d v1)
+   {
+      int i, vl=8; 
+      double *fptr = (double*) &v1; 
+
+      fprintf(stdout, "vector: < ");
+      for(i=0; i < vl; i++)
+         fprintf(stdout, "%lf, ",fptr[i] );
+      fprintf(stdout, ">\n");
+   }
+#endif
    #ifdef MDIM_UR8 
 
    vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS, 
@@ -4402,6 +4418,9 @@
 	       pb_Y[ind+2] = fy2;
                pb_Y[ind+3] = fy3;
             }
+/*
+ *          =============================================
+ */
             // connected nodes 
 	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
             {   
@@ -4489,11 +4508,11 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if 1
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
-                writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFileEFF("EFFUR4_"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
          #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
@@ -5252,6 +5271,7 @@
 
 #elif defined(MDIM_VEC_UR4)
    
+   
    vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS, 
          INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE)
    {
@@ -5270,10 +5290,9 @@
  *                   NOTE: rcp14_pd inst... precision 2^-14
  *                   rcp28_pd has relative error 2^-28 ... rounding??? 
  *                   NOTE: reciprocal is highly error prone for over/underflow
- *                   FIXME: to compare apple to apple, make div version 
  */
-      #define _MM512_RCP_PD _mm512_rcp14_pd  // rcp28 -- AVX512ER 
-      #define _MM512_MASKZ_RCP_PD _mm512_maskz_rcp14_pd  // rcp28
+      #define MM512_RCP_PD(VD_) VD_ = _mm512_rcp14_pd(VD_)  // rcp28 -- AVX512ER 
+      #define MM512_MASKZ_RCP_PD(K_, VD_) VD_ = _mm512_maskz_rcp14_pd(K_, VD_)  
 
       omp_set_num_threads(NUMOFTHREADS);
 /*
@@ -5295,9 +5314,11 @@
          
 	 for(INDEXTYPE b = 0; b < (graph.rows / BATCHSIZE); b += 1)
          {
+            // no cleanup since batchsize is multiple of 32 
 	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 32)
             {
 	       int ind = i-b*BATCHSIZE;
+               
                register __m512d vx0, vx1, vx2, vx3;
                register __m512d vy0, vy1, vy2, vy3;
 
@@ -5305,7 +5326,7 @@
                __m512d vfy0, vfy1, vfy2, vfy3;
 					
 	       vx0 = _mm512_loadu_pd(blasX + i);
-	       vx1 = _mm512_loadu_pd(blasX + i+8);
+	       vx1 = _mm512_loadu_pd(blasX + i+1*8);
 	       vx2 = _mm512_loadu_pd(blasX + i+2*8);
 	       vx3 = _mm512_loadu_pd(blasX + i+3*8);
 
@@ -5324,7 +5345,8 @@
 	       vfy2 = _mm512_set1_pd(0.0);
 	       vfy3 = _mm512_set1_pd(0.0);
                
-               #pragma omp parallel
+               #pragma omp parallel shared(vfx0, vfx1, vfx2, vfx3, vfy0, vfy1, \
+                     vfy2, vfy3)
                {
                   int id, nthreads; 
                   int chunksize;
@@ -5377,15 +5399,15 @@
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
                      
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     vd3 = _MM512_RCP_PD(vd3); 
+                     MM512_RCP_PD(vd0);
+                     MM512_RCP_PD(vd1);
+                     MM512_RCP_PD(vd2);
+                     MM512_RCP_PD(vd3);
 		     
                      //tfx0 += dx0 * d0;
                      vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -5433,16 +5455,16 @@
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
                         
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         
-                        vd0 = _MM512_RCP_PD(vd0); 
-                        vd1 = _MM512_RCP_PD(vd1); 
-                        vd2 = _MM512_RCP_PD(vd2); 
-                        vd3 = _MM512_RCP_PD(vd3); 
-                  
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
+                        
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
                         vtfx1 = _mm512_fmadd_pd(vdx1, vd1, vtfx1);
@@ -5495,25 +5517,29 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                         k0 = _cvtu32_mask8(ik0);
-                        vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
+                        //vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
+                        MM512_MASKZ_RCP_PD(k0, vd0); 
                      
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd1 = _MM512_RCP_PD(vd1); 
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         k1 = _cvtu32_mask8(ik1);
-                        vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
+                        //vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
+                        MM512_MASKZ_RCP_PD(k1, vd1); 
                      
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         k2 = _cvtu32_mask8(ik2);
-                        vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
+                        //vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
+                        MM512_MASKZ_RCP_PD(k2, vd2); 
+
                      
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         k3 = _cvtu32_mask8(ik3);
-                        vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
+                        //vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
+                        MM512_MASKZ_RCP_PD(k3, vd3); 
                   
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -5568,16 +5594,16 @@
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
                      
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     vd3 = _MM512_RCP_PD(vd3); 
-                  
+                     MM512_RCP_PD(vd0); 
+                     MM512_RCP_PD(vd1); 
+                     MM512_RCP_PD(vd2); 
+                     MM512_RCP_PD(vd3); 
+                     
                      //tfx0 += dx0 * d0;
                      vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
                      vtfx1 = _mm512_fmadd_pd(vdx1, vd1, vtfx1);
@@ -5623,16 +5649,16 @@
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
                         
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         
-                        vd0 = _MM512_RCP_PD(vd0); 
-                        vd1 = _MM512_RCP_PD(vd1); 
-                        vd2 = _MM512_RCP_PD(vd2); 
-                        vd3 = _MM512_RCP_PD(vd3); 
-                  
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
+                        
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
                         vtfx1 = _mm512_fmadd_pd(vdx1, vd1, vtfx1);
@@ -5764,11 +5790,11 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if 1
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
-                writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFileEFF("EFFUR4-VEC"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
          #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
@@ -5915,37 +5941,37 @@
 	             
                      //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		     vd0 = _mm512_mul_pd(vdx0, vdx0);
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                      vd0 = _MM512_RCP_PD(vd0); 
                      
 		     vd1 = _mm512_mul_pd(vdx1, vdx1);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                      vd1 = _MM512_RCP_PD(vd1); 
                      
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                      vd2 = _MM512_RCP_PD(vd2); 
                      
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      vd3 = _MM512_RCP_PD(vd3); 
                   
 		     vd4 = _mm512_mul_pd(vdx4, vdx4);
-                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
+                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
                      vd4 = _MM512_RCP_PD(vd4); 
                      
                      
 		     vd5 = _mm512_mul_pd(vdx5, vdx5);
-                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
+                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
                      vd5 = _MM512_RCP_PD(vd5); 
                      
                      
 		     vd6 = _mm512_mul_pd(vdx6, vdx6);
-                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
+                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                      vd6 = _MM512_RCP_PD(vd6); 
                      
 		     vd7 = _mm512_mul_pd(vdx7, vdx7);
-                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
+                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
                      vd7 = _MM512_RCP_PD(vd7); 
 		
 		     
@@ -6007,35 +6033,35 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                         vd0 = _MM512_RCP_PD(vd0); 
                      
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         vd1 = _MM512_RCP_PD(vd1); 
                      
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         vd2 = _MM512_RCP_PD(vd2); 
                      
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         vd3 = _MM512_RCP_PD(vd3); 
                   
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
                         vd4 = _MM512_RCP_PD(vd4); 
                      
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
                         vd5 = _MM512_RCP_PD(vd5); 
                      
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                         vd6 = _MM512_RCP_PD(vd6); 
                      
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
-                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
+                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
                         vd7 = _MM512_RCP_PD(vd7); 
 		     
                         //tfx0 += dx0 * d0;
@@ -6110,50 +6136,50 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                         k0 = _cvtu32_mask8(ik0);
                         //vd0 = _MM512_MASKZ_RCP_PD(vd0, k0, vd0); 
                         vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
                      
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         vd1 = _MM512_RCP_PD(vd1); 
                         k1 = _cvtu32_mask8(ik1);
                         //vd1 = _MM512_MASKZ_RCP_PD(vd1, k1, vd1); 
                         vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
                      
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         k2 = _cvtu32_mask8(ik2);
                         //vd2 = _MM512_MASKZ_RCP_PD(vd2, k2, vd2); 
                         vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
                      
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         k3 = _cvtu32_mask8(ik3);
                         //vd3 = _MM512_MASKZ_RCP_PD(vd3, k3, vd3); 
                         vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
                   
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
                         k4 = _cvtu32_mask8(ik4);
                         //vd4 = _MM512_MASKZ_RCP_PD(vd4, k4, vd4); 
                         vd4 = _MM512_MASKZ_RCP_PD(k4, vd4); 
                      
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
                         k5 = _cvtu32_mask8(ik5);
                         //vd5 = _MM512_MASKZ_RCP_PD(vd5, k5, vd5); 
                         vd5 = _MM512_MASKZ_RCP_PD(k5, vd5); 
                      
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                         k6 = _cvtu32_mask8(ik6);
                         //vd6 = _MM512_MASKZ_RCP_PD(vd6, k6, vd6); 
                         vd6 = _MM512_MASKZ_RCP_PD(k6, vd6); 
                      
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
-                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
+                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
                         k7 = _cvtu32_mask8(ik7);
                         //vd7 = _MM512_MASKZ_RCP_PD(vd7, k7, vd7); 
                         vd7 = _MM512_MASKZ_RCP_PD(k7, vd7); 
@@ -6223,37 +6249,37 @@
 	             
                      //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		     vd0 = _mm512_mul_pd(vdx0, vdx0);
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                      vd0 = _MM512_RCP_PD(vd0); 
                      
 		     vd1 = _mm512_mul_pd(vdx1, vdx1);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                      vd1 = _MM512_RCP_PD(vd1); 
                      
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                      vd2 = _MM512_RCP_PD(vd2); 
                      
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      vd3 = _MM512_RCP_PD(vd3); 
                   
 		     vd4 = _mm512_mul_pd(vdx4, vdx4);
-                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
+                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
                      vd4 = _MM512_RCP_PD(vd4); 
                      
                      
 		     vd5 = _mm512_mul_pd(vdx5, vdx5);
-                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
+                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
                      vd5 = _MM512_RCP_PD(vd5); 
                      
                      
 		     vd6 = _mm512_mul_pd(vdx6, vdx6);
-                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
+                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                      vd6 = _MM512_RCP_PD(vd6); 
                      
 		     vd7 = _mm512_mul_pd(vdx7, vdx7);
-                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
+                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
                      vd7 = _MM512_RCP_PD(vd7); 
 		
 		     
@@ -6314,37 +6340,37 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                         vd0 = _MM512_RCP_PD(vd0); 
                      
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         vd1 = _MM512_RCP_PD(vd1); 
                      
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         vd2 = _MM512_RCP_PD(vd2); 
                      
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         vd3 = _MM512_RCP_PD(vd3); 
                   
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
                         vd4 = _MM512_RCP_PD(vd4); 
                      
                      
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
                         vd5 = _MM512_RCP_PD(vd5); 
                      
                      
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                         vd6 = _MM512_RCP_PD(vd6); 
                      
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
-                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
+                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
                         vd7 = _MM512_RCP_PD(vd7); 
 		
 		     
@@ -6590,11 +6616,11 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if 1
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
-                writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFileEFF("EFFUR4_VEC"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
          #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
@@ -6609,6 +6635,7 @@
       INDEXTYPE LOOP = 0;
       VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
       VALUETYPE STEP = 1.0;
+      VALUETYPE *sumX, *sumY;
       
       
       vector<VALUETYPE> result;
@@ -6621,10 +6648,24 @@
  *                   NOTE: rcp14_pd inst... precision 2^-14
  *                   rcp28_pd has relative error 2^-28 ... rounding??? 
  *                   NOTE: reciprocal is highly error prone for over/underflow
- *                   FIXME: to compare apple to apple, make div version 
  */
-      #define _MM512_RCP_PD _mm512_rcp14_pd  // rcp28 -- AVX512ER 
-      #define _MM512_MASKZ_RCP_PD _mm512_maskz_rcp14_pd  // rcp28
+      #define MM512_RCP_PD(VD_) VD_ = _mm512_rcp14_pd(VD_)  // rcp28 -- AVX512ER 
+      #define MM512_MASKZ_RCP_PD(K_, VD_) VD_ = _mm512_maskz_rcp14_pd(K_, VD_)  
+/*
+ *    NOTE: to avoid overflow the stack, we allocate memory in heap to 
+ *    manage reduction .... 
+ *    FIXME: possible to combine it with pb_X and pb_Y???? 
+ *           size = NUMOFTHREADS * UNROLL * VLEN
+ *    solved the stack overflow by this way 
+ */
+   #define USED3ARR  0 
+
+   #if USED3ARR == 0 
+      sumX = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*4*8])));
+      sumY = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*4*8])));
+   #endif
 
       omp_set_num_threads(NUMOFTHREADS);
 /*
@@ -6655,11 +6696,22 @@
  *             to minimize critical section, we are using extra memory here
  *                Total mem = NUMOFTHREADS * 0.5KB
  */
+   #if USED3ARR == 1
+/*
+ *             FIXME: stack overflow ... so, didn't work with 18 threads... 
+ *             Since it depends on nthrds, create space in stack...!!! 
+ *    
+ */
                double sum[NUMOFTHREADS][4+4][8]; // 4+4 vector 
-	       for (m=0; m < NUMOFTHREADS; m++)
+	       // init it with zero  
+               for (m=0; m < NUMOFTHREADS; m++)
                  for (n=0; n < 8; n++)
                      for (k=0; k < 8; k++)
                         sum[m][n][k] = 0.0;
+   #else
+               for (m=0; m < NUMOFTHREADS*4*8; m++)
+                  sumX[m] = sumY[m] = 0.0;
+   #endif
 
 	       vx0 = _mm512_loadu_pd(blasX + i);
 	       vx1 = _mm512_loadu_pd(blasX + i+8);
@@ -6670,8 +6722,11 @@
 	       vy1 = _mm512_loadu_pd(blasY + i+1*8);
 	       vy2 = _mm512_loadu_pd(blasY + i+2*8);
 	       vy3 = _mm512_loadu_pd(blasY + i+3*8);
-					
-               #pragma omp parallel
+      #if USED3ARR == 1	
+               #pragma omp parallel shared(sum)
+      #else
+               #pragma omp parallel shared(sumX, sumY)
+      #endif
                {
                   int id, nthreads; 
                   int chunksize;
@@ -6722,15 +6777,15 @@
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
                      
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     vd3 = _MM512_RCP_PD(vd3); 
+                     MM512_RCP_PD(vd0);
+                     MM512_RCP_PD(vd1);
+                     MM512_RCP_PD(vd2);
+                     MM512_RCP_PD(vd3);
                   
                      //tfx0 += dx0 * d0;
                      vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6778,15 +6833,15 @@
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
                         
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         
-                        vd0 = _MM512_RCP_PD(vd0); 
-                        vd1 = _MM512_RCP_PD(vd1); 
-                        vd2 = _MM512_RCP_PD(vd2); 
-                        vd3 = _MM512_RCP_PD(vd3); 
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
                   
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6840,29 +6895,28 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                         k0 = _cvtu32_mask8(ik0);
-                        //vd0 = _MM512_MASKZ_RCP_PD(vd0, k0, vd0); 
-                        vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
+                        //vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
+                        MM512_MASKZ_RCP_PD(k0, vd0); 
                      
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd1 = _MM512_RCP_PD(vd1); 
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         k1 = _cvtu32_mask8(ik1);
-                        //vd1 = _MM512_MASKZ_RCP_PD(vd1, k1, vd1); 
-                        vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
+                        //vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
+                        MM512_MASKZ_RCP_PD(k1, vd1); 
                      
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         k2 = _cvtu32_mask8(ik2);
-                        //vd2 = _MM512_MASKZ_RCP_PD(vd2, k2, vd2); 
-                        vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
+                        //vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
+                        MM512_MASKZ_RCP_PD(k2, vd2); 
                      
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         k3 = _cvtu32_mask8(ik3);
-                        //vd3 = _MM512_MASKZ_RCP_PD(vd3, k3, vd3); 
-                        vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
+                        //vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
+                        MM512_MASKZ_RCP_PD(k3, vd3); 
 		     
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6916,15 +6970,15 @@
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
                      
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     vd3 = _MM512_RCP_PD(vd3); 
+                     MM512_RCP_PD(vd0); 
+                     MM512_RCP_PD(vd1); 
+                     MM512_RCP_PD(vd2); 
+                     MM512_RCP_PD(vd3); 
                   
                      //tfx0 += dx0 * d0;
                      vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6967,21 +7021,19 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                        vd0 = _MM512_RCP_PD(vd0); 
-                     
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd1 = _MM512_RCP_PD(vd1); 
-                     
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                        vd2 = _MM512_RCP_PD(vd2); 
-                     
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
-                        vd3 = _MM512_RCP_PD(vd3); 
-                  
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
 		     
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -7001,7 +7053,7 @@
  */
                   {
                      register __m512d tv; 
-                     
+            #if USED3ARR == 1 
                      tv = _mm512_loadu_pd(sum[id][0]);
                      vtfx0 = _mm512_add_pd(vtfx0, tv);
                      _mm512_storeu_pd(sum[id][0], vtfx0);
@@ -7009,7 +7061,16 @@
                      tv = _mm512_loadu_pd(sum[id][1]);
                      vtfx1 = _mm512_add_pd(vtfx0, tv);
                      _mm512_storeu_pd(sum[id][1], vtfx1);
-                     
+#if 1
+                     if (id == 0)
+                     {
+                        fprintf(stdout, "*** b=%d, i=%d\n", b, i);
+                        fprintf(stdout, "=======================\n");
+                        PrintVector(tv);
+                        PrintVector(vtfx1);
+                        fprintf(stdout, "*******\n");
+                     }
+#endif
                      tv = _mm512_loadu_pd(sum[id][2]);
                      vtfx2 = _mm512_add_pd(vtfx2, tv);
                      _mm512_storeu_pd(sum[id][2], vtfx2);
@@ -7034,20 +7095,103 @@
                      tv = _mm512_loadu_pd(sum[id][3+4]);
                      vtfy3 = _mm512_add_pd(vtfy3, tv);
                      _mm512_storeu_pd(sum[id][3+4], vtfy3);
+               #else
                      
+                     double *ptr = sumX + id*32;
+                     tv = _mm512_loadu_pd(ptr);
+                     vtfx0 = _mm512_add_pd(vtfx0, tv);
+                     _mm512_storeu_pd(ptr, vtfx0);
+                     
+                     tv = _mm512_loadu_pd(ptr+1*8);
+                     vtfx1 = _mm512_add_pd(vtfx0, tv);
+                     _mm512_storeu_pd(ptr+1*8, vtfx1);
+                     
+                     tv = _mm512_loadu_pd(ptr+2*8);
+                     vtfx2 = _mm512_add_pd(vtfx2, tv);
+                     _mm512_storeu_pd(ptr+2*8, vtfx2);
+
+                     tv = _mm512_loadu_pd(ptr+3*8);
+                     vtfx3 = _mm512_add_pd(vtfx3, tv);
+                     _mm512_storeu_pd(ptr+3*8, vtfx3);
+                     
+                     //fy1 += tfy1; 
+                     ptr = (double*) sumY + id*32;
+                     tv = _mm512_loadu_pd(ptr);
+                     vtfy0 = _mm512_add_pd(vtfy0, tv);
+                     _mm512_storeu_pd(ptr, vtfy0);
+                     
+                     tv = _mm512_loadu_pd(ptr+1*8);
+                     vtfy1 = _mm512_add_pd(vtfy0, tv);
+                     _mm512_storeu_pd(ptr+1*8, vtfy1);
+                     
+                     tv = _mm512_loadu_pd(ptr+2*8);
+                     vtfy2 = _mm512_add_pd(vtfy2, tv);
+                     _mm512_storeu_pd(ptr+2*8, vtfy2);
+
+                     tv = _mm512_loadu_pd(ptr+3*8);
+                     vtfy3 = _mm512_add_pd(vtfy3, tv);
+                     _mm512_storeu_pd(ptr+3*8, vtfy3);
+               #endif
                   }
                }
 /*
  *             Out of parallel region 
  */
+   #if 0
+               fprintf(stdout, "Printing value of all sum: \n");
+               fprintf(stdout, "******************************\n");
+               for (m=0; m < NUMOFTHREADS; m++)
+               {
+                  fprintf(stdout, "Thread_id = %d\n", m);
+                  for (n=0; n < 8; n++)
+                  {
+                     fprintf(stdout, "[ ");
+                     for (k=0; k < 8; k++)
+                     {
+                        fprintf(stdout, "%.2f, ", sum[m][n][k]);
+                     }
+                     fprintf(stdout, "]\n");
+                  }
+               }
+   #endif
 /*
  *             sum the results up:  
  */
-               for (m=1; m < NUMOFTHREADS; m++)
-                  for (n=0; n < 8; n++)
-                     for (k=0; k < 8; k++)
-                        sum[0][n][k] += sum[m][n][k];
+      #if USED3ARR == 1
 
+               for (m=1; m < NUMOFTHREADS; m++)
+               {
+                  fprintf(stdout, "thread_id=%d\n", m);
+                  fprintf(stdout, "===============");
+                  for (n=0; n < 8; n++)
+                  {
+                     fprintf(stdout, "(sum0, sum) = \n");
+                     for (k=0; k < 8; k++)
+                     {
+                        fprintf(stdout, "(%.2f,%.2f) ", 
+                                sum[0][n][k], sum[m][n][k]);
+                        sum[0][n][k] += sum[m][n][k];
+                     }
+                  }
+               }
+#if 0
+               fprintf(stdout, "Printing value of sum: \n");
+               fprintf(stdout, "******************************\n");
+               //for (m=0; m < NUMOFTHREADS; m++)
+               {
+                  fprintf(stdout, "position at 0: \n");
+                  for (n=0; n < 8; n++)
+                  {
+                     fprintf(stdout, "[ ");
+                     for (k=0; k < 8; k++)
+                     {
+                        fprintf(stdout, "%.2f, ", sum[0][n][k]);
+                     }
+                     fprintf(stdout, "]\n");
+                  }
+               }
+   #endif
+               
                __m512d tvsum;
 
                tvsum = _mm512_loadu_pd(sum[0][0]);
@@ -7055,6 +7199,11 @@
                
                tvsum = _mm512_loadu_pd(sum[0][1]);
                _mm512_storeu_pd(pb_X+ind+8, tvsum); 
+#if 1
+               fprintf(stdout, "loading sum[0] at the end:\n");
+                     PrintVector(tvsum); 
+               fprintf(stdout, "----------------------\n");
+#endif
                
                tvsum = _mm512_loadu_pd(sum[0][2]);
                _mm512_storeu_pd(pb_X+ind+2*8, tvsum);
@@ -7074,7 +7223,49 @@
 
                tvsum = _mm512_loadu_pd(sum[0][4+3]);
                _mm512_storeu_pd(pb_Y+ind+3*8, tvsum); 
+      #else
+               for(m=1; m < NUMOFTHREADS; m++)
+               {
+                  for (n=0; n < 32; n++)
+                  {
+                     sumX[n] += sumX[m*32+n];
+                  }
+               }
+
+
+               double *ptr = &sumX[0]; 
+               __m512d tvsum;
                
+               
+               tvsum = _mm512_loadu_pd(ptr);
+               _mm512_storeu_pd(pb_X+ind, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+1*8);
+               _mm512_storeu_pd(pb_X+ind+8, tvsum); 
+               
+#if 0
+                     PrintVector(tvsum); 
+#endif
+               tvsum = _mm512_loadu_pd(ptr+2*8);
+               _mm512_storeu_pd(pb_X+ind+2*8, tvsum);
+
+               tvsum = _mm512_loadu_pd(ptr+3*8);
+               _mm512_storeu_pd(pb_X+ind+3*8, tvsum); 
+               
+               // Y  
+               ptr = &sumY[0]; 
+               tvsum = _mm512_loadu_pd(ptr);
+               _mm512_storeu_pd(pb_Y+ind, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+8);
+               _mm512_storeu_pd(pb_Y+ind+8, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+2*8);
+               _mm512_storeu_pd(pb_Y+ind+2*8, tvsum);
+
+               tvsum = _mm512_loadu_pd(ptr+3*8);
+               _mm512_storeu_pd(pb_Y+ind+3*8, tvsum); 
+      #endif    
             }
             // connected nodes 
 	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
@@ -7163,14 +7354,18 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if 1
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
-                writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFileEFF("EFFUR4-VEC-NOSYNC"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
          #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
+#if USED3ARR == 0
+                  free(sumX);
+                  free(sumY);
+#endif 
                 return result;
         }
 
