@@ -19,7 +19,7 @@
                               // N=64: spup = 0.683  
                               // N=32: spup = 0.974  
 
-   //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46 energy=5.70207e+10 
+   //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46  
                        // N=128: spup = 0.30 
                        // N=64:  spup = 0.33
                        // N=32:  spup = 0.44
@@ -32,19 +32,19 @@
    
    //#define MDIM_VEC_UR4 1  // N=256: spup = 1.35 
                            // N=128: spup = 1.42  
-                           // N=64: spup = 1.53 sec=0.099 energy = 7.23105e+11 
+                           // N=64: spup = 1.53 sec=0.099  
                            // N=32: spup = 2.03  --- with 256 Eff, spup = 1.26   
    
-   //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  .... FIXME: energy=nan 
+   //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  ....  
                                   // N = 128: spup = 2.07 
                                   // N = 64: spup = 2.27  
    
-   //#define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
+   #define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
                                   // N=128: spup = 1.9
                                   // N=64: spup = 2.25 -- with 256 eff, spup = 1.85  
                                   // N=32: spup = 2.91 -- with 256 eff, spup = 1.89 
    //no splitting of two cases 
-   #define MDIM_VEC_UR4_MASK_NOSYNC 1  // N=256: 
+   //#define MDIM_VEC_UR4_MASK_NOSYNC 1  // N=256: 
                                        //
 
 	newalgo::newalgo(CSR<INDEXTYPE, VALUETYPE> &A_csr, string input, string outputd, int init, double weight, double th, string ifile){
