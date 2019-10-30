@@ -39,12 +39,12 @@
                                   // N = 128: spup = 2.07 
                                   // N = 64: spup = 2.27  
    
-   #define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
+   //#define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
                                   // N=128: spup = 1.9
                                   // N=64: spup = 2.25 -- with 256 eff, spup = 1.85  
                                   // N=32: spup = 2.91 -- with 256 eff, spup = 1.89 
    //no splitting of two cases 
-   //#define MDIM_VEC_UR4_MASK_NOSYNC 1  // N=256: 
+   #define MDIM_VEC_UR4_MASK_NOSYNC 1  // N=256: 
                                        //
 
 	newalgo::newalgo(CSR<INDEXTYPE, VALUETYPE> &A_csr, string input, string outputd, int init, double weight, double th, string ifile){
@@ -7284,7 +7284,7 @@
                   
                   for(j = id*chunksize; j < (id+1)*chunksize; j++)
                   {
-                     unsigned int n = j-i;
+                     int n = j-i;
                      double xj = blasX[j];
                      register __m512d vxj = _mm512_set1_pd(xj);
                      double yj = blasY[j];
@@ -7321,6 +7321,11 @@
                      vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                      vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      
+                     k0 = _cvtu32_mask8(ik0);
+                     k1 = _cvtu32_mask8(ik1);
+                     k2 = _cvtu32_mask8(ik2);
+                     k3 = _cvtu32_mask8(ik3);
+                     
                      MM512_MASKZ_RCP_PD(k0, vd0);
                      MM512_MASKZ_RCP_PD(k1, vd1);
                      MM512_MASKZ_RCP_PD(k2, vd2);
@@ -7345,7 +7350,7 @@
                   {
                      for (j=nthreads*chunksize; j < M; j++)
                      {
-                        unsigned int n = j-i;
+                        int n = j-i;
                         double xj = blasX[j];
                         register __m512d vxj = _mm512_set1_pd(xj);
                         double yj = blasY[j];
@@ -7380,6 +7385,11 @@
                         vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                     
+                        k0 = _cvtu32_mask8(ik0);
+                        k1 = _cvtu32_mask8(ik1);
+                        k2 = _cvtu32_mask8(ik2);
+                        k3 = _cvtu32_mask8(ik3);
                         
                         MM512_MASKZ_RCP_PD(k0, vd0); 
                         MM512_MASKZ_RCP_PD(k1, vd1); 
