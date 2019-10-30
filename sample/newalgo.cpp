@@ -2898,7 +2898,7 @@
       #define DOUT stderr     // debug output 
 
    //#define MDIM_UR8_NOSYNC 1  // N=256: spup = 0.572 to NDIM Efficient vecrion  
-                              // N=128 spup = 0.634    
+                              // N=128 spup = 0.634  FIXED  
                               // N=64: spup = 0.683  
                               // N=32: spup = 0.974  
 
@@ -2922,10 +2922,13 @@
                                   // N = 128: spup = 2.07 
                                   // N = 64: spup = 2.27  
    
-   #define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXME: energy=nan 
+   //#define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
                                   // N=128: spup = 1.9
                                   // N=64: spup = 2.25 -- with 256 eff, spup = 1.85  
                                   // N=32: spup = 2.91 -- with 256 eff, spup = 1.89 
+   //no splitting of two cases 
+   #define MDIM_VEC_UR4_MASK_NOSYNC 1  // N=256: 
+                                       //
 #if 1 
    void PrintVector(__m512d v1)
    {
@@ -3514,17 +3517,30 @@
       INDEXTYPE LOOP = 0;
       VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
       VALUETYPE STEP = 1.0;
+      VALUETYPE *sumX, *sumY;
       
       
       vector<VALUETYPE> result;
       pb_X = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
       pb_Y = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
       ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
+      
+#define MM512_RCP_PD(VD_) VD_ = _mm512_rcp14_pd(VD_)  // rcp28 -- AVX512ER 
+#define MM512_MASKZ_RCP_PD(K_, VD_) VD_ = _mm512_maskz_rcp14_pd(K_, VD_)  
+/*
+ *    NOTE: to avoid overflow the stack, we allocate memory in heap to 
+ *    manage reduction .... 
+ *    FIXME: possible to combine it with pb_X and pb_Y???? 
+ *           size = NUMOFTHREADS * UNROLL * VLEN
+ *    solved the stack overflow by this way 
+ *    FIXME: VLEN depends on VALUETYPE... following only works for double as 
+ *    a test case 
+ */
+      sumX = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*8])));
+      sumY = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*8])));
      
-#if 0
-      cout << "Rows = " << graph.rows << endl;
-      exit(1);
-#endif
 
       omp_set_num_threads(NUMOFTHREADS);
 /*
@@ -3550,7 +3566,9 @@
             {
 	       int ind = i-b*BATCHSIZE;
                int m, n;
-               double sum[NUMOFTHREADS][2][8]; // 8+8 sum for each threads, one cache line 
+               
+               for (m=0; m < NUMOFTHREADS*8; m++)
+                  sumX[m] = sumY[m] = 0.0;
 
                VALUETYPE fx0, fx1, fx2, fx3, fx4, fx5, fx6, fx7;
                VALUETYPE fy0, fy1, fy2, fy3, fy4, fy5, fy6, fy7;
@@ -3579,11 +3597,6 @@
 	       fx0 = fx1 = fx2 = fx3 = fx4 = fx5 = fx6 = fx7 = 0;
 	       fy0 = fy1 = fy2 = fy3 = fy4 = fy5 = fy6 = fy7 = 0;		
                
-               // init sum mem
-               for (m=0; m < NUMOFTHREADS; m++)
-                  for (n=0; n < 8; n++)
-                     sum[m][0][n] = sum[m][1][n] = 0.0;
-
                #pragma omp parallel
                {
                   int id, nthreads; 
@@ -3606,15 +3619,7 @@
  *                j is up to i... lower up case  
  */
                   chunksize = i/nthreads; 
-#if DEBUG == 1
-                  if (id == 0)
-                  {
-                     fprintf(DOUT, "**********\n");
-                     fprintf(DOUT, "lower half case: chunksize = %ld\n", 
-                           chunksize );
-                     fflush(DOUT);
-                  }
-#endif
+                  
                   for(j = id*chunksize; j < (id+1)*chunksize; j++)
                   {
                      VALUETYPE xj = blasX[j];
@@ -3670,10 +3675,6 @@
  */
                   #pragma omp single nowait
                   {
-         #if DEBUG == 1
-                     fprintf(DOUT, "i=%d: lower cleanup case = %d\n", i, 
-                           i-nthreads*chunksize); 
-         #endif
                      for (j=nthreads*chunksize; j < i; j++)
                      {
                         VALUETYPE xj = blasX[j];
@@ -3817,13 +3818,6 @@
                   for(INDEXTYPE j = i+8; j < graph.rows; j += 1)
  */ 
                   chunksize = (M - i - 8)/nthreads; 
-         #if DEBUG == 1
-                  if (id == 0)
-                  {
-                     fprintf(DOUT, "upper half case: chunksize = %d\n", 
-                           chunksize);
-                  }
-         #endif
 
                   for(j = (i+8)+id*chunksize; j < (i+8)+(id+1)*chunksize; j++)
                   {
@@ -3880,9 +3874,6 @@
  */
                   #pragma omp single nowait 
                   {
-         #if DEBUG == 1
-                     fprintf(DOUT, "i=%d (id=%d): lower cleanup case\n", i, id); 
-         #endif
                      for (j=(i+8)+nthreads*chunksize; j < M; j++)
                      {
                         VALUETYPE xj = blasX[j];
@@ -3938,23 +3929,23 @@
  *                Reduction using memory  
  */
                   {
-                     sum[id][0][0] += tfx0; 
-                     sum[id][0][1] += tfx1; 
-                     sum[id][0][2] += tfx2; 
-                     sum[id][0][3] += tfx3; 
-                     sum[id][0][4] += tfx4; 
-                     sum[id][0][5] += tfx5; 
-                     sum[id][0][6] += tfx6; 
-                     sum[id][0][7] += tfx7; 
+                     sumX[id] += tfx0; 
+                     sumX[id+1] += tfx1; 
+                     sumX[id+2] += tfx2; 
+                     sumX[id+3] += tfx3; 
+                     sumX[id+4] += tfx4; 
+                     sumX[id+5] += tfx5; 
+                     sumX[id+6] += tfx6; 
+                     sumX[id+7] += tfx7; 
                      
-                     sum[id][1][0] += tfy0; 
-                     sum[id][1][1] += tfy1; 
-                     sum[id][1][2] += tfy2; 
-                     sum[id][1][3] += tfy3; 
-                     sum[id][1][4] += tfy4; 
-                     sum[id][1][5] += tfy5; 
-                     sum[id][1][6] += tfy6; 
-                     sum[id][1][7] += tfy7; 
+                     sumY[id] += tfy0; 
+                     sumY[id+1] += tfy1; 
+                     sumY[id+2] += tfy2; 
+                     sumY[id+3] += tfy3; 
+                     sumY[id+4] += tfy4; 
+                     sumY[id+5] += tfy5; 
+                     sumY[id+6] += tfy6; 
+                     sumY[id+7] += tfy7; 
                   }
                }
 /*
@@ -3965,23 +3956,23 @@
  */
                for (m=0; m < NUMOFTHREADS; m++)
                {
-                  fx0 += sum[m][0][0]; 
-                  fx1 += sum[m][0][1]; 
-                  fx2 += sum[m][0][2]; 
-                  fx3 += sum[m][0][3]; 
-                  fx4 += sum[m][0][4]; 
-                  fx5 += sum[m][0][5]; 
-                  fx6 += sum[m][0][6]; 
-                  fx7 += sum[m][0][7]; 
+                  fx0 += sumX[m]; 
+                  fx1 += sumX[m+1]; 
+                  fx2 += sumX[m+2]; 
+                  fx3 += sumX[m+3]; 
+                  fx4 += sumX[m+4]; 
+                  fx5 += sumX[m+5]; 
+                  fx6 += sumX[m+6]; 
+                  fx7 += sumX[m+7]; 
                   
-                  fy0 += sum[m][1][0]; 
-                  fy1 += sum[m][1][1]; 
-                  fy2 += sum[m][1][2]; 
-                  fy3 += sum[m][1][3]; 
-                  fy4 += sum[m][1][4]; 
-                  fy5 += sum[m][1][5]; 
-                  fy6 += sum[m][1][6]; 
-                  fy7 += sum[m][1][7]; 
+                  fy0 += sumY[m]; 
+                  fy1 += sumY[m+1]; 
+                  fy2 += sumY[m+2]; 
+                  fy3 += sumY[m+3]; 
+                  fy4 += sumY[m+4]; 
+                  fy5 += sumY[m+5]; 
+                  fy6 += sumY[m+6]; 
+                  fy7 += sumY[m+7]; 
                }
 
 
@@ -4090,11 +4081,11 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if 1
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
-                writeToFileEFF("EFFUR"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFileEFF("EFFUR8-NOSYNC"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
          #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
@@ -5809,6 +5800,7 @@
       INDEXTYPE LOOP = 0;
       VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
       VALUETYPE STEP = 1.0;
+      VALUETYPE *sumX, *sumY;
       
       
       vector<VALUETYPE> result;
@@ -5823,8 +5815,21 @@
  *                   NOTE: reciprocal is highly error prone for over/underflow
  *                   FIXME: to compare apple to apple, make div version 
  */
-      #define _MM512_RCP_PD _mm512_rcp14_pd  // rcp28 -- AVX512ER 
-      #define _MM512_MASKZ_RCP_PD _mm512_maskz_rcp14_pd  // rcp28
+      #define MM512_RCP_PD(VD_) VD_ = _mm512_rcp14_pd(VD_)  // rcp28 -- AVX512ER 
+      #define MM512_MASKZ_RCP_PD(K_, VD_) VD_ = _mm512_maskz_rcp14_pd(K_, VD_)  
+/*
+ *    NOTE: to avoid overflow the stack, we allocate memory in heap to 
+ *    manage reduction .... 
+ *    FIXME: possible to combine it with pb_X and pb_Y???? 
+ *           size = NUMOFTHREADS * UNROLL * VLEN
+ *    solved the stack overflow by this way 
+ *    FIXME: VLEN depends on VALUETYPE... following only works for double as 
+ *    a test case 
+ */
+      sumX = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*8*8])));
+      sumY = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*8*8])));
 
       omp_set_num_threads(NUMOFTHREADS);
 /*
@@ -5856,11 +5861,8 @@
  *             to minimize critical section, we are using extra memory here
  *                Total mem = NUMOFTHREADS * 1KB
  */
-               double sum[NUMOFTHREADS][16][8]; // 8+8 vector 
-	       for (m=0; m < NUMOFTHREADS; m++)
-                 for (n=0; n < 16; n++)
-                     for (k=0; k < 8; k++)
-                        sum[m][n][k] = 0.0;
+               for (m=0; m < NUMOFTHREADS*8*8; m++)
+                  sumX[m] = sumY[m] = 0.0;
 
 	       vx0 = _mm512_loadu_pd(blasX + i);
 	       vx1 = _mm512_loadu_pd(blasX + i+8);
@@ -5941,39 +5943,31 @@
 	             
                      //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		     vd0 = _mm512_mul_pd(vdx0, vdx0);
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     
 		     vd1 = _mm512_mul_pd(vdx1, vdx1);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
-                     vd3 = _MM512_RCP_PD(vd3); 
-                  
 		     vd4 = _mm512_mul_pd(vdx4, vdx4);
-                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
-                     vd4 = _MM512_RCP_PD(vd4); 
-                     
-                     
 		     vd5 = _mm512_mul_pd(vdx5, vdx5);
-                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
-                     vd5 = _MM512_RCP_PD(vd5); 
-                     
-                     
 		     vd6 = _mm512_mul_pd(vdx6, vdx6);
-                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
-                     vd6 = _MM512_RCP_PD(vd6); 
-                     
 		     vd7 = _mm512_mul_pd(vdx7, vdx7);
+                     
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                      vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
-                     vd7 = _MM512_RCP_PD(vd7); 
-		
+                     
+                     MM512_RCP_PD(vd0); 
+                     MM512_RCP_PD(vd1); 
+                     MM512_RCP_PD(vd2); 
+                     MM512_RCP_PD(vd3); 
+                     MM512_RCP_PD(vd4); 
+                     MM512_RCP_PD(vd5); 
+                     MM512_RCP_PD(vd6); 
+                     MM512_RCP_PD(vd7); 
 		     
                      //tfx0 += dx0 * d0;
                      vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6000,10 +5994,6 @@
  */
                   #pragma omp single nowait
                   {
-         #if DEBUG == 1
-                     fprintf(DOUT, "i=%d: lower cleanup case = %d\n", i, 
-                           i-nthreads*chunksize); 
-         #endif
                      for (j=nthreads*chunksize; j < i; j++)
                      {
                         double xj = blasX[j];
@@ -6033,36 +6023,31 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
-                        vd0 = _MM512_RCP_PD(vd0); 
-                     
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
-                        vd1 = _MM512_RCP_PD(vd1); 
-                     
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
-                        vd2 = _MM512_RCP_PD(vd2); 
-                     
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
-                        vd3 = _MM512_RCP_PD(vd3); 
-                  
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
-                        vd4 = _MM512_RCP_PD(vd4); 
-                     
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
-                        vd5 = _MM512_RCP_PD(vd5); 
-                     
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
-                        vd6 = _MM512_RCP_PD(vd6); 
-                     
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                         vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
-                        vd7 = _MM512_RCP_PD(vd7); 
+                        
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
+                        MM512_RCP_PD(vd4); 
+                        MM512_RCP_PD(vd5); 
+                        MM512_RCP_PD(vd6); 
+                        MM512_RCP_PD(vd7); 
 		     
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6102,7 +6087,6 @@
                         // by default all 1 (for 8 elements)
                         unsigned int ik0, ik1, ik2, ik3, ik4, ik5, ik6, ik7; 
                         __mmask8 k0, k1, k2, k3, k4, k5, k6, k7; 
-            #if 1
 /*
  *                      Possible to further optimize.. will think later 
  */
@@ -6136,53 +6120,40 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
-                        k0 = _cvtu32_mask8(ik0);
-                        //vd0 = _MM512_MASKZ_RCP_PD(vd0, k0, vd0); 
-                        vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
-                     
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
-                        vd1 = _MM512_RCP_PD(vd1); 
-                        k1 = _cvtu32_mask8(ik1);
-                        //vd1 = _MM512_MASKZ_RCP_PD(vd1, k1, vd1); 
-                        vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
-                     
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
-                        k2 = _cvtu32_mask8(ik2);
-                        //vd2 = _MM512_MASKZ_RCP_PD(vd2, k2, vd2); 
-                        vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
-                     
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
-                        k3 = _cvtu32_mask8(ik3);
-                        //vd3 = _MM512_MASKZ_RCP_PD(vd3, k3, vd3); 
-                        vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
-                  
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
-                        k4 = _cvtu32_mask8(ik4);
-                        //vd4 = _MM512_MASKZ_RCP_PD(vd4, k4, vd4); 
-                        vd4 = _MM512_MASKZ_RCP_PD(k4, vd4); 
-                     
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
-                        k5 = _cvtu32_mask8(ik5);
-                        //vd5 = _MM512_MASKZ_RCP_PD(vd5, k5, vd5); 
-                        vd5 = _MM512_MASKZ_RCP_PD(k5, vd5); 
-                     
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
-                        k6 = _cvtu32_mask8(ik6);
-                        //vd6 = _MM512_MASKZ_RCP_PD(vd6, k6, vd6); 
-                        vd6 = _MM512_MASKZ_RCP_PD(k6, vd6); 
-                     
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                         vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
+                        
+                        k0 = _cvtu32_mask8(ik0);
+                        k1 = _cvtu32_mask8(ik1);
+                        k2 = _cvtu32_mask8(ik2);
+                        k3 = _cvtu32_mask8(ik3);
+                        k4 = _cvtu32_mask8(ik4);
+                        k5 = _cvtu32_mask8(ik5);
+                        k6 = _cvtu32_mask8(ik6);
                         k7 = _cvtu32_mask8(ik7);
-                        //vd7 = _MM512_MASKZ_RCP_PD(vd7, k7, vd7); 
-                        vd7 = _MM512_MASKZ_RCP_PD(k7, vd7); 
+                        
+                        MM512_MASKZ_RCP_PD(k0, vd0); 
+                        MM512_MASKZ_RCP_PD(k1, vd1); 
+                        MM512_MASKZ_RCP_PD(k2, vd2); 
+                        MM512_MASKZ_RCP_PD(k3, vd3); 
+                        MM512_MASKZ_RCP_PD(k4, vd4); 
+                        MM512_MASKZ_RCP_PD(k5, vd5); 
+                        MM512_MASKZ_RCP_PD(k6, vd6); 
+                        MM512_MASKZ_RCP_PD(k7, vd7); 
 		     
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6203,7 +6174,6 @@
                         vtfy5 = _mm512_fmadd_pd(vdy5, vd5, vtfy5);
                         vtfy6 = _mm512_fmadd_pd(vdy6, vd6, vtfy6);
                         vtfy7 = _mm512_fmadd_pd(vdy7, vd7, vtfy7);
-            #endif
                      }
                   }
 /*
@@ -6212,13 +6182,6 @@
                   for(INDEXTYPE j = i+8; j < graph.rows; j += 1)
  */ 
                   chunksize = (M - i - 64)/nthreads; 
-         #if DEBUG == 1
-                  if (id == 0)
-                  {
-                     fprintf(DOUT, "upper half case: chunksize = %d\n", 
-                           chunksize);
-                  }
-         #endif
 
                   for(j = (i+64)+id*chunksize; j < (i+64)+(id+1)*chunksize; j++)
                   {
@@ -6249,38 +6212,31 @@
 	             
                      //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		     vd0 = _mm512_mul_pd(vdx0, vdx0);
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     
 		     vd1 = _mm512_mul_pd(vdx1, vdx1);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
-                     vd3 = _MM512_RCP_PD(vd3); 
-                  
 		     vd4 = _mm512_mul_pd(vdx4, vdx4);
-                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
-                     vd4 = _MM512_RCP_PD(vd4); 
-                     
-                     
 		     vd5 = _mm512_mul_pd(vdx5, vdx5);
-                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
-                     vd5 = _MM512_RCP_PD(vd5); 
-                     
-                     
 		     vd6 = _mm512_mul_pd(vdx6, vdx6);
-                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
-                     vd6 = _MM512_RCP_PD(vd6); 
-                     
 		     vd7 = _mm512_mul_pd(vdx7, vdx7);
+                     
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                      vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
-                     vd7 = _MM512_RCP_PD(vd7); 
+                     
+                     MM512_RCP_PD(vd0); 
+                     MM512_RCP_PD(vd1); 
+                     MM512_RCP_PD(vd2); 
+                     MM512_RCP_PD(vd3); 
+                     MM512_RCP_PD(vd4); 
+                     MM512_RCP_PD(vd5); 
+                     MM512_RCP_PD(vd6); 
+                     MM512_RCP_PD(vd7); 
 		
 		     
                      //tfx0 += dx0 * d0;
@@ -6308,9 +6264,6 @@
  */
                   #pragma omp single nowait 
                   {
-         #if DEBUG == 1
-                     fprintf(DOUT, "i=%d (id=%d): lower cleanup case\n", i, id); 
-         #endif
                      for (j=(i+64)+nthreads*chunksize; j < M; j++)
                      {
                         double xj = blasX[j];
@@ -6340,39 +6293,31 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
-                        vd0 = _MM512_RCP_PD(vd0); 
-                     
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
-                        vd1 = _MM512_RCP_PD(vd1); 
-                     
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
-                        vd2 = _MM512_RCP_PD(vd2); 
-                     
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
-                        vd3 = _MM512_RCP_PD(vd3); 
-                  
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
-                        vd4 = _MM512_RCP_PD(vd4); 
-                     
-                     
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
-                        vd5 = _MM512_RCP_PD(vd5); 
-                     
-                     
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
-                        vd6 = _MM512_RCP_PD(vd6); 
-                     
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
                         vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
-                        vd7 = _MM512_RCP_PD(vd7); 
-		
+                        
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
+                        MM512_RCP_PD(vd4); 
+                        MM512_RCP_PD(vd5); 
+                        MM512_RCP_PD(vd6); 
+                        MM512_RCP_PD(vd7); 
 		     
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -6400,133 +6345,142 @@
  */
                   {
                      register __m512d tv; 
+                     double *ptr = sumX + id*64;
                      
-                     tv = _mm512_loadu_pd(sum[id][0]);
+                     tv = _mm512_loadu_pd(ptr);
                      vtfx0 = _mm512_add_pd(vtfx0, tv);
-                     _mm512_storeu_pd(sum[id][0], vtfx0);
+                     _mm512_storeu_pd(ptr, vtfx0);
                      
-                     tv = _mm512_loadu_pd(sum[id][1]);
-                     vtfx1 = _mm512_add_pd(vtfx0, tv);
-                     _mm512_storeu_pd(sum[id][1], vtfx1);
+                     tv = _mm512_loadu_pd(ptr+1*8);
+                     vtfx1 = _mm512_add_pd(vtfx1, tv);
+                     _mm512_storeu_pd(ptr+1*8, vtfx1);
                      
-                     tv = _mm512_loadu_pd(sum[id][2]);
+                     tv = _mm512_loadu_pd(ptr+2*8);
                      vtfx2 = _mm512_add_pd(vtfx2, tv);
-                     _mm512_storeu_pd(sum[id][2], vtfx2);
+                     _mm512_storeu_pd(ptr+2*8, vtfx2);
 
-                     tv = _mm512_loadu_pd(sum[id][3]);
+                     tv = _mm512_loadu_pd(ptr+3*8);
                      vtfx3 = _mm512_add_pd(vtfx3, tv);
-                     _mm512_storeu_pd(sum[id][3], vtfx3);
+                     _mm512_storeu_pd(ptr+3*8, vtfx3);
                      
-                     tv = _mm512_loadu_pd(sum[id][4]);
+                     tv = _mm512_loadu_pd(ptr+4*8);
                      vtfx4 = _mm512_add_pd(vtfx4, tv);
-                     _mm512_storeu_pd(sum[id][4], vtfx4);
+                     _mm512_storeu_pd(ptr+4*8, vtfx4);
                      
-                     tv = _mm512_loadu_pd(sum[id][5]);
+                     tv = _mm512_loadu_pd(ptr+5*8);
                      vtfx5 = _mm512_add_pd(vtfx5, tv);
-                     _mm512_storeu_pd(sum[id][5], vtfx5);
-
-                     tv = _mm512_loadu_pd(sum[id][6]);
+                     _mm512_storeu_pd(ptr+5*8, vtfx5);
+                     
+                     tv = _mm512_loadu_pd(ptr+6*8);
                      vtfx6 = _mm512_add_pd(vtfx6, tv);
-                     _mm512_storeu_pd(sum[id][6], vtfx6);
+                     _mm512_storeu_pd(ptr+6*8, vtfx6);
 
-                     tv = _mm512_loadu_pd(sum[id][7]);
+                     tv = _mm512_loadu_pd(ptr+7*8);
                      vtfx7 = _mm512_add_pd(vtfx7, tv);
-                     _mm512_storeu_pd(sum[id][7], vtfx7);
+                     _mm512_storeu_pd(ptr+7*8, vtfx7);
                      
                      //fy1 += tfy1; 
-                     tv = _mm512_loadu_pd(sum[id][0+8]);
+                     ptr = (double*) sumY + id*64;
+                     tv = _mm512_loadu_pd(ptr);
                      vtfy0 = _mm512_add_pd(vtfy0, tv);
-                     _mm512_storeu_pd(sum[id][0+8], vtfy0);
+                     _mm512_storeu_pd(ptr, vtfy0);
                      
-                     tv = _mm512_loadu_pd(sum[id][1+8]);
-                     vtfy1 = _mm512_add_pd(vtfy0, tv);
-                     _mm512_storeu_pd(sum[id][1+8], vtfy1);
+                     tv = _mm512_loadu_pd(ptr+1*8);
+                     vtfy1 = _mm512_add_pd(vtfy1, tv);
+                     _mm512_storeu_pd(ptr+1*8, vtfy1);
                      
-                     tv = _mm512_loadu_pd(sum[id][2+8]);
+                     tv = _mm512_loadu_pd(ptr+2*8);
                      vtfy2 = _mm512_add_pd(vtfy2, tv);
-                     _mm512_storeu_pd(sum[id][2+8], vtfy2);
+                     _mm512_storeu_pd(ptr+2*8, vtfy2);
 
-                     tv = _mm512_loadu_pd(sum[id][3+8]);
+                     tv = _mm512_loadu_pd(ptr+3*8);
                      vtfy3 = _mm512_add_pd(vtfy3, tv);
-                     _mm512_storeu_pd(sum[id][3+8], vtfy3);
+                     _mm512_storeu_pd(ptr+3*8, vtfy3);
                      
-                     tv = _mm512_loadu_pd(sum[id][4+8]);
+                     tv = _mm512_loadu_pd(ptr+4*8);
                      vtfy4 = _mm512_add_pd(vtfy4, tv);
-                     _mm512_storeu_pd(sum[id][4+8], vtfy4);
+                     _mm512_storeu_pd(ptr+4*8, vtfy4);
                      
-                     tv = _mm512_loadu_pd(sum[id][5+8]);
+                     tv = _mm512_loadu_pd(ptr+5*8);
                      vtfy5 = _mm512_add_pd(vtfy5, tv);
-                     _mm512_storeu_pd(sum[id][5+8], vtfy5);
-
-                     tv = _mm512_loadu_pd(sum[id][6+8]);
+                     _mm512_storeu_pd(ptr+5*8, vtfy5);
+                     
+                     tv = _mm512_loadu_pd(ptr+6*8);
                      vtfy6 = _mm512_add_pd(vtfy6, tv);
-                     _mm512_storeu_pd(sum[id][6+8], vtfy6);
+                     _mm512_storeu_pd(ptr+6*8, vtfy6);
 
-                     tv = _mm512_loadu_pd(sum[id][7+8]);
+                     tv = _mm512_loadu_pd(ptr+7*8);
                      vtfy7 = _mm512_add_pd(vtfy7, tv);
-                     _mm512_storeu_pd(sum[id][7+8], vtfy7);
+                     _mm512_storeu_pd(ptr+7*8, vtfy7);
+
                   }
                }
 /*
  *             Out of parallel region 
  */
 /*
- *             sum the results up:  
+ *             sum the results up: 
+ *             FIXME: use intrinsic to speed it up 
  */
-               for (m=1; m < NUMOFTHREADS; m++)
-                  for (n=0; n < 16; n++)
-                     for (k=0; k < 8; k++)
-                        sum[0][n][k] += sum[m][n][k];
+               for(m=1; m < NUMOFTHREADS; m++)
+               {
+                  for (n=0; n < 64; n++)
+                  {
+                     sumX[n] += sumX[m*32+n];
+                     sumY[n] += sumY[m*32+n];
+                  }
+               }
 
+               double *ptr = &sumX[0]; 
                __m512d tvsum;
-
-               tvsum = _mm512_loadu_pd(sum[0][0]);
+               
+               tvsum = _mm512_loadu_pd(ptr);
                _mm512_storeu_pd(pb_X+ind, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][1]);
+               tvsum = _mm512_loadu_pd(ptr+1*8);
                _mm512_storeu_pd(pb_X+ind+8, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][2]);
+               tvsum = _mm512_loadu_pd(ptr+2*8);
                _mm512_storeu_pd(pb_X+ind+2*8, tvsum);
 
-               tvsum = _mm512_loadu_pd(sum[0][3]);
+               tvsum = _mm512_loadu_pd(ptr+3*8);
                _mm512_storeu_pd(pb_X+ind+3*8, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][4]);
+               tvsum = _mm512_loadu_pd(ptr+4*8);
                _mm512_storeu_pd(pb_X+ind+4*8, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][5]);
+               tvsum = _mm512_loadu_pd(ptr+5*8);
                _mm512_storeu_pd(pb_X+ind+5*8, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][6]);
-               _mm512_storeu_pd(pb_X+ind+6*8, tvsum); 
-               
-               tvsum = _mm512_loadu_pd(sum[0][7]);
+               tvsum = _mm512_loadu_pd(ptr+6*8);
+               _mm512_storeu_pd(pb_X+ind+6*8, tvsum);
+
+               tvsum = _mm512_loadu_pd(ptr+7*8);
                _mm512_storeu_pd(pb_X+ind+7*8, tvsum); 
-               
                // Y  
-               tvsum = _mm512_loadu_pd(sum[0][8+0]);
+               ptr = &sumY[0]; 
+               tvsum = _mm512_loadu_pd(ptr);
                _mm512_storeu_pd(pb_Y+ind, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][8+1]);
+               tvsum = _mm512_loadu_pd(ptr+8);
                _mm512_storeu_pd(pb_Y+ind+8, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][8+2]);
+               tvsum = _mm512_loadu_pd(ptr+2*8);
                _mm512_storeu_pd(pb_Y+ind+2*8, tvsum);
 
-               tvsum = _mm512_loadu_pd(sum[0][8+3]);
+               tvsum = _mm512_loadu_pd(ptr+3*8);
                _mm512_storeu_pd(pb_Y+ind+3*8, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][8+4]);
+               tvsum = _mm512_loadu_pd(ptr+4*8);
                _mm512_storeu_pd(pb_Y+ind+4*8, tvsum); 
+
+               tvsum = _mm512_loadu_pd(ptr+5*8);
+               _mm512_storeu_pd(pb_Y+ind+5*8, tvsum); 
                
-               tvsum = _mm512_loadu_pd(sum[0][8+5]);
-               _mm512_storeu_pd(pb_Y+ind+5*8, tvsum);
-
-               tvsum = _mm512_loadu_pd(sum[0][8+6]);
-               _mm512_storeu_pd(pb_Y+ind+6*8, tvsum);
-
-               tvsum = _mm512_loadu_pd(sum[0][8+7]);
+               tvsum = _mm512_loadu_pd(ptr+6*8);
+               _mm512_storeu_pd(pb_Y+ind+6*8, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+7*8);
                _mm512_storeu_pd(pb_Y+ind+7*8, tvsum); 
             }
             // connected nodes 
@@ -6620,7 +6574,7 @@
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
-                writeToFileEFF("EFFUR4_VEC"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFileEFF("EFFUR8_VEC_NOSYNC"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
          #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
@@ -6657,15 +6611,13 @@
  *    FIXME: possible to combine it with pb_X and pb_Y???? 
  *           size = NUMOFTHREADS * UNROLL * VLEN
  *    solved the stack overflow by this way 
+ *    FIXME: VLEN depends on VALUETYPE... following only works for double as 
+ *    a test case 
  */
-   #define USED3ARR  0 
-
-   #if USED3ARR == 0 
       sumX = static_cast<VALUETYPE *> 
                (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*4*8])));
       sumY = static_cast<VALUETYPE *> 
                (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*4*8])));
-   #endif
 
       omp_set_num_threads(NUMOFTHREADS);
 /*
@@ -6694,24 +6646,10 @@
                register __m512d vy0, vy1, vy2, vy3;
 /*
  *             to minimize critical section, we are using extra memory here
- *                Total mem = NUMOFTHREADS * 0.5KB
+ *             FIXME: use intrinsic to optimize it, like: XoR  
  */
-   #if USED3ARR == 1
-/*
- *             FIXME: stack overflow ... so, didn't work with 18 threads... 
- *             Since it depends on nthrds, create space in stack...!!! 
- *    
- */
-               double sum[NUMOFTHREADS][4+4][8]; // 4+4 vector 
-	       // init it with zero  
-               for (m=0; m < NUMOFTHREADS; m++)
-                 for (n=0; n < 8; n++)
-                     for (k=0; k < 8; k++)
-                        sum[m][n][k] = 0.0;
-   #else
                for (m=0; m < NUMOFTHREADS*4*8; m++)
                   sumX[m] = sumY[m] = 0.0;
-   #endif
 
 	       vx0 = _mm512_loadu_pd(blasX + i);
 	       vx1 = _mm512_loadu_pd(blasX + i+8);
@@ -6722,11 +6660,10 @@
 	       vy1 = _mm512_loadu_pd(blasY + i+1*8);
 	       vy2 = _mm512_loadu_pd(blasY + i+2*8);
 	       vy3 = _mm512_loadu_pd(blasY + i+3*8);
-      #if USED3ARR == 1	
-               #pragma omp parallel shared(sum)
-      #else
+/*
+ *             starting of parallel region 
+ */
                #pragma omp parallel shared(sumX, sumY)
-      #endif
                {
                   int id, nthreads; 
                   int chunksize;
@@ -6804,10 +6741,6 @@
  */
                   #pragma omp single nowait
                   {
-         #if DEBUG == 1
-                     fprintf(DOUT, "i=%d: lower cleanup case = %d\n", i, 
-                           i-nthreads*chunksize); 
-         #endif
                      for (j=nthreads*chunksize; j < i; j++)
                      {
                         double xj = blasX[j];
@@ -6872,7 +6805,6 @@
                         // by default all 1 (for 8 elements)
                         unsigned int ik0, ik1, ik2, ik3; 
                         __mmask8 k0, k1, k2, k3; 
-            #if 1  // to debug 
 /*
  *                      Possible to further optimize.. will think later 
  */
@@ -6897,25 +6829,21 @@
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
                         vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
                         k0 = _cvtu32_mask8(ik0);
-                        //vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
                         MM512_MASKZ_RCP_PD(k0, vd0); 
                      
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
                         vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         k1 = _cvtu32_mask8(ik1);
-                        //vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
                         MM512_MASKZ_RCP_PD(k1, vd1); 
                      
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
                         vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         k2 = _cvtu32_mask8(ik2);
-                        //vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
                         MM512_MASKZ_RCP_PD(k2, vd2); 
                      
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
                         vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                         k3 = _cvtu32_mask8(ik3);
-                        //vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
                         MM512_MASKZ_RCP_PD(k3, vd3); 
 		     
                         //tfx0 += dx0 * d0;
@@ -6929,7 +6857,6 @@
                         vtfy1 = _mm512_fmadd_pd(vdy1, vd1, vtfy1);
                         vtfy2 = _mm512_fmadd_pd(vdy2, vd2, vtfy2);
                         vtfy3 = _mm512_fmadd_pd(vdy3, vd3, vtfy3);
-            #endif
                      }
                   }
 /*
@@ -6937,13 +6864,6 @@
  *
  */ 
                   chunksize = (M - i - 32)/nthreads; 
-         #if DEBUG == 1
-                  if (id == 0)
-                  {
-                     fprintf(DOUT, "upper half case: chunksize = %d\n", 
-                           chunksize);
-                  }
-         #endif
 
                   for(j = (i+32)+id*chunksize; j < (i+32)+(id+1)*chunksize; j++)
                   {
@@ -6997,9 +6917,6 @@
  */
                   #pragma omp single nowait 
                   {
-         #if DEBUG == 1
-                     fprintf(DOUT, "i=%d (id=%d): lower cleanup case\n", i, id); 
-         #endif
                      for (j=(i+32)+nthreads*chunksize; j < M; j++)
                      {
                         double xj = blasX[j];
@@ -7053,57 +6970,14 @@
  */
                   {
                      register __m512d tv; 
-            #if USED3ARR == 1 
-                     tv = _mm512_loadu_pd(sum[id][0]);
-                     vtfx0 = _mm512_add_pd(vtfx0, tv);
-                     _mm512_storeu_pd(sum[id][0], vtfx0);
-                     
-                     tv = _mm512_loadu_pd(sum[id][1]);
-                     vtfx1 = _mm512_add_pd(vtfx0, tv);
-                     _mm512_storeu_pd(sum[id][1], vtfx1);
-#if 1
-                     if (id == 0)
-                     {
-                        fprintf(stdout, "*** b=%d, i=%d\n", b, i);
-                        fprintf(stdout, "=======================\n");
-                        PrintVector(tv);
-                        PrintVector(vtfx1);
-                        fprintf(stdout, "*******\n");
-                     }
-#endif
-                     tv = _mm512_loadu_pd(sum[id][2]);
-                     vtfx2 = _mm512_add_pd(vtfx2, tv);
-                     _mm512_storeu_pd(sum[id][2], vtfx2);
-
-                     tv = _mm512_loadu_pd(sum[id][3]);
-                     vtfx3 = _mm512_add_pd(vtfx3, tv);
-                     _mm512_storeu_pd(sum[id][3], vtfx3);
-                     
-                     //fy1 += tfy1; 
-                     tv = _mm512_loadu_pd(sum[id][0+4]);
-                     vtfy0 = _mm512_add_pd(vtfy0, tv);
-                     _mm512_storeu_pd(sum[id][0+4], vtfy0);
-                     
-                     tv = _mm512_loadu_pd(sum[id][1+4]);
-                     vtfy1 = _mm512_add_pd(vtfy0, tv);
-                     _mm512_storeu_pd(sum[id][1+4], vtfy1);
-                     
-                     tv = _mm512_loadu_pd(sum[id][2+4]);
-                     vtfy2 = _mm512_add_pd(vtfy2, tv);
-                     _mm512_storeu_pd(sum[id][2+4], vtfy2);
-
-                     tv = _mm512_loadu_pd(sum[id][3+4]);
-                     vtfy3 = _mm512_add_pd(vtfy3, tv);
-                     _mm512_storeu_pd(sum[id][3+4], vtfy3);
-               #else
-                     
                      double *ptr = sumX + id*32;
+                     
                      tv = _mm512_loadu_pd(ptr);
                      vtfx0 = _mm512_add_pd(vtfx0, tv);
                      _mm512_storeu_pd(ptr, vtfx0);
                      
                      tv = _mm512_loadu_pd(ptr+1*8);
-                     vtfx1 = _mm512_add_pd(vtfx0, tv);
+                     vtfx1 = _mm512_add_pd(vtfx1, tv);
                      _mm512_storeu_pd(ptr+1*8, vtfx1);
                      
                      tv = _mm512_loadu_pd(ptr+2*8);
@@ -7121,7 +6995,7 @@
                      _mm512_storeu_pd(ptr, vtfy0);
                      
                      tv = _mm512_loadu_pd(ptr+1*8);
-                     vtfy1 = _mm512_add_pd(vtfy0, tv);
+                     vtfy1 = _mm512_add_pd(vtfy1, tv);
                      _mm512_storeu_pd(ptr+1*8, vtfy1);
                      
                      tv = _mm512_loadu_pd(ptr+2*8);
@@ -7131,104 +7005,21 @@
                      tv = _mm512_loadu_pd(ptr+3*8);
                      vtfy3 = _mm512_add_pd(vtfy3, tv);
                      _mm512_storeu_pd(ptr+3*8, vtfy3);
-               #endif
                   }
                }
 /*
  *             Out of parallel region 
  */
-   #if 0
-               fprintf(stdout, "Printing value of all sum: \n");
-               fprintf(stdout, "******************************\n");
-               for (m=0; m < NUMOFTHREADS; m++)
-               {
-                  fprintf(stdout, "Thread_id = %d\n", m);
-                  for (n=0; n < 8; n++)
-                  {
-                     fprintf(stdout, "[ ");
-                     for (k=0; k < 8; k++)
-                     {
-                        fprintf(stdout, "%.2f, ", sum[m][n][k]);
-                     }
-                     fprintf(stdout, "]\n");
-                  }
-               }
-   #endif
 /*
- *             sum the results up:  
+ *             sum the results up: 
+ *             FIXME: use intrinsic to speed it up 
  */
-      #if USED3ARR == 1
-
-               for (m=1; m < NUMOFTHREADS; m++)
-               {
-                  fprintf(stdout, "thread_id=%d\n", m);
-                  fprintf(stdout, "===============");
-                  for (n=0; n < 8; n++)
-                  {
-                     fprintf(stdout, "(sum0, sum) = \n");
-                     for (k=0; k < 8; k++)
-                     {
-                        fprintf(stdout, "(%.2f,%.2f) ", 
-                                sum[0][n][k], sum[m][n][k]);
-                        sum[0][n][k] += sum[m][n][k];
-                     }
-                  }
-               }
-#if 0
-               fprintf(stdout, "Printing value of sum: \n");
-               fprintf(stdout, "******************************\n");
-               //for (m=0; m < NUMOFTHREADS; m++)
-               {
-                  fprintf(stdout, "position at 0: \n");
-                  for (n=0; n < 8; n++)
-                  {
-                     fprintf(stdout, "[ ");
-                     for (k=0; k < 8; k++)
-                     {
-                        fprintf(stdout, "%.2f, ", sum[0][n][k]);
-                     }
-                     fprintf(stdout, "]\n");
-                  }
-               }
-   #endif
-               
-               __m512d tvsum;
-
-               tvsum = _mm512_loadu_pd(sum[0][0]);
-               _mm512_storeu_pd(pb_X+ind, tvsum); 
-               
-               tvsum = _mm512_loadu_pd(sum[0][1]);
-               _mm512_storeu_pd(pb_X+ind+8, tvsum); 
-#if 1
-               fprintf(stdout, "loading sum[0] at the end:\n");
-                     PrintVector(tvsum); 
-               fprintf(stdout, "----------------------\n");
-#endif
-               
-               tvsum = _mm512_loadu_pd(sum[0][2]);
-               _mm512_storeu_pd(pb_X+ind+2*8, tvsum);
-
-               tvsum = _mm512_loadu_pd(sum[0][3]);
-               _mm512_storeu_pd(pb_X+ind+3*8, tvsum); 
-               
-               // Y  
-               tvsum = _mm512_loadu_pd(sum[0][4+0]);
-               _mm512_storeu_pd(pb_Y+ind, tvsum); 
-               
-               tvsum = _mm512_loadu_pd(sum[0][4+1]);
-               _mm512_storeu_pd(pb_Y+ind+8, tvsum); 
-               
-               tvsum = _mm512_loadu_pd(sum[0][4+2]);
-               _mm512_storeu_pd(pb_Y+ind+2*8, tvsum);
-
-               tvsum = _mm512_loadu_pd(sum[0][4+3]);
-               _mm512_storeu_pd(pb_Y+ind+3*8, tvsum); 
-      #else
                for(m=1; m < NUMOFTHREADS; m++)
                {
                   for (n=0; n < 32; n++)
                   {
                      sumX[n] += sumX[m*32+n];
+                     sumY[n] += sumY[m*32+n];
                   }
                }
 
@@ -7243,9 +7034,6 @@
                tvsum = _mm512_loadu_pd(ptr+1*8);
                _mm512_storeu_pd(pb_X+ind+8, tvsum); 
                
-#if 0
-                     PrintVector(tvsum); 
-#endif
                tvsum = _mm512_loadu_pd(ptr+2*8);
                _mm512_storeu_pd(pb_X+ind+2*8, tvsum);
 
@@ -7265,8 +7053,8 @@
 
                tvsum = _mm512_loadu_pd(ptr+3*8);
                _mm512_storeu_pd(pb_Y+ind+3*8, tvsum); 
-      #endif    
             }
+
             // connected nodes 
 	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
             {   
@@ -7362,10 +7150,428 @@
          #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
-#if USED3ARR == 0
-                  free(sumX);
-                  free(sumY);
-#endif 
+/*
+ *              NOTE: free allocated memory... Why not done for other mem???
+ */
+                free(sumX);
+                free(sumY);
+                return result;
+        }
+#elif defined (MDIM_VEC_UR4_MASK_NOSYNC)
+   
+   vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS, 
+         INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE)
+   {
+      INDEXTYPE LOOP = 0;
+      VALUETYPE start, end, ENERGY, ENERGY0, *pb_X, *pb_Y;
+      VALUETYPE STEP = 1.0;
+      VALUETYPE *sumX, *sumY;
+      
+      
+      vector<VALUETYPE> result;
+      pb_X = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+      pb_Y = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
+      ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
+
+/*
+ *    NOTE: we have different version of reciprocals... I'm defining it here
+ *                   NOTE: rcp14_pd inst... precision 2^-14
+ *                   rcp28_pd has relative error 2^-28 ... rounding??? 
+ *                   NOTE: reciprocal is highly error prone for over/underflow
+ */
+      #define MM512_RCP_PD(VD_) VD_ = _mm512_rcp14_pd(VD_)  // rcp28 -- AVX512ER 
+      #define MM512_MASKZ_RCP_PD(K_, VD_) VD_ = _mm512_maskz_rcp14_pd(K_, VD_)  
+/*
+ *    NOTE: to avoid overflow the stack, we allocate memory in heap to 
+ *    manage reduction .... 
+ *    FIXME: possible to combine it with pb_X and pb_Y???? 
+ *           size = NUMOFTHREADS * UNROLL * VLEN
+ *    solved the stack overflow by this way 
+ *    FIXME: VLEN depends on VALUETYPE... following only works for double as 
+ *    a test case 
+ */
+      sumX = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*4*8])));
+      sumY = static_cast<VALUETYPE *> 
+               (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*4*8])));
+
+      omp_set_num_threads(NUMOFTHREADS);
+/*
+ *    time included initDFS 
+ */
+      start = omp_get_wtime();
+
+      initDFS();
+      
+      while(LOOP < ITERATIONS)
+      {
+         ENERGY0 = ENERGY;
+         ENERGY = 0;
+         for(int i = 0; i < BATCHSIZE; i++)
+         {
+            pb_X[i] = pb_Y[i] = 0;
+         }
+         
+	 for(INDEXTYPE b = 0; b < (graph.rows / BATCHSIZE); b += 1)
+         {
+	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 32)
+            {
+	       int ind = i-b*BATCHSIZE;
+               int m, n, k;
+               register __m512d vx0, vx1, vx2, vx3;
+               register __m512d vy0, vy1, vy2, vy3;
+/*
+ *             to minimize critical section, we are using extra memory here
+ *             FIXME: use intrinsic to optimize it, like: XoR  
+ */
+               for (m=0; m < NUMOFTHREADS*4*8; m++)
+                  sumX[m] = sumY[m] = 0.0;
+
+	       vx0 = _mm512_loadu_pd(blasX + i);
+	       vx1 = _mm512_loadu_pd(blasX + i+8);
+	       vx2 = _mm512_loadu_pd(blasX + i+2*8);
+	       vx3 = _mm512_loadu_pd(blasX + i+3*8);
+
+	       vy0 = _mm512_loadu_pd(blasY + i);
+	       vy1 = _mm512_loadu_pd(blasY + i+1*8);
+	       vy2 = _mm512_loadu_pd(blasY + i+2*8);
+	       vy3 = _mm512_loadu_pd(blasY + i+3*8);
+/*
+ *             starting of parallel region 
+ */
+               #pragma omp parallel shared(sumX, sumY)
+               {
+                  int id, nthreads; 
+                  int chunksize;
+                  int j; 
+                  __m512d vdx0, vdx1, vdx2, vdx3;
+                  __m512d vdy0, vdy1, vdy2, vdy3;
+                  __m512d vd0, vd1, vd2, vd3;
+                  
+                  __m512d vtfx0, vtfx1, vtfx2, vtfx3;
+                  __m512d vtfy0, vtfy1, vtfy2, vtfy3;
+
+                  const int M = graph.rows; 
+                  id = omp_get_thread_num();
+                  nthreads = omp_get_num_threads();
+                  
+                  // init temp sum 
+		  vtfx0 = _mm512_set1_pd(0.0); vtfy0 = _mm512_set1_pd(0.0);
+		  vtfx1 = _mm512_set1_pd(0.0); vtfy1 = _mm512_set1_pd(0.0);
+		  vtfx2 = _mm512_set1_pd(0.0); vtfy2 = _mm512_set1_pd(0.0);
+		  vtfx3 = _mm512_set1_pd(0.0); vtfy3 = _mm512_set1_pd(0.0);
+/*
+ *                j is up to i... lower up case  
+ */
+                  chunksize = M/nthreads; 
+                  
+                  for(j = id*chunksize; j < (id+1)*chunksize; j++)
+                  {
+                     unsigned int n = j-i;
+                     double xj = blasX[j];
+                     register __m512d vxj = _mm512_set1_pd(xj);
+                     double yj = blasY[j];
+                     register __m512d vyj = _mm512_set1_pd(yj);
+                        
+                     unsigned int ik0, ik1, ik2, ik3; 
+                     __mmask8 k0, k1, k2, k3; 
+		  
+                     ik0 = ( n >= 0 && n < 8 ) ? (255 & (~(1 << (n%8))))  : 255; 
+                     ik1 = ( n >=8 && n < 8+8 )? (255 & ~(1 << n%8))  : 255; 
+                     ik2 = ( n >=2*8 && n < 2*8+8 )? (255 & ~(1 << n%8))  : 255; 
+                     ik3 = ( n >=3*8 && n < 3*8+8 )? (255 & ~(1 << n%8))  : 255; 
+                     
+                     //dx0 = xj - x0;
+		     vdx0 = _mm512_sub_pd(vxj, vx0);
+		     vdx1 = _mm512_sub_pd(vxj, vx1);
+		     vdx2 = _mm512_sub_pd(vxj, vx2);
+		     vdx3 = _mm512_sub_pd(vxj, vx3);
+	          
+                     // dy0 = yj - y0;
+		     vdy0 = _mm512_sub_pd(vyj, vy0);
+		     vdy1 = _mm512_sub_pd(vyj, vy1);
+		     vdy2 = _mm512_sub_pd(vyj, vy2);
+		     vdy3 = _mm512_sub_pd(vyj, vy3);
+	             
+                     //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
+		     vd0 = _mm512_mul_pd(vdx0, vdx0);
+		     vd1 = _mm512_mul_pd(vdx1, vdx1);
+		     vd2 = _mm512_mul_pd(vdx2, vdx2);
+		     vd3 = _mm512_mul_pd(vdx3, vdx3);
+                     
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                     
+                     MM512_MASKZ_RCP_PD(k0, vd0);
+                     MM512_MASKZ_RCP_PD(k1, vd1);
+                     MM512_MASKZ_RCP_PD(k2, vd2);
+                     MM512_MASKZ_RCP_PD(k3, vd3);
+                  
+                     //tfx0 += dx0 * d0;
+                     vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
+                     vtfx1 = _mm512_fmadd_pd(vdx1, vd1, vtfx1);
+                     vtfx2 = _mm512_fmadd_pd(vdx2, vd2, vtfx2);
+                     vtfx3 = _mm512_fmadd_pd(vdx3, vd3, vtfx3);
+
+                     //tfy0 += dy0 * d0;
+                     vtfy0 = _mm512_fmadd_pd(vdy0, vd0, vtfy0);
+                     vtfy1 = _mm512_fmadd_pd(vdy1, vd1, vtfy1);
+                     vtfy2 = _mm512_fmadd_pd(vdy2, vd2, vtfy2);
+                     vtfy3 = _mm512_fmadd_pd(vdy3, vd3, vtfy3);
+                  }
+/*
+ *                cleanup 
+ */
+                  #pragma omp single nowait 
+                  {
+                     for (j=nthreads*chunksize; j < M; j++)
+                     {
+                        unsigned int n = j-i;
+                        double xj = blasX[j];
+                        register __m512d vxj = _mm512_set1_pd(xj);
+                        double yj = blasY[j];
+                        register __m512d vyj = _mm512_set1_pd(yj);
+                        unsigned int ik0, ik1, ik2, ik3; 
+                        __mmask8 k0, k1, k2, k3; 
+		  
+                        ik0 = ( n >= 0 && n < 8 ) ? (255 & (~(1 << (n%8))))  : 255; 
+                        ik1 = ( n >=8 && n < 8+8 )? (255 & ~(1 << n%8))  : 255; 
+                        ik2 = ( n >=2*8 && n < 2*8+8 )? (255 & ~(1 << n%8))  : 255; 
+                        ik3 = ( n >=3*8 && n < 3*8+8 )? (255 & ~(1 << n%8))  : 255; 
+		  
+                        //dx0 = xj - x0;
+		        vdx0 = _mm512_sub_pd(vxj, vx0);
+		        vdx1 = _mm512_sub_pd(vxj, vx1);
+		        vdx2 = _mm512_sub_pd(vxj, vx2);
+		        vdx3 = _mm512_sub_pd(vxj, vx3);
+	          
+                        // dy0 = yj - y0;
+		        vdy0 = _mm512_sub_pd(vyj, vy0);
+		        vdy1 = _mm512_sub_pd(vyj, vy1);
+		        vdy2 = _mm512_sub_pd(vyj, vy2);
+		        vdy3 = _mm512_sub_pd(vyj, vy3);
+	             
+                        //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
+		        vd0 = _mm512_mul_pd(vdx0, vdx0);
+		        vd1 = _mm512_mul_pd(vdx1, vdx1);
+		        vd2 = _mm512_mul_pd(vdx2, vdx2);
+		        vd3 = _mm512_mul_pd(vdx3, vdx3);
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        
+                        MM512_MASKZ_RCP_PD(k0, vd0); 
+                        MM512_MASKZ_RCP_PD(k1, vd1); 
+                        MM512_MASKZ_RCP_PD(k2, vd2); 
+                        MM512_MASKZ_RCP_PD(k3, vd3); 
+		     
+                        //tfx0 += dx0 * d0;
+                        vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
+                        vtfx1 = _mm512_fmadd_pd(vdx1, vd1, vtfx1);
+                        vtfx2 = _mm512_fmadd_pd(vdx2, vd2, vtfx2);
+                        vtfx3 = _mm512_fmadd_pd(vdx3, vd3, vtfx3);
+
+                        //tfy0 += dy0 * d0;
+                        vtfy0 = _mm512_fmadd_pd(vdy0, vd0, vtfy0);
+                        vtfy1 = _mm512_fmadd_pd(vdy1, vd1, vtfy1);
+                        vtfy2 = _mm512_fmadd_pd(vdy2, vd2, vtfy2);
+                        vtfy3 = _mm512_fmadd_pd(vdy3, vd3, vtfy3);
+                     }
+                  }
+/*
+ *                Reduction without synchronization  
+ */
+                  {
+                     register __m512d tv; 
+                     double *ptr = sumX + id*32;
+                     
+                     tv = _mm512_loadu_pd(ptr);
+                     vtfx0 = _mm512_add_pd(vtfx0, tv);
+                     _mm512_storeu_pd(ptr, vtfx0);
+                     
+                     tv = _mm512_loadu_pd(ptr+1*8);
+                     vtfx1 = _mm512_add_pd(vtfx1, tv);
+                     _mm512_storeu_pd(ptr+1*8, vtfx1);
+                     
+                     tv = _mm512_loadu_pd(ptr+2*8);
+                     vtfx2 = _mm512_add_pd(vtfx2, tv);
+                     _mm512_storeu_pd(ptr+2*8, vtfx2);
+
+                     tv = _mm512_loadu_pd(ptr+3*8);
+                     vtfx3 = _mm512_add_pd(vtfx3, tv);
+                     _mm512_storeu_pd(ptr+3*8, vtfx3);
+                     
+                     //fy1 += tfy1; 
+                     ptr = (double*) sumY + id*32;
+                     tv = _mm512_loadu_pd(ptr);
+                     vtfy0 = _mm512_add_pd(vtfy0, tv);
+                     _mm512_storeu_pd(ptr, vtfy0);
+                     
+                     tv = _mm512_loadu_pd(ptr+1*8);
+                     vtfy1 = _mm512_add_pd(vtfy1, tv);
+                     _mm512_storeu_pd(ptr+1*8, vtfy1);
+                     
+                     tv = _mm512_loadu_pd(ptr+2*8);
+                     vtfy2 = _mm512_add_pd(vtfy2, tv);
+                     _mm512_storeu_pd(ptr+2*8, vtfy2);
+
+                     tv = _mm512_loadu_pd(ptr+3*8);
+                     vtfy3 = _mm512_add_pd(vtfy3, tv);
+                     _mm512_storeu_pd(ptr+3*8, vtfy3);
+                  }
+               }
+/*
+ *             Out of parallel region 
+ */
+/*
+ *             sum the results up: 
+ *             FIXME: use intrinsic to speed it up 
+ */
+               for(m=1; m < NUMOFTHREADS; m++)
+               {
+                  for (n=0; n < 32; n++)
+                  {
+                     sumX[n] += sumX[m*32+n];
+                     sumY[n] += sumY[m*32+n];
+                  }
+               }
+
+
+               double *ptr = &sumX[0]; 
+               __m512d tvsum;
+               
+               
+               tvsum = _mm512_loadu_pd(ptr);
+               _mm512_storeu_pd(pb_X+ind, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+1*8);
+               _mm512_storeu_pd(pb_X+ind+8, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+2*8);
+               _mm512_storeu_pd(pb_X+ind+2*8, tvsum);
+
+               tvsum = _mm512_loadu_pd(ptr+3*8);
+               _mm512_storeu_pd(pb_X+ind+3*8, tvsum); 
+               
+               // Y  
+               ptr = &sumY[0]; 
+               tvsum = _mm512_loadu_pd(ptr);
+               _mm512_storeu_pd(pb_Y+ind, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+8);
+               _mm512_storeu_pd(pb_Y+ind+8, tvsum); 
+               
+               tvsum = _mm512_loadu_pd(ptr+2*8);
+               _mm512_storeu_pd(pb_Y+ind+2*8, tvsum);
+
+               tvsum = _mm512_loadu_pd(ptr+3*8);
+               _mm512_storeu_pd(pb_Y+ind+3*8, tvsum); 
+            }
+
+            // connected nodes 
+	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
+            {   
+               int ind = i-b*BATCHSIZE;
+               VALUETYPE pbX=0.0, pbY=0.0;
+               VALUETYPE dist, distX, distY;
+               for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1)
+               {
+                  int v = graph.colids[j];
+                  distX = blasX[v] - blasX[i];
+                  distY = blasY[v] - blasY[i];
+                  dist = (distX * distX + distY * distY);
+                  dist = sqrt(dist) + 1.0 / dist;
+                  pbX += distX * dist;
+                  pbY += distY * dist;
+               }
+               pb_X[ind] = pbX - pb_X[ind];
+               pb_Y[ind] = pbY - pb_Y[ind];
+            }
+	    /*printf("After:\n");
+            for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i++)
+            {
+               printf("%d = %lf,", i, pb_X[i-b*BATCHSIZE]);
+            }
+	    */
+	    for(INDEXTYPE i = b * BATCHSIZE; i < (b + 1) * BATCHSIZE; i += 1)
+            {
+               int ind = i-b*BATCHSIZE;
+               VALUETYPE d;
+	       d = (pb_X[ind] * pb_X[ind] + pb_Y[ind] * pb_Y[ind]);
+	       ENERGY += d ;
+	       
+               d = STEP / sqrt(d);
+	       blasX[i] += pb_X[ind] * d;
+               blasY[i] += pb_Y[ind] * d;
+	       
+               pb_X[ind] = 0;
+	       pb_Y[ind] = 0;    
+            }
+         }
+/*
+ *    cleanup 
+ */
+			INDEXTYPE cleanup = (graph.rows/BATCHSIZE) * BATCHSIZE;
+			#pragma omp parallel for schedule(dynamic) 
+			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
+                                INDEXTYPE ind = i- cleanup;
+                                VALUETYPE fx = 0, fy = 0, distX, distY, dist, dist2;
+                                for(INDEXTYPE j = graph.rowptr[i]; j < graph.rowptr[i+1]; j += 1){
+                                        int v = graph.colids[j];
+                                        distX = blasX[v] - blasX[i];
+                                        distY = blasY[v] - blasY[i];
+                                        dist = (distX * distX + distY * distY);
+                                        dist = sqrt(dist) + 1.0 / dist;
+                                        pb_X[ind] += distX * dist;
+                                        pb_Y[ind] += distY * dist;
+                                }
+                                for(INDEXTYPE j = 0; j < i; j += 1){
+                                        distX = blasX[j] - blasX[i];
+                                        distY = blasY[j] - blasY[i];
+                                        dist2 = 1.0 / (distX * distX + distY * distY);
+                                        fx += distX * dist2;
+                                        fy += distY * dist2;
+                                }
+                                for(INDEXTYPE j = i+1; j < graph.rows; j += 1){
+                                        distX = blasX[j] - blasX[i];
+                                        distY = blasY[j] - blasY[i];
+                                        dist2 = 1.0 / (distX * distX + distY * distY);
+                                        fx += distX * dist2;
+                                        fy += distY * dist2;
+                                }
+                                pb_X[ind] = pb_X[ind] - fx;
+                                pb_Y[ind] = pb_Y[ind] - fy;
+                        }	
+			for(INDEXTYPE i = cleanup; i < graph.rows; i += 1){
+                                int ind = i-cleanup;
+                                double dist = (pb_X[ind]*pb_X[ind] + pb_Y[ind]*pb_Y[ind]);
+                                ENERGY += dist;
+				dist = STEP / sqrt(dist);
+				blasX[i] += pb_X[ind] * dist;
+                                blasY[i] += pb_Y[ind] * dist;
+				pb_X[ind] = pb_Y[ind] = 0;
+                        }
+                        STEP = STEP * 0.999;
+                        LOOP++;
+                }
+                end = omp_get_wtime();
+         #if 1
+                cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
+                cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
+                cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
+                writeToFileEFF("EFFUR4-VEC-MASK-NOSYNC"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+         #endif
+                result.push_back(ENERGY);
+                result.push_back(end - start);
+/*
+ *              NOTE: free allocated memory... Why not done for other mem???
+ */
+                free(sumX);
+                free(sumY);
                 return result;
         }
 
