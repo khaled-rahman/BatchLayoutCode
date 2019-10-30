@@ -113,18 +113,30 @@ void GetAvgTimes(int argc, char *argv[], int nrep)
    SetInputMatricesAsCSR(A_csr, inputfile);
    A_csr.Sorted();
    vector<VALUETYPE> outputvec;
-   
+ /*
+  *   Original implementation
+  */
+   algorithms algo = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
+   algo.cacheBlockingminiBatchForceDirectedAlgorithm(600, 18, 256, 0);	
+
+/*
+ * To compare two versions 
+ */
    newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
    newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
 
    for (int i=0; i < nrep; i++)
    {
-      outputvec = na.EfficientVersion(5, 48, 256);
+      //outputvec = na.EfficientVersion(5, 18, 256);
+      //outputvec = na.EfficientVersion(5, 18, 64);
+      outputvec = na.EfficientVersion(600, 18, 64);
       time1 += outputvec[1];
       energy1 += (outputvec[0]/nrep); // to avoid overflow 
       //cout << "1st energy=" << outputvec[0] << "  Time = " << outputvec[1] <<endl; 
 
-      outputvec = na2.EfficientVersionUnRoll(5, 48, 256);
+      //outputvec = na2.EfficientVersionMdim(5, 18, 256);
+      //outputvec = na2.EfficientVersionMdim(5, 18, 64);
+      outputvec = na2.EfficientVersionMdim(600, 18, 64);
       //cout << "2nd energy=" << outputvec[0] << " Time = " << outputvec[1] << endl; 
       time2 += outputvec[1];
       energy2 += (outputvec[0]/nrep); // to avoid overflow 
@@ -133,9 +145,16 @@ void GetAvgTimes(int argc, char *argv[], int nrep)
    time2 /= nrep;
    cout << "Efficient version: Avg time"<<"("<<nrep<<") = " << time1 <<endl;
    cout << "Efficient version: Avg Energy"<<"("<<nrep<<") = " << energy1 <<endl;
+#if 0
    cout << "Efficient Unroll version: Avg time"<<"("<<nrep<<") = " << time2 <<endl;
-   cout << "Efficient version: Avg Energy"<<"("<<nrep<<") = " << energy2 <<endl;
+   cout << "Efficient Unroll: Avg Energy"<<"("<<nrep<<") = " << energy2 <<endl;
    cout << "Speedup of Unroll version = " << time1/time2 << endl;
+#else
+   cout << "Efficient M-dim version: Avg time"<<"("<<nrep<<") = " << time2 <<endl;
+   cout << "Efficient M-dim: Avg Energy"<<"("<<nrep<<") = " << energy2 <<endl;
+   cout << "Speedup of M-dim version = " << time1/time2 << endl;
+   cout << "Speedup of old version = " << time2/time1 << endl;
+#endif
 
 }
 
@@ -148,7 +167,7 @@ int main(int argc, char* argv[]){
    #if DEBUG == 1 
         GetAvgTimes(argc, argv, 1);
    #else
-        GetAvgTimes(argc, argv, 20);
+        GetAvgTimes(argc, argv, 5);
    #endif
 	return 0;
 }
