@@ -19,7 +19,7 @@
                               // N=64: spup = 0.683  
                               // N=32: spup = 0.974  
 
-   //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46 energy=5.70207e+10 
+   //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46  
                        // N=128: spup = 0.30 
                        // N=64:  spup = 0.33
                        // N=32:  spup = 0.44
@@ -32,10 +32,10 @@
    
    //#define MDIM_VEC_UR4 1  // N=256: spup = 1.35 
                            // N=128: spup = 1.42  
-                           // N=64: spup = 1.53 sec=0.099 energy = 7.23105e+11 
+                           // N=64: spup = 1.53 sec=0.099  
                            // N=32: spup = 2.03  --- with 256 Eff, spup = 1.26   
    
-   //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  .... FIXME: energy=nan 
+   //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  ....  
                                   // N = 128: spup = 2.07 
                                   // N = 64: spup = 2.27  
    
@@ -7284,7 +7284,7 @@
                   
                   for(j = id*chunksize; j < (id+1)*chunksize; j++)
                   {
-                     unsigned int n = j-i;
+                     int n = j-i;
                      double xj = blasX[j];
                      register __m512d vxj = _mm512_set1_pd(xj);
                      double yj = blasY[j];
@@ -7321,6 +7321,11 @@
                      vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                      vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
                      
+                     k0 = _cvtu32_mask8(ik0);
+                     k1 = _cvtu32_mask8(ik1);
+                     k2 = _cvtu32_mask8(ik2);
+                     k3 = _cvtu32_mask8(ik3);
+                     
                      MM512_MASKZ_RCP_PD(k0, vd0);
                      MM512_MASKZ_RCP_PD(k1, vd1);
                      MM512_MASKZ_RCP_PD(k2, vd2);
@@ -7345,7 +7350,7 @@
                   {
                      for (j=nthreads*chunksize; j < M; j++)
                      {
-                        unsigned int n = j-i;
+                        int n = j-i;
                         double xj = blasX[j];
                         register __m512d vxj = _mm512_set1_pd(xj);
                         double yj = blasY[j];
@@ -7380,6 +7385,11 @@
                         vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
                         vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
                         vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                     
+                        k0 = _cvtu32_mask8(ik0);
+                        k1 = _cvtu32_mask8(ik1);
+                        k2 = _cvtu32_mask8(ik2);
+                        k3 = _cvtu32_mask8(ik3);
                         
                         MM512_MASKZ_RCP_PD(k0, vd0); 
                         MM512_MASKZ_RCP_PD(k1, vd1); 
