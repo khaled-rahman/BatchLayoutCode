@@ -69,6 +69,7 @@ class newalgo{
 	vector<VALUETYPE> EfficientVersion(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);	
 	vector<VALUETYPE> EfficientVersionUnRoll(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);
 	vector<VALUETYPE> EfficientVersionV2(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);
+	vector<VALUETYPE> EfficientVersionMdim(INDEXTYPE ITERATIONS, INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE);
 	void print();
 	void writeRepulsiveForce(vector<Coordinate<VALUETYPE> > &repulse, string f);
 	void writeToFileBH(Coordinate<VALUETYPE> *tCoordinates, string f);
