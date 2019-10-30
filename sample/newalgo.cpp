@@ -3,6 +3,49 @@
 #include<immintrin.h>
 
 #define NEARZERO 1e-30
+   
+
+#define DEBUG 0 
+   #define DOUT stderr     // debug output 
+
+#define NO_FWRITE 1 
+/*
+ * MDIM selection 
+ *
+ */
+
+   //#define MDIM_UR8_NOSYNC 1  // N=256: spup = 0.572 to NDIM Efficient vecrion  
+                              // N=128 spup = 0.634  FIXED  
+                              // N=64: spup = 0.683  
+                              // N=32: spup = 0.974  
+
+   //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46 energy=5.70207e+10 
+                       // N=128: spup = 0.30 
+                       // N=64:  spup = 0.33
+                       // N=32:  spup = 0.44
+                       // N=16:  spup = 0.68
+                       // N=4:  spup = 1.71    sec = 0.43
+   
+   //#define MDIM_VEC_UR8 1  // N=256: spup = 1.46  
+                           // N=128: spup = 1.56
+                           // N=64: spup = 1.85
+   
+   //#define MDIM_VEC_UR4 1  // N=256: spup = 1.35 
+                           // N=128: spup = 1.42  
+                           // N=64: spup = 1.53 sec=0.099 energy = 7.23105e+11 
+                           // N=32: spup = 2.03  --- with 256 Eff, spup = 1.26   
+   
+   //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  .... FIXME: energy=nan 
+                                  // N = 128: spup = 2.07 
+                                  // N = 64: spup = 2.27  
+   
+   #define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
+                                  // N=128: spup = 1.9
+                                  // N=64: spup = 2.25 -- with 256 eff, spup = 1.85  
+                                  // N=32: spup = 2.91 -- with 256 eff, spup = 1.89 
+   //no splitting of two cases 
+   //#define MDIM_VEC_UR4_MASK_NOSYNC 1  // N=256: 
+                                       //
 
 	newalgo::newalgo(CSR<INDEXTYPE, VALUETYPE> &A_csr, string input, string outputd, int init, double weight, double th, string ifile){
 		graph.make_empty();
@@ -116,6 +159,7 @@
                 initDFS();
 		NBLAS(BATCHSIZE, ITERATIONS, NUMOFTHREADS, nCoordinates, &ENERGY, graph, frm);
                 end = omp_get_wtime();
+
                 cout << "NBLAS Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "NBLAS Minbatch Energy:" << ENERGY << endl;
                 cout << "NBLAS Minibatch Parallel Wall time required:" << end - start << endl;
@@ -240,7 +284,7 @@
                         LOOP++;
                 }
 		end = omp_get_wtime();
-         #if 1
+         #if NO_FWRITE == 0
                 cout << "Efficient Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficient Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficient Minibatch Parallel Wall time required:" << end - start << endl;
@@ -686,7 +730,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-            #if 0
+            #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -1229,7 +1273,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-            #if 0
+            #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -1582,7 +1626,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -1866,7 +1910,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -2091,7 +2135,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -2448,7 +2492,8 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -2611,10 +2656,12 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
+         #if NO_FWRITE == 0
                 cout << "Efficient V2 Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficient V2 Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficient V2 Minibatch Parallel Wall time required:" << end - start << endl;
-                //writeToFile("EfficientV2"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+                writeToFile("EfficientV2"+ to_string(BATCHSIZE)+"PARAOUT" + to_string(LOOP));
+         #endif
                 result.push_back(ENERGY);
                 result.push_back(end - start);
                 return result;
@@ -2873,7 +2920,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -2894,41 +2941,6 @@
  *    is not bad to vectorize following code
  * ToDO: manage it manually........ 
  */
-   #define DEBUG 0 
-      #define DOUT stderr     // debug output 
-
-   //#define MDIM_UR8_NOSYNC 1  // N=256: spup = 0.572 to NDIM Efficient vecrion  
-                              // N=128 spup = 0.634  FIXED  
-                              // N=64: spup = 0.683  
-                              // N=32: spup = 0.974  
-
-   //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46 energy=5.70207e+10 
-                       // N=128: spup = 0.30 
-                       // N=64:  spup = 0.33
-                       // N=32:  spup = 0.44
-                       // N=16:  spup = 0.68
-                       // N=4:  spup = 1.71    sec = 0.43
-   
-   //#define MDIM_VEC_UR8 1  // N=256: spup = 1.46  
-                           // N=128: spup = 1.56
-                           // N=64: spup = 1.85
-   
-   //#define MDIM_VEC_UR4 1  // N=256: spup = 1.35 
-                           // N=128: spup = 1.42  
-                           // N=64: spup = 1.53 sec=0.099 energy = 7.23105e+11 
-                           // N=32: spup = 2.03  --- with 256 Eff, spup = 1.26   
-   
-   //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  .... FIXME: energy=nan 
-                                  // N = 128: spup = 2.07 
-                                  // N = 64: spup = 2.27  
-   
-   //#define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
-                                  // N=128: spup = 1.9
-                                  // N=64: spup = 2.25 -- with 256 eff, spup = 1.85  
-                                  // N=32: spup = 2.91 -- with 256 eff, spup = 1.89 
-   //no splitting of two cases 
-   #define MDIM_VEC_UR4_MASK_NOSYNC 1  // N=256: 
-                                       //
 #if 1 
    void PrintVector(__m512d v1)
    {
@@ -3494,7 +3506,8 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -4081,7 +4094,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 1
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -4499,7 +4512,8 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 1
+         
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -5249,7 +5263,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 0
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -5781,7 +5795,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 1
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -6570,7 +6584,8 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 1
+         
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -7142,7 +7157,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 1
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
@@ -7158,7 +7173,9 @@
                 return result;
         }
 #elif defined (MDIM_VEC_UR4_MASK_NOSYNC)
-   
+/*
+ * 
+ */
    vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS, 
          INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE)
    {
@@ -7559,7 +7576,7 @@
                         LOOP++;
                 }
                 end = omp_get_wtime();
-         #if 1
+         #if NO_FWRITE == 0
                 cout << "Efficientunroll Minibatch Size:" << BATCHSIZE  << endl;
                 cout << "Efficientunroll Minbatch Energy:" << ENERGY << endl;
                 cout << "Efficientunroll Minibatch Parallel Wall time required:" << end - start << endl;
