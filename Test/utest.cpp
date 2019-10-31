@@ -108,6 +108,7 @@ void GetAvgTimes(int argc, char *argv[], int nrep)
    //string inputfile = "./datasets/input/jagmesh1.mtx";
    //string inputfile = "./datasets/input/3elt_dual.mtx";
    string inputfile = "./datasets/input/pkustk01.mtx";
+   //string inputfile = "./datasets/input/af_shell10.mtx";
    //string inputfile = "./datasets/input/skirt.mtx";
    string outputdir = "./datasets/output/";
    SetInputMatricesAsCSR(A_csr, inputfile);
@@ -116,27 +117,28 @@ void GetAvgTimes(int argc, char *argv[], int nrep)
  /*
   *   Original implementation
   */
+#if 0
    algorithms algo = algorithms(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
    algo.cacheBlockingminiBatchForceDirectedAlgorithm(600, 18, 256, 0);	
-
+#endif
 /*
  * To compare two versions 
  */
    newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
    newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
-
+   
    for (int i=0; i < nrep; i++)
    {
       //outputvec = na.EfficientVersion(5, 18, 256);
-      //outputvec = na.EfficientVersion(5, 18, 64);
-      outputvec = na.EfficientVersion(600, 18, 64);
+      outputvec = na.EfficientVersion(5, 18, 256);
+      //outputvec = na.EfficientVersion(600, 18, 64);
       time1 += outputvec[1];
       energy1 += (outputvec[0]/nrep); // to avoid overflow 
       //cout << "1st energy=" << outputvec[0] << "  Time = " << outputvec[1] <<endl; 
 
       //outputvec = na2.EfficientVersionMdim(5, 18, 256);
-      //outputvec = na2.EfficientVersionMdim(5, 18, 64);
-      outputvec = na2.EfficientVersionMdim(600, 18, 64);
+      outputvec = na2.EfficientVersionMdim(5, 18, 64);
+      //outputvec = na2.EfficientVersionMdim(600, 18, 64);
       //cout << "2nd energy=" << outputvec[0] << " Time = " << outputvec[1] << endl; 
       time2 += outputvec[1];
       energy2 += (outputvec[0]/nrep); // to avoid overflow 
@@ -167,7 +169,7 @@ int main(int argc, char* argv[]){
    #if DEBUG == 1 
         GetAvgTimes(argc, argv, 1);
    #else
-        GetAvgTimes(argc, argv, 5);
+        GetAvgTimes(argc, argv, 20);
    #endif
 	return 0;
 }
