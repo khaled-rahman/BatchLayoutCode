@@ -14,29 +14,30 @@
  *
  */
 
-   //#define MDIM_UR8_NOSYNC 1  // N=256: spup = 0.572 to NDIM Efficient vecrion  
-                              // N=128 spup = 0.634  FIXED  
+   //#define MDIM_UR8_NOSYNC 1  // N=256: spup = 0.572 NDIM Efficient vecrion  
+                              // N=128 spup = 0.634  FIXME: energy   
                               // N=64: spup = 0.683  
                               // N=32: spup = 0.974  
 
    //#define MDIM_UR4 1  // N=256: spup = 0.278   sec = 0.46  
-                       // N=128: spup = 0.30 
+                       // N=128: spup = 0.30    FIXED
                        // N=64:  spup = 0.33
                        // N=32:  spup = 0.44
                        // N=16:  spup = 0.68
                        // N=4:  spup = 1.71    sec = 0.43
+   //#define MDIM_UR8 1  // FIXED   
    
-   //#define MDIM_VEC_UR8 1  // N=256: spup = 1.46  
+   //#define MDIM_VEC_UR8 1  // N=256: spup = 1.46  FIXED  
                            // N=128: spup = 1.56
                            // N=64: spup = 1.85
    
-   //#define MDIM_VEC_UR4 1  // N=256: spup = 1.35 
+   //#define MDIM_VEC_UR4 1  // N=256: spup = 1.35 FIXED 
                            // N=128: spup = 1.42  
                            // N=64: spup = 1.53 sec=0.099  
                            // N=32: spup = 2.03  --- with 256 Eff, spup = 1.26   
    
    //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  ....  
-                                  // N = 128: spup = 2.07 
+                                  // N = 128: spup = 2.07   FIXED  
                                   // N = 64: spup = 2.27  
    
    #define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
@@ -2968,11 +2969,6 @@
       pb_Y = static_cast<VALUETYPE *> (::operator new (sizeof(VALUETYPE[BATCHSIZE])));
       ENERGY0 = ENERGY = numeric_limits<VALUETYPE>::max();
      
-#if 0
-      cout << "Rows = " << graph.rows << endl;
-      exit(1);
-#endif
-
       omp_set_num_threads(NUMOFTHREADS);
 /*
  *    time included initDFS 
@@ -3046,15 +3042,6 @@
  *                j is up to i... lower up case  
  */
                   chunksize = i/nthreads; 
-#if DEBUG == 1
-                  if (id == 0)
-                  {
-                     fprintf(DOUT, "**********\n");
-                     fprintf(DOUT, "lower half case: chunksize = %ld\n", 
-                           chunksize );
-                     fflush(DOUT);
-                  }
-#endif
                   for(j = id*chunksize; j < (id+1)*chunksize; j++)
                   {
                      VALUETYPE xj = blasX[j];
@@ -3110,10 +3097,6 @@
  */
                   #pragma omp single nowait
                   {
-         #if DEBUG == 1
-                     fprintf(DOUT, "i=%d: lower cleanup case = %d\n", i, 
-                           i-nthreads*chunksize); 
-         #endif
                      for (j=nthreads*chunksize; j < i; j++)
                      {
                         VALUETYPE xj = blasX[j];
@@ -3547,7 +3530,8 @@
  *           size = NUMOFTHREADS * UNROLL * VLEN
  *    solved the stack overflow by this way 
  *    FIXME: VLEN depends on VALUETYPE... following only works for double as 
- *    a test case 
+ *    a test case
+ *    NOTE: for single precision, it may suffer from false sharing: 4*8=32 byte
  */
       sumX = static_cast<VALUETYPE *> 
                (::operator new (sizeof(VALUETYPE[NUMOFTHREADS*8])));
@@ -3607,8 +3591,8 @@
 	       y6 = blasY[i+6];
 	       y7 = blasY[i+7];
 					
-	       fx0 = fx1 = fx2 = fx3 = fx4 = fx5 = fx6 = fx7 = 0;
-	       fy0 = fy1 = fy2 = fy3 = fy4 = fy5 = fy6 = fy7 = 0;		
+	       fx0 = fx1 = fx2 = fx3 = fx4 = fx5 = fx6 = fx7 = 0.0;
+	       fy0 = fy1 = fy2 = fy3 = fy4 = fy5 = fy6 = fy7 = 0.0;		
                
                #pragma omp parallel
                {
@@ -4546,8 +4530,8 @@
  *                   NOTE: reciprocal is highly error prone for over/underflow
  *                   FIXME: to compare apple to apple, make div version 
  */
-      #define _MM512_RCP_PD _mm512_rcp14_pd  // rcp28 -- AVX512ER 
-      #define _MM512_MASKZ_RCP_PD _mm512_maskz_rcp14_pd  // rcp28
+#define MM512_RCP_PD(VD_) VD_ = _mm512_rcp14_pd(VD_)  // rcp28 -- AVX512ER 
+#define MM512_MASKZ_RCP_PD(K_, VD_) VD_ = _mm512_maskz_rcp14_pd(K_, VD_)  
 
       omp_set_num_threads(NUMOFTHREADS);
 /*
@@ -4675,38 +4659,31 @@
 	             
                      //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		     vd0 = _mm512_mul_pd(vdx0, vdx0);
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     
 		     vd1 = _mm512_mul_pd(vdx1, vdx1);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
-                     vd3 = _MM512_RCP_PD(vd3); 
-                  
 		     vd4 = _mm512_mul_pd(vdx4, vdx4);
-                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
-                     vd4 = _MM512_RCP_PD(vd4); 
-                     
-                     
 		     vd5 = _mm512_mul_pd(vdx5, vdx5);
-                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
-                     vd5 = _MM512_RCP_PD(vd5); 
-                     
-                     
 		     vd6 = _mm512_mul_pd(vdx6, vdx6);
-                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
-                     vd6 = _MM512_RCP_PD(vd6); 
-                     
 		     vd7 = _mm512_mul_pd(vdx7, vdx7);
-                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
-                     vd7 = _MM512_RCP_PD(vd7); 
+                     
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
+                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
+                     
+                     MM512_RCP_PD(vd0); 
+                     MM512_RCP_PD(vd1); 
+                     MM512_RCP_PD(vd2); 
+                     MM512_RCP_PD(vd3); 
+                     MM512_RCP_PD(vd4); 
+                     MM512_RCP_PD(vd5); 
+                     MM512_RCP_PD(vd6); 
+                     MM512_RCP_PD(vd7); 
 		
 		     
                      //tfx0 += dx0 * d0;
@@ -4767,36 +4744,31 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                        vd0 = _MM512_RCP_PD(vd0); 
-                     
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd1 = _MM512_RCP_PD(vd1); 
-                     
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                        vd2 = _MM512_RCP_PD(vd2); 
-                     
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
-                        vd3 = _MM512_RCP_PD(vd3); 
-                  
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
-                        vd4 = _MM512_RCP_PD(vd4); 
-                     
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
-                        vd5 = _MM512_RCP_PD(vd5); 
-                     
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
-                        vd6 = _MM512_RCP_PD(vd6); 
-                     
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
-                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
-                        vd7 = _MM512_RCP_PD(vd7); 
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
+                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
+                        
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
+                        MM512_RCP_PD(vd4); 
+                        MM512_RCP_PD(vd5); 
+                        MM512_RCP_PD(vd6); 
+                        MM512_RCP_PD(vd7); 
 		     
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -4870,53 +4842,40 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                        k0 = _cvtu32_mask8(ik0);
-                        //vd0 = _MM512_MASKZ_RCP_PD(vd0, k0, vd0); 
-                        vd0 = _MM512_MASKZ_RCP_PD(k0, vd0); 
-                     
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd1 = _MM512_RCP_PD(vd1); 
-                        k1 = _cvtu32_mask8(ik1);
-                        //vd1 = _MM512_MASKZ_RCP_PD(vd1, k1, vd1); 
-                        vd1 = _MM512_MASKZ_RCP_PD(k1, vd1); 
-                     
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                        k2 = _cvtu32_mask8(ik2);
-                        //vd2 = _MM512_MASKZ_RCP_PD(vd2, k2, vd2); 
-                        vd2 = _MM512_MASKZ_RCP_PD(k2, vd2); 
-                     
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
-                        k3 = _cvtu32_mask8(ik3);
-                        //vd3 = _MM512_MASKZ_RCP_PD(vd3, k3, vd3); 
-                        vd3 = _MM512_MASKZ_RCP_PD(k3, vd3); 
-                  
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
-                        k4 = _cvtu32_mask8(ik4);
-                        //vd4 = _MM512_MASKZ_RCP_PD(vd4, k4, vd4); 
-                        vd4 = _MM512_MASKZ_RCP_PD(k4, vd4); 
-                     
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
-                        k5 = _cvtu32_mask8(ik5);
-                        //vd5 = _MM512_MASKZ_RCP_PD(vd5, k5, vd5); 
-                        vd5 = _MM512_MASKZ_RCP_PD(k5, vd5); 
-                     
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
-                        k6 = _cvtu32_mask8(ik6);
-                        //vd6 = _MM512_MASKZ_RCP_PD(vd6, k6, vd6); 
-                        vd6 = _MM512_MASKZ_RCP_PD(k6, vd6); 
-                     
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
-                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
+                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
+                        
+                        k0 = _cvtu32_mask8(ik0);
+                        k1 = _cvtu32_mask8(ik1);
+                        k2 = _cvtu32_mask8(ik2);
+                        k3 = _cvtu32_mask8(ik3);
+                        k4 = _cvtu32_mask8(ik4);
+                        k5 = _cvtu32_mask8(ik5);
+                        k6 = _cvtu32_mask8(ik6);
                         k7 = _cvtu32_mask8(ik7);
-                        //vd7 = _MM512_MASKZ_RCP_PD(vd7, k7, vd7); 
-                        vd7 = _MM512_MASKZ_RCP_PD(k7, vd7); 
+                        
+                        MM512_MASKZ_RCP_PD(k0, vd0); 
+                        MM512_MASKZ_RCP_PD(k1, vd1); 
+                        MM512_MASKZ_RCP_PD(k2, vd2); 
+                        MM512_MASKZ_RCP_PD(k3, vd3); 
+                        MM512_MASKZ_RCP_PD(k4, vd4); 
+                        MM512_MASKZ_RCP_PD(k5, vd5); 
+                        MM512_MASKZ_RCP_PD(k6, vd6); 
+                        MM512_MASKZ_RCP_PD(k7, vd7); 
 		     
                         //tfx0 += dx0 * d0;
                         vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -4983,39 +4942,31 @@
 	             
                      //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		     vd0 = _mm512_mul_pd(vdx0, vdx0);
-                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                     vd0 = _MM512_RCP_PD(vd0); 
-                     
 		     vd1 = _mm512_mul_pd(vdx1, vdx1);
-                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                     vd1 = _MM512_RCP_PD(vd1); 
-                     
 		     vd2 = _mm512_mul_pd(vdx2, vdx2);
-                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                     vd2 = _MM512_RCP_PD(vd2); 
-                     
 		     vd3 = _mm512_mul_pd(vdx3, vdx3);
-                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
-                     vd3 = _MM512_RCP_PD(vd3); 
-                  
 		     vd4 = _mm512_mul_pd(vdx4, vdx4);
-                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
-                     vd4 = _MM512_RCP_PD(vd4); 
-                     
-                     
 		     vd5 = _mm512_mul_pd(vdx5, vdx5);
-                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
-                     vd5 = _MM512_RCP_PD(vd5); 
-                     
-                     
 		     vd6 = _mm512_mul_pd(vdx6, vdx6);
-                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
-                     vd6 = _MM512_RCP_PD(vd6); 
-                     
 		     vd7 = _mm512_mul_pd(vdx7, vdx7);
-                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
-                     vd7 = _MM512_RCP_PD(vd7); 
-		
+                     
+                     vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                     vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                     vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                     vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                     vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                     vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                     vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
+                     vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
+                     
+                     MM512_RCP_PD(vd0); 
+                     MM512_RCP_PD(vd1); 
+                     MM512_RCP_PD(vd2); 
+                     MM512_RCP_PD(vd3); 
+                     MM512_RCP_PD(vd4); 
+                     MM512_RCP_PD(vd5); 
+                     MM512_RCP_PD(vd6); 
+                     MM512_RCP_PD(vd7); 
 		     
                      //tfx0 += dx0 * d0;
                      vtfx0 = _mm512_fmadd_pd(vdx0, vd0, vtfx0);
@@ -5074,38 +5025,31 @@
 	             
                         //d0 = 1.0 / (dx0 * dx0 + dy0 * dy0);
 		        vd0 = _mm512_mul_pd(vdx0, vdx0);
-                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vdx0);
-                        vd0 = _MM512_RCP_PD(vd0); 
-                     
 		        vd1 = _mm512_mul_pd(vdx1, vdx1);
-                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vdx1);
-                        vd1 = _MM512_RCP_PD(vd1); 
-                     
 		        vd2 = _mm512_mul_pd(vdx2, vdx2);
-                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vdx2);
-                        vd2 = _MM512_RCP_PD(vd2); 
-                     
 		        vd3 = _mm512_mul_pd(vdx3, vdx3);
-                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vdx3);
-                        vd3 = _MM512_RCP_PD(vd3); 
-                  
 		        vd4 = _mm512_mul_pd(vdx4, vdx4);
-                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vdx4);
-                        vd4 = _MM512_RCP_PD(vd4); 
-                     
-                     
 		        vd5 = _mm512_mul_pd(vdx5, vdx5);
-                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vdx5);
-                        vd5 = _MM512_RCP_PD(vd5); 
-                     
-                     
 		        vd6 = _mm512_mul_pd(vdx6, vdx6);
-                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vdx6);
-                        vd6 = _MM512_RCP_PD(vd6); 
-                     
 		        vd7 = _mm512_mul_pd(vdx7, vdx7);
-                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vdx7);
-                        vd7 = _MM512_RCP_PD(vd7); 
+                        
+                        vd0 = _mm512_fmadd_pd(vdy0, vdy0, vd0);
+                        vd1 = _mm512_fmadd_pd(vdy1, vdy1, vd1);
+                        vd2 = _mm512_fmadd_pd(vdy2, vdy2, vd2);
+                        vd3 = _mm512_fmadd_pd(vdy3, vdy3, vd3);
+                        vd4 = _mm512_fmadd_pd(vdy4, vdy4, vd4);
+                        vd5 = _mm512_fmadd_pd(vdy5, vdy5, vd5);
+                        vd6 = _mm512_fmadd_pd(vdy6, vdy6, vd6);
+                        vd7 = _mm512_fmadd_pd(vdy7, vdy7, vd7);
+                        
+                        MM512_RCP_PD(vd0); 
+                        MM512_RCP_PD(vd1); 
+                        MM512_RCP_PD(vd2); 
+                        MM512_RCP_PD(vd3); 
+                        MM512_RCP_PD(vd4); 
+                        MM512_RCP_PD(vd5); 
+                        MM512_RCP_PD(vd6); 
+                        MM512_RCP_PD(vd7); 
 		
 		     
                         //tfx0 += dx0 * d0;
@@ -6394,7 +6338,7 @@
                      _mm512_storeu_pd(ptr+7*8, vtfx7);
                      
                      //fy1 += tfy1; 
-                     ptr = (double*) sumY + id*64;
+                     ptr = sumY + id*64;
                      tv = _mm512_loadu_pd(ptr);
                      vtfy0 = _mm512_add_pd(vtfy0, tv);
                      _mm512_storeu_pd(ptr, vtfy0);
@@ -6440,8 +6384,8 @@
                {
                   for (n=0; n < 64; n++)
                   {
-                     sumX[n] += sumX[m*32+n];
-                     sumY[n] += sumY[m*32+n];
+                     sumX[n] += sumX[m*64+n];
+                     sumY[n] += sumY[m*64+n];
                   }
                }
 
