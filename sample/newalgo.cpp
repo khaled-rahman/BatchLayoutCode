@@ -39,9 +39,9 @@
    //#define MDIM_VEC_UR8_NOSYNC 1  // N=256: spup = 1.93  ....  
                                   // N = 128: spup = 2.07   FIXED  
                                   // N = 64: spup = 2.27  
-    //#define MDIM_VEC_UR2_NOSYNC 1 
+    #define MDIM_VEC_UR2_NOSYNC 1 
     //#define MDIM_VEC_UR5_NOSYNC 1
-    #define MDIM_VEC_UR6_NOSYNC 1 
+    //#define MDIM_VEC_UR6_NOSYNC 1 
    //#define MDIM_VEC_UR4_NOSYNC 1  // N=256: spup = 1.8 ... FIXED 
                                   // N=128: spup = 1.9
                                   // N=64: spup = 2.25 -- with 256 eff, spup = 1.85  
@@ -7049,7 +7049,7 @@ vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS,
                 return result;
 }
 
-/*
+
 #elif defined(MDIM_VEC_UR2_NOSYNC)
 vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS, 
          INDEXTYPE NUMOFTHREADS, INDEXTYPE BATCHSIZE)
@@ -7414,7 +7414,6 @@ vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS,
                 return result;
         }
 
-*/
 
 #elif defined(MDIM_VEC_UR6_NOSYNC)
 vector<VALUETYPE> newalgo::EfficientVersionMdim(INDEXTYPE ITERATIONS, 
