@@ -43,6 +43,6 @@ else
    vec="KVEC"
 fi
 
-
-./xextract -b genfrc.base -langC ROUT=$vec -o dgfr${dim}Dcalc_M${mask}_${vec}_UR${ur}.c \
-   rout=MVEC pre=d -def DIM ${dim} -def UR ${ur} -def AMSK ${mask} 
+./xextract -b genfrc.base -langC rout=$vec \
+   -o dgfr${dim}Dcalc_M${mask}_${vec}_UR${ur}.c \
+   pre=d -def DIM ${dim} -def UR ${ur} -def AMSK ${mask} 
