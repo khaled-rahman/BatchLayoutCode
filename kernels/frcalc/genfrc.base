@@ -1,0 +1,375 @@
+@ROUT !
+@ifdef ! TYPE 
+   @define TYPE @double@
+@endifdef
+@ifdef ! AMSK
+   @iexp AMSK 1 
+@endifdef 
+@ifdef ! DIM 
+   @iexp DIM 3
+@endifdef
+@ifdef ! UR
+   @iexp UR 1
+@endifdef
+/*#include<immintrin.h>*/  /* later replaced by simd.h */
+#include "simd.h"
+/*
+ * Function prototype 
+ */
+void UFR@(DIM)DCALC(
+      long M, 
+   @iexp i 0 
+   @iwhile i < @(DIM)
+      const @(TYPE) *X@(i),   
+      @iexp i @(i) 1 +
+   @endiwhile
+      long N,
+   @iexp i 0 
+   @iexp kk @(DIM) -1 +
+   @iwhile i < @(kk)
+      @(TYPE) *wX@(i),   
+      @iexp i @(i) 1 +
+   @endiwhile 
+      @(TYPE) *wX@(i)   
+   )
+{
+@ROUT MVEC 
+   int j;
+   for (j=0; j < N; j+=VLEN*@(UR))
+   {
+      int i;
+   @declare "      register VTYPE " y n ";"
+      @iexp j 0
+      @iwhile j < @(UR)
+         @iexp i 0 
+         @iwhile i < @(DIM)
+            vxD@(i)U@(j)
+            @iexp i @(i) 1 +
+         @endiwhile
+         @iexp i 0 
+         @iwhile i < @(DIM)
+            vfxD@(i)U@(j)
+            @iexp i @(i) 1 +
+         @endiwhile
+      @iexp j @(j) 1 +
+      @endiwhile
+   @enddeclare 
+   /* load all the data */ 
+   @iexp j 0
+   @iwhile j < @(DIM)
+      @iexp i 0 
+      @iwhile i < @(UR)
+         BCL_vldu(vxD@(j)U@(i), X@(j) + j + VLEN*@(i));
+         @iexp i @(i) 1 +
+      @endiwhile
+
+      @iexp j @(j) 1 +
+   @endiwhile 
+
+   /* set zero */
+   @iexp j 0
+   @iwhile j < @(DIM)
+      @iexp i 0 
+      @iwhile i < @(UR)
+         BCL_vzero(vfxD@(j)U@(i));
+         @iexp i @(i) 1 +
+      @endiwhile
+
+      @iexp j @(j) 1 +
+   @endiwhile 
+
+   @iif AMSK = 1
+      for (i=0; i < M; i++)
+      {
+      @declare "         int " y n ";"
+         @iexp j 0 
+         @iwhile j < @(UR)
+            ikU@(j)
+            @iexp j @(j) 1 +
+         @endiwhile
+      @enddeclare 
+         int n = i-j;
+         const unsigned int AONE = (1<<VLEN)-1;
+      @declare "         register VTYPE " y n ";"
+         @iexp i 0 
+         @iwhile i < @(DIM)
+            vxD@(i) 
+            @iexp i @(i) 1 +
+         @endiwhile
+         @iexp j 0 
+         @iwhile j < @(UR)
+            @iexp i 0 
+            @iwhile i < @(DIM)
+            vdxD@(i)U@(j) 
+               @iexp i @(i) 1 +
+            @endiwhile
+            @iexp j @(j) 1 +
+         @endiwhile 
+      @enddeclare
+      @declare "         register VTYPE " y n ";"
+         @iexp j 0 
+         @iwhile j < @(UR)
+            vdU@(j)
+            @iexp j @(j) 1 +
+         @endiwhile
+      @enddeclare
+   
+      @iexp j 0
+      @iwhile j < @(UR)
+         ikU@(j) = ( n >= VLEN*@(j) && n < VLEN*(@(j)+1) ) ? 
+               (AONE & (~(1 << (n%VLEN))))  : AONE; 
+         @iexp j @(j) 1 +
+      @endiwhile
+     
+      @iexp i 0 
+      @iwhile i < @(DIM)
+         BCL_vbcast(vxD@(i), X@(i)+i);
+         @iexp i @(i) 1 +
+      @endiwhile
+     
+      @iexp j 0 
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+         BCL_vsub(vdxD@(j)U@(i), vxD@(j), vxD@(j)U@(i));
+            @iexp i @(i) 1 +
+         @endiwhile
+         
+         @iexp j @(j) 1 +
+      @endiwhile 
+
+      @iexp j 0
+      @iwhile j < @(UR)
+         BCL_vmul(vdU@(j), vdxD0U@(j), vdxD0U@(j));
+         @iexp j @(j) 1 +
+      @endiwhile 
+
+      @iexp j 1 
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+         BCL_vmac(vdU@(i), vdxD@(j)U@(i), vdxD@(j)U@(i));
+            @iexp i @(i) 1 +
+         @endiwhile
+
+         @iexp j @(j) 1 +
+      @endiwhile
+        
+      @iexp j 0
+      @iwhile j < @(UR)
+         BCL_imaskz_vrcp(vdU@(j), ikU@(j));
+         @iexp j @(j) 1 +
+      @endiwhile
+
+      @iexp j 0
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+         BCL_vmac(vfxD@(j)U@(i), vdxD@(j)U@(i), vdU@(i));
+            @iexp i @(i) 1 +
+         @endiwhile
+
+         @iexp j @(j) 1 +
+      @endiwhile
+      }
+   @iexp j 0
+   @iwhile j < @(DIM)
+      @iexp i 0 
+      @iwhile i < @(UR)
+      BCL_vstu(wX@(j)+j+VLEN*@(i), vfxD@(j)U@(i));
+         @iexp i @(i) 1 +
+      @endiwhile
+
+      @iexp j @(j) 1 +
+   @endiwhile
+   @endiif
+   @iif AMSK = 0
+   // split the loop to optimize masking 
+   @endiif
+   }
+@ROUT KVEC
+   int j;
+   for (j=0; j < N; j+=@(UR))
+   {
+      int i;
+   @declare "      register @(TYPE) " y n ";"
+      @iexp j 0
+      @iwhile j < @(UR)
+         @iexp i 0 
+         @iwhile i < @(DIM)
+            fxD@(i)U@(j)
+            @iexp i @(i) 1 +
+         @endiwhile
+      @iexp j @(j) 1 +
+      @endiwhile
+   @enddeclare 
+   @declare "      register VTYPE " y n ";"
+      @iexp j 0
+      @iwhile j < @(UR)
+         @iexp i 0 
+         @iwhile i < @(DIM)
+            vxD@(i)U@(j)
+            @iexp i @(i) 1 +
+         @endiwhile
+         @iexp i 0 
+         @iwhile i < @(DIM)
+            vfxD@(i)U@(j)
+            @iexp i @(i) 1 +
+         @endiwhile
+      @iexp j @(j) 1 +
+      @endiwhile
+   @enddeclare 
+   
+   @iexp j 0
+   @iwhile j < @(DIM)
+      @iexp i 0 
+      @iwhile i < @(UR)
+      BCL_vbcast(vxD@(j)U@(i), X@(j) + j + @(i));
+         @iexp i @(i) 1 +
+      @endiwhile
+
+      @iexp j @(j) 1 +
+   @endiwhile 
+      /* set zero */
+   @iexp j 0
+   @iwhile j < @(DIM)
+      @iexp i 0 
+      @iwhile i < @(UR)
+      BCL_vzero(vfxD@(j)U@(i));
+         @iexp i @(i) 1 +
+      @endiwhile
+
+      @iexp j @(j) 1 +
+   @endiwhile 
+   @iif AMSK = 1
+      /* inner loop vectorization */ 
+      for (i=0; i < M; i+=VLEN)
+      {
+         const unsigned int AONE = (1<<VLEN)-1;
+      @declare "         int " y n ";"
+         @iexp j 0
+         @iwhile j < @(UR)
+            nU@(j) 
+            ikU@(j)
+            @iexp j @(j) 1 +
+         @endiwhile
+      @enddeclare 
+      @declare "         register VTYPE " y n ";"
+         @iexp i 0 
+         @iwhile i < @(DIM)
+            vxD@(i)
+            @iexp i @(i) 1 +
+         @endiwhile
+      @enddeclare 
+      @declare "         register VTYPE " y n ";"
+         @iexp j 0 
+         @iwhile j < @(UR)
+            @iexp i 0 
+            @iwhile i < @(DIM)
+            vdxD@(i)U@(j) 
+               @iexp i @(i) 1 +
+            @endiwhile
+            @iexp j @(j) 1 +
+         @endiwhile 
+      @enddeclare
+      @declare "         register VTYPE " y n ";"
+         @iexp j 0 
+         @iwhile j < @(UR)
+            vdU@(j)
+            @iexp j @(j) 1 +
+         @endiwhile
+      @enddeclare
+
+      @iexp j 0
+      @iwhile j < @(UR)
+         nU@(j) = j + @(j) - i;
+         ikU@(j) = (nU@(j) >= 0 && nU@(j) < VLEN) ? 
+               (AONE & (~(1 << nU@(j))))  : AONE; 
+         @iexp j @(j) 1 +
+      @endiwhile
+
+      @iexp i 0 
+      @iwhile i < @(DIM)
+         BCL_vldu(vxD@(i), X@(i)+i);
+         @iexp i @(i) 1 +
+      @endiwhile
+
+      @iexp j 0 
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+         BCL_vsub(vdxD@(j)U@(i), vxD@(j), vxD@(j)U@(i));
+            @iexp i @(i) 1 +
+         @endiwhile
+         
+         @iexp j @(j) 1 +
+      @endiwhile 
+
+      @iexp j 0
+      @iwhile j < @(UR)
+         BCL_vmul(vdU@(j), vdxD0U@(j), vdxD0U@(j));
+         @iexp j @(j) 1 +
+      @endiwhile 
+      
+      @iexp j 1 
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+         BCL_vmac(vdU@(i), vdxD@(j)U@(i), vdxD@(j)U@(i));
+            @iexp i @(i) 1 +
+         @endiwhile
+
+         @iexp j @(j) 1 +
+      @endiwhile
+      
+      @iexp j 0
+      @iwhile j < @(UR)
+         BCL_imaskz_vrcp(vdU@(j), ikU@(j));
+         @iexp j @(j) 1 +
+      @endiwhile
+
+      @iexp j 0
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+         BCL_vmac(vfxD@(j)U@(i), vdxD@(j)U@(i), vdU@(i));
+            @iexp i @(i) 1 +
+         @endiwhile
+
+         @iexp j @(j) 1 +
+      @endiwhile
+      }
+/*
+ *    KVEC needs reduction
+ *    NOTE: for now, we are reducing each vector into scalar and use store store,
+ *    except when UR is multiple of VLEN... 
+ *    FIXME: we can allocate extra padded memory to always use vector store 
+ */
+      @iexp j 0
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+      BCL_vrsum1(fxD@(j)U@(i), vfxD@(j)U@(i));
+            @iexp i @(i) 1 +
+         @endiwhile
+
+         @iexp j @(j) 1 +
+      @endiwhile
+     
+      @iexp j 0
+      @iwhile j < @(DIM)
+         @iexp i 0 
+         @iwhile i < @(UR)
+      wX@(j)[j+@(i)] = fxD@(j)U@(i);
+            @iexp i @(i) 1 +
+         @endiwhile
+
+         @iexp j @(j) 1 +
+      @endiwhile
+   @endiif
+   @iif AMSK = 0
+   // split the loop to optimize masking, not implemented yet  
+   @endiif
+   }
+@ROUT !
+}

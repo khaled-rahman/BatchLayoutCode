@@ -133,7 +133,7 @@ void GetAvgTimes(int argc, char *argv[], int nrep, string inputfile=""){
  */
    newalgo na = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
    newalgo na2 = newalgo(A_csr, inputfile, outputdir, 0, 1, 1.2, "");
-
+   
    for (int i=0; i < nrep; i++)
    {
       //outputvec = algo1.BarnesHutApproximation(1, 48, BATCHSIZE, 1.2, 0);
