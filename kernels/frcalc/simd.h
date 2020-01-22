@@ -14,7 +14,7 @@
 #ifdef BLC_X86
    #if defined(BLC_AVXZ) || defined(BLC_AVX512) /* avx512f */
       #include<immintrin.h>
-      #if VALUETPYE == double
+      #ifdef DREAL   /* DREAL is for double */ 
          #define VLEN 8
 /*
  *       AVX512 double precision 
@@ -54,7 +54,7 @@
             d_ = x0_[0];  \
          }
       
-      #elif VALUETYPE == float
+      #elif defined (SREAL)  /* SREAL is for float */ 
          #define VLEN 16
          #define VTYPE __m512 
          #define BCL_cvtint2mask(ik_, k_) k_ = _cvtu32_mask8(ik_) 
@@ -86,7 +86,7 @@
       #if defined(BLC_AVX2) || defined(BLC_AVXMAC)
          #define ArchHasMAC 
       #endif
-      #if VALUETPYE == double
+      #ifdef DREAL /* DREAL is for double */
          #define VLEN 4
          #define VTYPE __m256d 
          #define BCL_vldu(v_, p_) v_ = _mm256_loadu_pd(p_) 
@@ -124,7 +124,7 @@
             d_ = _mm256_blend_pd(d_, v0_, ik_); \
          }
          /*#define BCL_cvtint2mask(k_, ik) k_ = _cvtu32_mask8(ik_) */
-      #elif VALUETYPE == float
+      #elif defined(SREAL) /* SREAL for single precision real number */
          #define VLEN 8
          #define VTYPE __m256 
          #define BCL_vldu(v_, p_) v_ = _mm256_loadu_ps(p_) 
@@ -178,7 +178,7 @@
          #error "Unsupported Value Type!"
       #endif
    #elif defined(BLC_SSE2) || defined(BLC_SSE3)
-      #if VALUETPYE == double
+      #ifdef DREAL
          #define VLEN 2
       #elif VALUETYPE == float
          #define VLEN 4
@@ -186,7 +186,7 @@
          #error "Unsupported Value Type!"
       #endif
    #elif defined(BLC_SSE1)
-      #if VALUETYPE == float
+      #ifdef SREAL 
          #define VLEN 4
       #else /* double not supported */
          #error "Unsupported Value Type!"
@@ -198,10 +198,10 @@
 
 #elif defined(BLC_VSX)  /* openPower vector unit */
    #include <altivec.h>   
-   #if VALUETPYE == double
+   #ifdef DREAL 
       #define VLEN 2
       #define VTYPE vector double  
-   #elif VALUETYPE == float
+   #elif defined(SREAL)
       #define VLEN 4
       #define VTYPE vector float 
    #else
