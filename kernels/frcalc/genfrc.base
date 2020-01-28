@@ -157,7 +157,7 @@ void UFR@(DIM)DCALC(
         
       @iexp j 0
       @iwhile j < @(UR)
-         BCL_imaskz_vrcp(vdU@(j), ikU@(j));
+         BCL_imaskz_vrcp(vdU@(j), ikU@(j), vdU@(j));
          @iexp j @(j) 1 +
       @endiwhile
 
@@ -324,7 +324,7 @@ void UFR@(DIM)DCALC(
       
       @iexp j 0
       @iwhile j < @(UR)
-         BCL_imaskz_vrcp(vdU@(j), ikU@(j));
+         BCL_imaskz_vrcp(vdU@(j), ikU@(j), vdU@(j));
          @iexp j @(j) 1 +
       @endiwhile
 
